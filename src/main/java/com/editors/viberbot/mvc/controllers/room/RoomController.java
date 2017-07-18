@@ -1,4 +1,4 @@
-package com.editors.viberbot.database;
+package com.editors.viberbot.mvc.controllers.room;
 
 import java.util.List;
 
@@ -11,8 +11,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.editors.viberbot.database.entity.Room;
+import com.editors.viberbot.database.repository.RoomRepository;
+
 @RestController
-public class WebController {
+public class RoomController {
 
 	@Autowired
 	RoomRepository roomRepository;

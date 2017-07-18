@@ -1,4 +1,4 @@
-package com.editors.viberbot.database;
+package com.editors.viberbot.database.entity;
 import java.io.Serializable;
 
 import javax.persistence.Column;
