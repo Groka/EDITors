@@ -20,13 +20,22 @@
 				
 				<th> Name
 				</th>
+				
+				<th>
+					<button>Add</button>
+				</th>
 			</tr>
 			
 			<tr th:each="room : ${rooms}">
 			
 				<td th:text="${room.number}"></td>
 				<td th:text="${room.name}"></td>
-				
+				<td> 
+					<button>Edit</button>
+				</td>
+				<td>
+					<button>Delete</button>
+				</td>				
 			</tr>
 			
 		</table>
