@@ -11,6 +11,5 @@ import com.editors.viberbot.database.entity.Room;
 @Repository("roomRepository")
 public interface RoomRepository  extends JpaRepository<Room, Long>{
 	
-	Room findByName(String name);
 
 }
