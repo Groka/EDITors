@@ -10,7 +10,7 @@ import javax.persistence.Table;
 
 public class Room implements Serializable {
 
-	private static final long serialVersionUID = -3009157732242241606L;
+	//private static final long serialVersionUID = -3009157732242241606L;
 	
 	@Id
 	@Column(name = "id")
