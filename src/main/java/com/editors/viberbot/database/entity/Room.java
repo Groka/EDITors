@@ -9,8 +9,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.springframework.web.bind.annotation.ModelAttribute;
+
 @Entity
 @Table(name = "rooms")
+
 
 public class Room implements Serializable {
 
@@ -27,6 +30,11 @@ public class Room implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "id")
 	private long id;
+	
+	@ModelAttribute("room")
+	public Room createModel() {
+	    return new Room();
+	}
 	
 	public void setId(long id){
 		this.id = id;

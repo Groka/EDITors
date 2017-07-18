@@ -20,9 +20,10 @@
 				
 				<th> Name
 				</th>
-				
 				<th>
-					<button>Add</button>
+				</th>
+				<th>
+					<a th:href="@{/addRoom}" th:text="Add"></a>
 				</th>
 			</tr>
 			
@@ -35,7 +36,7 @@
 					<a th:href="@{/editRoom/{id}(id=${room.id})}" th:text="Edit"></a>
 				</td>
 				<td>
-					<button>Delete</button>
+					<a th:href="@{/deleteRoom/{id}(id=${room.id})}" th:text="Delete"></a>
 				</td>				
 			</tr>
 			
