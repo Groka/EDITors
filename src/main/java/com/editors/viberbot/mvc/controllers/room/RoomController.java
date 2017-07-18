@@ -7,25 +7,44 @@ import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.editors.viberbot.database.entity.Room;
 import com.editors.viberbot.database.repository.RoomRepository;
+import com.editors.viberbot.service.RoomService;
 
-@RestController
+@Controller
 public class RoomController {
 
 	@Autowired
 	RoomRepository roomRepository;
+	
+	private RoomService roomService;
+	
+	@Autowired
+	public void setRoomService(RoomService roomService){
+		this.roomService = roomService;
+		
+		
+	}
+	
+	@RequestMapping("/rooms")
+	public String listRooms(Model model){
+		model.addAttribute("rooms", roomRepository.findAll());
+		System.out.println("Velicina: " + roomRepository.findAll().size());
+		return "room/Rooms";
+	}
 	
 	@RequestMapping("/save")
 	public String process(){
 		roomRepository.save(new Room(1 , "Conference room"));
 		roomRepository.save(new Room(2, "Meeting room"));
 
-		return "Done";
+		return "room/Rooms";
 	}
 	
 	
