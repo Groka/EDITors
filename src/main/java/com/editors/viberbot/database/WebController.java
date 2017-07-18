@@ -1,5 +1,12 @@
 package com.editors.viberbot.database;
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -7,12 +14,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class WebController {
 
-	RoomRepository repositoryy;
+	@Autowired
+	RoomRepository roomRepository;
 	
 	@RequestMapping("/save")
 	public String process(){
-		repositoryy.save(new Room(1 , "Conference room"));
-		repositoryy.save(new Room(2, "Meeting room"));
+		roomRepository.save(new Room(1 , "Conference room"));
+		roomRepository.save(new Room(2, "Meeting room"));
 
 		return "Done";
 	}
@@ -22,7 +30,7 @@ public class WebController {
 	public String findAll(){
 		String result = "<html>";
 		
-		for(Room cust : repositoryy.findAll()){
+		for(Room cust : roomRepository.findAll()){
 			result += "<div>" + cust.toString() + "</div>";
 		}
 		
@@ -32,19 +40,21 @@ public class WebController {
 	@RequestMapping("/findbyid")
 	public String findById(@RequestParam("id") long id){
 		String result = "";
-		result = repositoryy.findOne(id).toString();
+		result = roomRepository.findOne(id).toString();
 		return result;
 	}
 	
+	/*
 	@RequestMapping("/findbyname")
 	public String fetchDataByLastName(@RequestParam("name") String name){
 		String result = "<html>";
 		
-		for(Room cust: repositoryy.findByName(name)){
+		for(Room cust: roomRepository.findByName(name)){
 			result += "<div>" + cust.toString() + "</div>"; 
 		}
 		
 		return result + "</html>";
 	}
+	*/
 	
 }
