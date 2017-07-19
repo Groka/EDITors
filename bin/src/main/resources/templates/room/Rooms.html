@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="ISO-8859-1"></meta>
+ <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"></link>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<title>Insert title here</title>
+</head>
+<body>
+
+	<div class="container">
+		<div th:if="${not #lists.isEmpty(rooms)}">
+		
+		<table class="table table-striped">
+			<tr>
+				<th> Number
+				</th>
+				
+				<th> Name
+				</th>
+				
+				<th>
+					<button>Add</button>
+				</th>
+			</tr>
+			
+			<tr th:each="room : ${rooms}">
+			
+				<td th:text="${room.number}"></td>
+				<td th:text="${room.name}"></td>
+				<td> 
+					<button>Edit</button>
+				</td>
+				<td>
+					<button>Delete</button>
+				</td>				
+			</tr>
+			
+		</table>
+		
+		</div>
+	</div>
+
+
+</body>
+</html>
