@@ -90,5 +90,11 @@ public class ReservationServiceImpl implements ReservationService {
 		reservationRepository.save(dbreservation);
 		return reservation;
 	}
+
+	@Override
+	public Reservation add(Reservation reservation) {
+		reservationRepository.save(reservation);
+		return null;
+	}
 	
 }
