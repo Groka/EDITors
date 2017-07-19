@@ -1,14 +1,17 @@
 package com.editors.viberbot.service;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 
 import com.editors.viberbot.database.entity.Reservation;
+import com.editors.viberbot.database.entity.User;
 
 public interface ReservationService {
 	public List<Reservation> getAll();
-	public void reserve(Reservation reservation);
-	public Reservation edit(Reservation reservation);
-	public void delete(Long id);
-	
-	//public User getByUser(String viberId);
+	public boolean reserve(Reservation reservation);
+	public boolean edit(Reservation reservation);
+	public boolean delete(Long id);
+	public List<LocalTime> getFreeRoomCapacitiesOnDate(Long roomId, LocalDate date);
+	public User getByUser(String viberId);
 }

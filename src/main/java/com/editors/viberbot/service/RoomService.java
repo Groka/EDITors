@@ -3,6 +3,7 @@ package com.editors.viberbot.service;
 import java.util.List;
 
 import com.editors.viberbot.database.entity.Room;
+import com.editors.viberbot.database.entity.User;
 
 public interface RoomService {
 	public Room add(Room room);

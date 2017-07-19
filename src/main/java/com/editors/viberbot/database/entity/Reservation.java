@@ -14,11 +14,6 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "reservations")
 public class Reservation implements Serializable {
-	
-	public Reservation(Long id, /*User user,*/ Room room, LocalDate date, LocalTime time){
-		
-	}
-	
 	protected Reservation(){
 		
 	}
@@ -28,12 +23,16 @@ public class Reservation implements Serializable {
 	@Column(name = "id")
 	private Long id;
 	
-	//private User user;
+	@Column(name = "user")
+	private User user;
 	
+	@Column(name = "room")
 	private Room room;
 	
+	@Column(name = "date")
 	private LocalDate date;
 	
+	@Column(name = "time")
 	private LocalTime time;
 
 	public Long getId() {
@@ -67,9 +66,29 @@ public class Reservation implements Serializable {
 	public void setTime(LocalTime time) {
 		this.time = time;
 	}
+	
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
 
 	@Override
 	public String toString() {
-		return "Reservation [id=" + id + ", room=" + room + ", date=" + date + ", time=" + time + "]";
+		return "Reservation [id=" + id + ", user=" + user + ", room=" + room + ", date=" + date + ", time=" + time
+				+ "]";
 	}
+
+	public Reservation(Long id, User user, Room room, LocalDate date, LocalTime time) {
+		super();
+		this.id = id;
+		this.user = user;
+		this.room = room;
+		this.date = date;
+		this.time = time;
+	}
+
+	
 }

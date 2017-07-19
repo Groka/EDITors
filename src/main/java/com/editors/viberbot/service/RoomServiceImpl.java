@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.editors.viberbot.database.entity.Room;
+import com.editors.viberbot.database.entity.User;
 import com.editors.viberbot.database.repository.RoomRepository;
 
 @Service("roomService")
@@ -46,7 +47,6 @@ public class RoomServiceImpl implements RoomService {
 	public void delete(Long id) {
 		roomRepository.delete(id);
 	}
-
 	
 
 }
