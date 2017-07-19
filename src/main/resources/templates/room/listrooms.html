@@ -26,12 +26,13 @@
 				</th>
 			</tr>
 			
+			
 			<tr th:each="room : ${rooms}">
 			
 				<td th:text="${room.number}"></td>
 				<td th:text="${room.name}"></td>
 				<td> 
-					<button>Edit</button>
+					<a th:href="@{/editRoom/{id}(id=${room.id})}" th:text="Edit"></a>
 				</td>
 				<td>
 					<button>Delete</button>

@@ -5,7 +5,9 @@ import java.util.List;
 import com.editors.viberbot.database.entity.Room;
 
 public interface RoomService {
-	public Room findRoomByName(String name);
-	public void saveRoom(Room room);
-	
+	public Room add(Room room);
+	public List<Room> findAll();
+	public boolean update(Room room);
+	public Room getOne(Long id);
+	public void delete(Long id);
 }

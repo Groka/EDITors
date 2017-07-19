@@ -15,13 +15,38 @@ public class RoomServiceImpl implements RoomService {
 	private RoomRepository roomRepository;
 
 	@Override
-	public Room findRoomByName(String name) {
-		return roomRepository.findByName(name);
+	public Room add(Room room) {
+		roomRepository.save(room);
+		return room;
 	}
 
 	@Override
-	public void saveRoom(Room room) {
-		roomRepository.save(room);
+	public List<Room> findAll() {
+		return roomRepository.findAll();
 	}
+
+	@Override
+	public boolean update(Room room) {
+		if(!roomRepository.exists(room.getId())) return false;
+		Room dbroom = getOne(room.getId());
+		dbroom.setName(room.getName());
+		dbroom.setNumber(room.getNumber());
+		dbroom.setStartWorkTime(room.getStartWorkTime());
+		dbroom.setEndWorkTime(room.getEndWorkTime());
+		roomRepository.save(dbroom);
+		return true;
+	}
+
+	@Override
+	public Room getOne(Long id) {
+		return roomRepository.findOne(id);
+	}
+
+	@Override
+	public void delete(Long id) {
+		roomRepository.delete(id);
+	}
+
+	
 
 }

@@ -1,5 +1,6 @@
 package com.editors.viberbot.database.entity;
 import java.io.Serializable;
+import java.time.LocalTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,12 +14,27 @@ import javax.persistence.Table;
 
 public class Room implements Serializable {
 
-	private static final long serialVersionUID = -3009157732242241606L;
+	public Room(int i, String name) {
+		this.number = i;
+		this.name = name;
+	}
+	
+	protected Room(){
+		
+	}
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "id")
 	private long id;
+	
+	public void setId(long id){
+		this.id = id;
+	}
+	
+	public long getId() {
+		return id;
+	}
 
 	@Column(name = "number")
 	private int number;
@@ -42,13 +58,36 @@ public class Room implements Serializable {
 		return name;
 	}
 
-	public Room(int i, String name) {
-		this.number = i;
-		this.name = name;
+	
+	@Column(name = "start_work_time")
+	private LocalTime startWorkTime;
+	
+	public void setStartWorkTime(LocalTime startWorkTime){
+		this.startWorkTime = startWorkTime;
 	}
 	
-	public Room(){
-		
+	public LocalTime getStartWorkTime(){
+		return startWorkTime;
+	}
+	
+	@Column(name = "end_work_time")
+	private LocalTime endWorkTime;
+	
+	public void setEndWorkTime(LocalTime endWorkTime){
+		this.endWorkTime = endWorkTime;
+	}
+	
+	public LocalTime getEndWorkTime(){
+		return endWorkTime;
+	}
+	
+	public String toString(){
+		String result = "Room number: " + getNumber() + "\n";
+		result += "Room name: " + getName() + "\n";
+		result += "Room id: " + getId() + "\n";
+		//result += "StartWorkTime: " + getStartWorkTime().toString() + "\n"; VRATITI
+		//result += "EndWorkTime: " + getEndWorkTime().toString() + "\n";
+		return result;
 	}
 
 }
