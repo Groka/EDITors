@@ -28,16 +28,6 @@ public class RoomController {
 	@Autowired
 	private RoomService roomService;
 	
-	/*
-	@Autowired
-	public void setRoomService(RoomService roomService){
-		this.roomService = roomService;
-		
-		
-	}
-	*/
-	
-	
 	@RequestMapping("/rooms")
 	public String listRooms(Model model){
 		model.addAttribute("rooms", roomService.findAll());

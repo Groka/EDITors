@@ -14,9 +14,11 @@ import javax.persistence.Table;
 
 public class Room implements Serializable {
 
-	public Room(int i, String name) {
+	public Room(int i, String name, LocalTime startWorkTime, LocalTime endWorkTime) {
 		this.number = i;
 		this.name = name;
+		this.startWorkTime = startWorkTime;
+		this.endWorkTime = endWorkTime;
 	}
 	
 	protected Room(){
