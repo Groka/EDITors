@@ -20,11 +20,13 @@ import com.viber.bot.api.ViberBot;
 import com.viber.bot.message.TextMessage;
 import com.viber.bot.profile.BotProfile;
 
-@RestController
+//@RestController
 @SpringBootApplication
 
-public class ViberbotApplication implements ApplicationListener<ApplicationReadyEvent>  {
+public class ViberbotApplication {
+//implements ApplicationListener<ApplicationReadyEvent>  {
 
+	/*
 	 @Inject
 	 private ViberBot bot;
 
@@ -47,7 +49,7 @@ public class ViberbotApplication implements ApplicationListener<ApplicationReady
 	                new TextMessage("Hi"))));
 	    }
 
-
+*/
 	
 	
 	public static void main(String[] args) {
