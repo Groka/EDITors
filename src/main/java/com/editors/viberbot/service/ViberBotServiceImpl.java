@@ -12,6 +12,8 @@ import com.viber.bot.event.incoming.IncomingUnsubscribeEvent;
 import com.viber.bot.message.Message;
 import com.viber.bot.message.MessageKeyboard;
 import com.viber.bot.message.TextMessage;
+import com.viber.bot.message.TrackingData;
+
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Nonnull;
@@ -65,6 +67,7 @@ public class ViberBotServiceImpl implements ViberBotService {
         Map<String, Object> mapMessageKeyboard = new HashMap<>();
         mapMessageKeyboard.put("Type", "keyboard");
         mapMessageKeyboard.put("DefaultHight", true);
+        mapMessageKeyboard.put("Buttons", buttons);
 
         // Create MessageKeyboard object
 
@@ -74,16 +77,24 @@ public class ViberBotServiceImpl implements ViberBotService {
         String userName = event.getUser().getName();
         String text = "Greetings " + userName + "!";
         
-        //
+        // Map for trackingdata
+        
+        Map<String, Object> mapTrackingData = new HashMap<>();
+        mapTrackingData.put("menu", "main");
+        
+        // TrackingData object
+        TrackingData trackingData = new TrackingData(mapTrackingData);
 
-        TextMessage textMessage = new TextMessage(text, messageKeyboard, null, null);
+        TextMessage textMessage = new TextMessage(text, messageKeyboard, trackingData, null);
 
+        //System.out.println();
+        
         return Futures.immediateFuture(Optional.of(textMessage));
     }
 
     @Override
     public void onMessageReceived(IncomingMessageEvent event) {
-    	
+    
     }
 
     @Override
