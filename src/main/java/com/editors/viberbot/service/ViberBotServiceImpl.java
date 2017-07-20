@@ -52,7 +52,7 @@ public class ViberBotServiceImpl implements ViberBotService {
         btnShowReservations.put("Rows", 1);
         btnShowReservations.put("BgColor", "#2db9b9");
         btnShowReservations.put("ActionType", "reply");
-        btnShowReservations.put("ActionBody", "Show reservations lomaaa");
+        btnShowReservations.put("ActionBody", "Show reservations");
         btnShowReservations.put("Text", "Show reservations");
         btnShowReservations.put("TextVAlign", "middle");
         btnShowReservations.put("TextHAlign", "center");
@@ -120,9 +120,8 @@ public class ViberBotServiceImpl implements ViberBotService {
     	
     	switch(trackingData.get("menu").toString()){	
     	case "main":
-    		System.out.println(message.toString());
-    		//if(message.getMapRepresentation().get("ActionBody").equals("Show reservations"))
-    			//response.send(showReservations(event, message));
+    		if(message.getMapRepresentation().get("text").equals("Show reservations"))
+    			response.send(showReservations(event, message));
     		break;
     	default:
     		System.out.println("U defaultu");
