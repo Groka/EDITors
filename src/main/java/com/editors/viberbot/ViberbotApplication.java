@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import javax.inject.Inject;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -14,9 +15,11 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.editors.viberbot.service.ViberBotService;
 import com.google.common.util.concurrent.Futures;
 import com.viber.bot.ViberSignatureValidator;
 import com.viber.bot.api.ViberBot;
+import com.viber.bot.message.MessageKeyboard;
 import com.viber.bot.message.TextMessage;
 import com.viber.bot.profile.BotProfile;
 import com.viber.bot.profile.UserProfile;
@@ -24,7 +27,9 @@ import com.viber.bot.profile.UserProfile;
 @SpringBootApplication
 
 public class ViberbotApplication implements ApplicationListener<ApplicationReadyEvent>  {
-
+	
+	@Autowired
+	private ViberBotService viberBotService;
 	
 	 @Inject
 	 private ViberBot bot;
@@ -45,11 +50,9 @@ public class ViberbotApplication implements ApplicationListener<ApplicationReady
 	       
 
 	        bot.onMessageReceived((event, message, response) ->{
-	        	System.out.println("Nesto se desavaaaaaaaaaaaaa");
 	        	response.send(message); 
-	        });// echos everything back
-	        bot.onConversationStarted(event -> Futures.immediateFuture(Optional.of( // send 'Hi UserName' when conversation is started
-	                new TextMessage("Hi"))));
+	        });
+	        bot.onConversationStarted(event -> viberBotService.conversationStarted(event) );
 	    }
 
 

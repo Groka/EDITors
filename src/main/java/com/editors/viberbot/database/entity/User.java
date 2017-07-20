@@ -11,6 +11,13 @@ import javax.persistence.Table;
 @Table(name = "users")
 public class User {
 	
+	public User(String viberId, String name, boolean subscribe) {
+		super();
+		this.viberId = viberId;
+		this.name = name;
+		this.subscribe = subscribe;
+	}
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "id")
@@ -49,7 +56,7 @@ public class User {
 		this.name = name;
 	}
 
-	public boolean isSubscribed() {
+	public boolean getSubscribe() {
 		return subscribe;
 	}
 
