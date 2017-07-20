@@ -10,17 +10,26 @@
 </head>
 <body>
 
-	<div class="container">
-		<form th:action="@{/editRoom}" th:object="${room}" method="POST">
-			<input th:value="${room.id}" th:field="*{id}" type="hidden" />
-			<label>Room name: </label>
-			<input th:value="${room.name}" th:field="*{name}" />
-			<label>Room number: </label>
-			<input th:value="${room.number}" th:field="*{number}" />
-			<button type="submit">Submit</button>
+<div style=" position: fixed; top: 0; left: 0; bottom: 0; right: 0;
+	 overflow: auto; background:url('http://www.hotel-grandmajestic.cz/files/hotel/conferences/hotel-majestic-prague-conference-room-grand-4-conference-and-events-02.jpg') no-repeat;">
+		
+		<form role="form"  th:action="@{/editRoom}" th:object="${room}" method="POST" style="width:30%; margin-left: 6em; margin-top: 4em; background: rgba(0, 0, 0, 0.77);">
+			<div class="form-group">
+						<input th:value="${room.id}" th:field="*{id}" type="hidden" />
+			
+			<label  style="margin-top:1em; color: white; padding: 0 0 0 1em;"> Room name: </label>
+			<br/>			
+			<input style="margin-left: 1em; margin-right: 1em; width: 90%;" th:value="${room.name}" th:field="*{name}" />
+			<br/>			
+			<label style="color: white; padding: 1em 0 0 1em;"> Room number: </label>
+			<br/>
+			<input th:value="${room.number}" th:field="*{number}" style="margin-left: 1em; margin-right: 1em; width: 90%;"/>
+			<br/>
+				
+			</div>
+			<button type="submit" style="margin: 1em;"  class="btn btn-info" > Submit </button>
 		</form>
 	</div>
-
 
 </body>
 </html>

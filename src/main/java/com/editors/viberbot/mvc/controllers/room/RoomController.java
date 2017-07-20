@@ -42,11 +42,13 @@ public class RoomController {
 	}
 	
 	@RequestMapping(value = "/editRoom", method = RequestMethod.POST)
-	public @ResponseBody String editRoom(@ModelAttribute Room room) throws NullPointerException {
+	public String editRoom(@ModelAttribute Room room) throws NullPointerException {
 		//Room room = roomService.getOne(id);
 		roomService.update(room);
 		System.out.println(room.toString());
-		return "Room sucessfully edited";
+		return "redirect:/rooms";
+
+		
 	}
 	
 	
