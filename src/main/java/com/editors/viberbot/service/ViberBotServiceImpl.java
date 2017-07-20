@@ -120,7 +120,7 @@ public class ViberBotServiceImpl implements ViberBotService {
     	
     	switch(trackingData.get("menu").toString()){	
     	case "main":
-    		System.out.println(message.getKeyboard().keySet().toString());
+    		System.out.println(message.toString());
     		//if(message.getMapRepresentation().get("ActionBody").equals("Show reservations"))
     			//response.send(showReservations(event, message));
     		break;
