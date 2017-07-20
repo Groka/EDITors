@@ -1,7 +1,5 @@
 package com.editors.viberbot.service;
 
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.log;
-
 import java.io.Console;
 import java.time.LocalDate;
 import java.time.LocalTime;
