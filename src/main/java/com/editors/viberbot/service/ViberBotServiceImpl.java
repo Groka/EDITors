@@ -123,8 +123,10 @@ public class ViberBotServiceImpl implements ViberBotService {
     		System.out.println("Ovdje sam");
     		if(message.getMapRepresentation().get("ActionBody") == "Show reservations")
     			response.send(showReservations(event, message));
+    		break;
     	default:
     		System.out.println("U defaultu");
+    		break;
     	}
     	
     }
