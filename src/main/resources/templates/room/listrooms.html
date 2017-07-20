@@ -10,7 +10,10 @@
 </head>
 <body>
 
-	<div class="container">
+	<div style=" position: fixed; top: 0; left: 0; bottom: 0; right: 0;
+	 overflow: auto; background-color: white;">
+
+	<div class="container" style="background-color: white;">
 		<div th:if="${not #lists.isEmpty(rooms)}">
 		
 		<table class="table table-striped">
@@ -23,7 +26,7 @@
 				<th>
 				</th>
 				<th>
-					<a th:href="@{/addRoom}" th:text="Add"></a>
+					<a th:href="@{/addRoom}"><span class="table-add glyphicon glyphicon-plus" style="color: green;" ></span></a>
 				</th>
 			</tr>
 			
@@ -33,10 +36,13 @@
 				<td th:text="${room.number}"></td>
 				<td th:text="${room.name}"></td>
 				<td> 
-					<a th:href="@{/editRoom/{id}(id=${room.id})}" th:text="Edit"></a>
+					<a th:href="@{/editRoom/{id}(id=${room.id})}"><span class="table-edit glyphicon glyphicon-pencil" style="color: blue;"></span></a>
 				</td>
-				<td>
-					<a th:href="@{/deleteRoom/{id}(id=${room.id})}" th:text="Delete"></a>
+				<td>			
+					<a th:href="@{/rooms/{id}(id=${room.id})}"><span class="table-remove glyphicon glyphicon-remove" style="color: #8B0000;"
+  onclick="return confirm('Are you sure you would like to delete this room?');"
+					
+					></span></a>
 				</td>				
 			</tr>
 			
@@ -45,6 +51,7 @@
 		</div>
 	</div>
 
+</div>
 
 </body>
 </html>
