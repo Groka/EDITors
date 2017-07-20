@@ -94,10 +94,9 @@ public class ViberBotServiceImpl implements ViberBotService {
     @Override
     public void onMessageReceived(IncomingMessageEvent event, Message message, Response response) {
     	TrackingData trackingData = message.getTrackingData();
-    	System.out.println("\n\nTracking data: " + trackingData.get("menu").toString() + "\n\n");
-    	switch(trackingData.get("menu").toString()){
-    		
-    	}
+    	System.out.println("Keys in the trackingdata:\n");
+    	for(String s : trackingData.keySet())
+    		System.out.println(s);
     }
 
     @Override
