@@ -18,6 +18,9 @@ public class User {
 		this.subscribe = subscribe;
 	}
 
+	public User() {
+	}
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "id")

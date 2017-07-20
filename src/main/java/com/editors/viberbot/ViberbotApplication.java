@@ -73,7 +73,6 @@ public class ViberbotApplication implements ApplicationListener<ApplicationReady
 				MessageKeyboard messageKeyboard2 = new MessageKeyboard(messageKeyboard);
 
 				TextMessage textMessage = new TextMessage(text, messageKeyboard2, null, null);
-	        	System.out.println("Nesto se desavaaaaaaaaaaaaa");
 	        	response.send(textMessage);
 	        });
 
