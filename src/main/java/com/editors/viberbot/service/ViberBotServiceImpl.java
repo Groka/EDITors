@@ -52,7 +52,7 @@ public class ViberBotServiceImpl implements ViberBotService {
         btnShowReservations.put("Rows", 1);
         btnShowReservations.put("BgColor", "#2db9b9");
         btnShowReservations.put("ActionType", "reply");
-        btnShowReservations.put("ActionBody", "Show reservations");
+        btnShowReservations.put("ActionBody", "Show reservations lomaaa");
         btnShowReservations.put("Text", "Show reservations");
         btnShowReservations.put("TextVAlign", "middle");
         btnShowReservations.put("TextHAlign", "center");
