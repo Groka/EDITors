@@ -17,9 +17,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 
 public class Room implements Serializable {
 
-	public Room(long id, int number, String name, LocalTime startWorkTime, LocalTime endWorkTime) {
+	public Room(String name, int number, LocalTime startWorkTime, LocalTime endWorkTime) {
 		super();
-		this.id = id;
+		//this.id = id;
 		this.number = number;
 		this.name = name;
 		this.startWorkTime = startWorkTime;
@@ -94,8 +94,8 @@ public class Room implements Serializable {
 		String result = "Room number: " + getNumber() + "\n";
 		result += "Room name: " + getName() + "\n";
 		result += "Room id: " + getId() + "\n";
-		//result += "StartWorkTime: " + getStartWorkTime().toString() + "\n"; VRATITI
-		//result += "EndWorkTime: " + getEndWorkTime().toString() + "\n";
+		result += "StartWorkTime: " + getStartWorkTime().toString() + "\n"; 
+		result += "EndWorkTime: " + getEndWorkTime().toString() + "\n";
 		return result;
 	}
 

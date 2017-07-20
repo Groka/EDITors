@@ -20,7 +20,7 @@ public class ViberBotServiceImpl2 implements ViberBotService {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
+	
 	@Override
 	public void onMessageReceived(IncomingMessageEvent event, Message message, Response response) {
 		// TODO Auto-generated method stub
@@ -29,13 +29,15 @@ public class ViberBotServiceImpl2 implements ViberBotService {
 
 	@Override
 	public void onSubscribe(IncomingSubscribedEvent event) {
-		// TODO Auto-generated method stub
+	
+		
 		
 	}
 
 	@Override
 	public void onUnsubscribe(IncomingUnsubscribeEvent event) {
-		// TODO Auto-generated method stub
+
+		
 		
 	}
 

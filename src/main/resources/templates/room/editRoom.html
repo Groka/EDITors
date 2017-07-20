@@ -25,6 +25,15 @@
 			<br/>
 			<input th:value="${room.number}" th:field="*{number}" style="margin-left: 1em; margin-right: 1em; width: 90%;"/>
 			<br/>
+			<label  style="margin-top:1em; color: white; padding: 0 0 0 1em;"> Start work time: </label>
+			<br/>			
+			<input style="margin-left: 1em; margin-right: 1em; width: 90%;" th:value="${room.startWorkTime}" th:field="*{startWorkTime}" />
+			<br/>			
+			<label style="color: white; padding: 1em 0 0 1em;"> End work time: </label>
+			<br/>
+			<input th:value="${room.endWorkTime}" th:field="*{endWorkTime}" style="margin-left: 1em; margin-right: 1em; width: 90%;"/>
+			<br/>
+		
 				
 			</div>
 			<button type="submit" style="margin: 1em;"  class="btn btn-info" > Submit </button>
