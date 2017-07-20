@@ -6,6 +6,9 @@ import com.viber.bot.event.callback.OnMessageReceived;
 import com.viber.bot.event.callback.OnSubscribe;
 import com.viber.bot.event.callback.OnUnsubscribe;
 import com.viber.bot.event.incoming.IncomingConversationStartedEvent;
+import com.viber.bot.event.incoming.IncomingMessageEvent;
+import com.viber.bot.event.incoming.IncomingSubscribedEvent;
+import com.viber.bot.event.incoming.IncomingUnsubscribeEvent;
 import com.viber.bot.message.Message;
 import com.viber.bot.message.MessageKeyboard;
 import com.viber.bot.message.TextMessage;
@@ -24,8 +27,11 @@ import java.util.concurrent.Future;
 
 @Service("viberBotService")
 public class ViberBotServiceImpl implements ViberBotService {
+	
+	ViberBotServiceImpl2 viberBotServiceImpl2 = new ViberBotServiceImpl2();
+	
     @Override
-    public Future<Optional<Message>> onConversationStarted(@Nonnull IncomingConversationStartedEvent listener) {
+    public Future<Optional<Message>> onConversationStarted(IncomingConversationStartedEvent event) {
         // Button for reserving a room
         HashMap<String, Object> btnReserveARoom = new HashMap<>();
         btnReserveARoom.put("Columns", 6);
@@ -65,8 +71,10 @@ public class ViberBotServiceImpl implements ViberBotService {
         MessageKeyboard messageKeyboard = new MessageKeyboard(mapMessageKeyboard);
 
         // Text to show when conversation starts
-        String userName = listener.getUser().getName();
+        String userName = event.getUser().getName();
         String text = "Greetings " + userName + "!";
+        
+        //
 
         TextMessage textMessage = new TextMessage(text, messageKeyboard, null, null);
 
@@ -74,17 +82,17 @@ public class ViberBotServiceImpl implements ViberBotService {
     }
 
     @Override
-    public void onMessageReceived(@Nonnull OnMessageReceived listener) {
-
+    public void onMessageReceived(IncomingMessageEvent event) {
+    	
     }
 
     @Override
-    public void onSubscribe(@Nonnull OnSubscribe listener) {
-
+    public void onSubscribe(IncomingSubscribedEvent event) {
+    	
     }
 
     @Override
-    public void onUnsubscribe(@Nonnull OnUnsubscribe listener) {
+    public void onUnsubscribe(IncomingUnsubscribeEvent event) {
 
     }
 }
