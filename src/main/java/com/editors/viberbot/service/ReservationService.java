@@ -16,5 +16,4 @@ public interface ReservationService {
 	public boolean delete(Long id);
 	public List<LocalTime> getFreeRoomCapacitiesOnDate(Long roomId, LocalDate date);
 	public List<Reservation> getByUser(String viberId);
-	public Reservation add(Reservation reservation);
 }
