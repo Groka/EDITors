@@ -49,7 +49,7 @@ public class User {
 		this.name = name;
 	}
 
-	public boolean isSubscribe() {
+	public boolean isSubscribed() {
 		return subscribe;
 	}
 

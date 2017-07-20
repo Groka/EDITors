@@ -38,7 +38,7 @@ public class UserServiceImpl implements UserService {
 		User user = new User();
 		try{
 			user = getByViberId(viberId);
-			if(!user.isSubscribe()) user.setSubscribe(true);
+			if(!user.isSubscribed()) user.setSubscribe(true);
 			userRepository.save(user);
 		}catch(NotFoundException e){
 			throw e;
@@ -50,7 +50,7 @@ public class UserServiceImpl implements UserService {
 		User user = new User();
 		try{
 			user = getByViberId(viberId);
-			if(user.isSubscribe()) user.setSubscribe(false);
+			if(user.isSubscribed()) user.setSubscribe(false);
 			userRepository.save(user);
 		}catch(NotFoundException e){
 			throw e;

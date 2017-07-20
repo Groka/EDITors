@@ -10,7 +10,7 @@ import com.viber.bot.api.ViberBot;
 import com.viber.bot.profile.BotProfile;
 
 @Configuration
-public class ViberBotConfig {
+public class BotConfig {
 	
 	@Value("${application.viber-bot.auth-token}")
     private String authToken;
