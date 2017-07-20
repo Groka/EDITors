@@ -3,6 +3,7 @@ package com.editors.viberbot.service;
 import java.util.Optional;
 import java.util.concurrent.Future;
 
+import com.viber.bot.Response;
 import com.viber.bot.event.callback.OnMessageReceived;
 import com.viber.bot.event.callback.OnSubscribe;
 import com.viber.bot.event.callback.OnUnsubscribe;
@@ -21,7 +22,7 @@ public class ViberBotServiceImpl2 implements ViberBotService {
 	}
 
 	@Override
-	public void onMessageReceived(IncomingMessageEvent event) {
+	public void onMessageReceived(IncomingMessageEvent event, Message message, Response response) {
 		// TODO Auto-generated method stub
 		
 	}

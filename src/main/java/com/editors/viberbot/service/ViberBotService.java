@@ -1,5 +1,6 @@
 package com.editors.viberbot.service;
 
+import com.viber.bot.Response;
 import com.viber.bot.event.callback.OnMessageReceived;
 import com.viber.bot.event.callback.OnSubscribe;
 import com.viber.bot.event.callback.OnUnsubscribe;
@@ -18,7 +19,7 @@ import java.util.concurrent.Future;
  */
 public interface ViberBotService {
     public Future<Optional<Message>> onConversationStarted(final @Nonnull IncomingConversationStartedEvent event);
-    public void onMessageReceived(IncomingMessageEvent event);
+    public void onMessageReceived(IncomingMessageEvent event, Message message, Response response);
     public void onSubscribe(IncomingSubscribedEvent event);
     public void onUnsubscribe(IncomingUnsubscribeEvent event);
 }

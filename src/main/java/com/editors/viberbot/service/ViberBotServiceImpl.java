@@ -1,6 +1,7 @@
 package com.editors.viberbot.service;
 
 import com.google.common.util.concurrent.Futures;
+import com.viber.bot.Response;
 import com.viber.bot.event.callback.OnConversationStarted;
 import com.viber.bot.event.callback.OnMessageReceived;
 import com.viber.bot.event.callback.OnSubscribe;
@@ -86,15 +87,17 @@ public class ViberBotServiceImpl implements ViberBotService {
         TrackingData trackingData = new TrackingData(mapTrackingData);
 
         TextMessage textMessage = new TextMessage(text, messageKeyboard, trackingData, null);
-
-        //System.out.println();
         
         return Futures.immediateFuture(Optional.of(textMessage));
     }
 
     @Override
-    public void onMessageReceived(IncomingMessageEvent event) {
-    
+    public void onMessageReceived(IncomingMessageEvent event, Message message, Response response) {
+    	TrackingData trackingData = message.getTrackingData();
+    	System.out.println("\n\nTracking data: " + trackingData.get("menu").toString() + "\n\n");
+    	switch(trackingData.get("menu").toString()){
+    		
+    	}
     }
 
     @Override
