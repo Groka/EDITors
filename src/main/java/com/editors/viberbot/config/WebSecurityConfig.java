@@ -16,7 +16,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     	
         http
             .authorizeRequests()
-            	.antMatchers(HttpMethod.POST, "/").permitAll()
+            	.antMatchers(HttpMethod.POST, "/viber").authenticated()
                 .antMatchers("/login").permitAll()
                 .anyRequest().authenticated()
                 .and()

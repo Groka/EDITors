@@ -19,6 +19,7 @@ import com.viber.bot.ViberSignatureValidator;
 import com.viber.bot.api.ViberBot;
 import com.viber.bot.message.TextMessage;
 import com.viber.bot.profile.BotProfile;
+import com.viber.bot.profile.UserProfile;
 
 @SpringBootApplication
 
@@ -41,6 +42,7 @@ public class ViberbotApplication implements ApplicationListener<ApplicationReady
 	        } catch (Exception e) {
 	            e.printStackTrace();
 	        }
+	       
 
 	        bot.onMessageReceived((event, message, response) ->{
 	        	System.out.println("Nesto se desavaaaaaaaaaaaaa");
