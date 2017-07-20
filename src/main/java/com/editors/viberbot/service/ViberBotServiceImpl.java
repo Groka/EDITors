@@ -52,7 +52,7 @@ public class ViberBotServiceImpl implements ViberBotService {
         btnShowReservations.put("Rows", 1);
         btnShowReservations.put("BgColor", "#2db9b9");
         btnShowReservations.put("ActionType", "reply");
-        btnShowReservations.put("ActionBody", "Show Reservations");
+        btnShowReservations.put("ActionBody", "Show reservations");
         btnShowReservations.put("Text", "Show reservations");
         btnShowReservations.put("TextVAlign", "middle");
         btnShowReservations.put("TextHAlign", "center");
@@ -83,6 +83,7 @@ public class ViberBotServiceImpl implements ViberBotService {
         Map<String, Object> mapTrackingData = new HashMap<>();
         mapTrackingData.put("menu", "main");
         
+        
         // TrackingData object
         TrackingData trackingData = new TrackingData(mapTrackingData);
 
@@ -90,13 +91,37 @@ public class ViberBotServiceImpl implements ViberBotService {
         
         return Futures.immediateFuture(Optional.of(textMessage));
     }
-
+    
+    private TextMessage showReservations(IncomingMessageEvent event, Message message){
+    	// Map for trackingdata
+        
+        Map<String, Object> mapTrackingData = new HashMap<>();
+        mapTrackingData.put("menu", "show_reservations");
+        
+        // TrackingData object
+        TrackingData trackingData = new TrackingData(mapTrackingData);
+        
+    	TextMessage textMessage = new TextMessage("dobar radi vadi", null, trackingData, null);
+    	
+    	return textMessage;
+    }
+    
     @Override
     public void onMessageReceived(IncomingMessageEvent event, Message message, Response response) {
     	TrackingData trackingData = message.getTrackingData();
+    	
+    	// For testing purposes
     	System.out.println("Keys in the trackingdata:\n");
+    	
     	for(String s : trackingData.keySet())
     		System.out.println(s);
+    	
+    	switch(trackingData.get("menu").toString()){
+    	case "main":
+    		if(message.getMapRepresentation().get("ActionBody") == "Show reservations")
+    			response.send(showReservations(event, message));
+    	}
+    	
     }
 
     @Override
