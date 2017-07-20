@@ -1,11 +1,15 @@
 package com.editors.viberbot;
 
 
-import java.util.Optional;
+import java.util.*;
 
 import javax.inject.Inject;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import com.editors.viberbot.service.ViberBotService;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.viber.bot.message.MessageKeyboard;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -50,16 +54,40 @@ public class ViberbotApplication implements ApplicationListener<ApplicationReady
 	       
 
 	        bot.onMessageReceived((event, message, response) ->{
-	        	response.send(message); 
+				String text = "Testing keyboard";
+
+				Map<String, Object> messageKeyboard = new HashMap<>();
+				messageKeyboard.put("Type", "keyboard");
+				messageKeyboard.put("DefaultHight", true);
+
+				ArrayList<HashMap<String, Object>> buttons = new ArrayList<>();
+				HashMap<String, Object> button1 = new HashMap<>();
+				button1.put("ActionType", "reply");
+				button1.put("ActionBody", "reply to PA");
+				button1.put("Text", "Test");
+
+				buttons.add(button1);
+
+				messageKeyboard.put("Buttons", buttons);
+
+				MessageKeyboard messageKeyboard2 = new MessageKeyboard(messageKeyboard);
+
+				TextMessage textMessage = new TextMessage(text, messageKeyboard2, null, null);
+	        	System.out.println("Nesto se desavaaaaaaaaaaaaa");
+	        	response.send(textMessage);
 	        });
-	        bot.onConversationStarted(event -> viberBotService.conversationStarted(event) );
+
+	        //bot.onConversationStarted(event -> Futures.immediateFuture(Optional.of( // send 'Hi UserName' when conversation is started
+	          //      new TextMessage("Hi"))));
+		 	bot.onConversationStarted(event -> viberBotService.onConversationStarted(event));
 	    }
 
 
 	
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) throws JsonProcessingException {
 		SpringApplication.run(ViberbotApplication.class, args);
+
 	}
 
 }
