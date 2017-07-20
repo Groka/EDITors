@@ -42,7 +42,10 @@ public class ViberbotApplication implements ApplicationListener<ApplicationReady
 	            e.printStackTrace();
 	        }
 
-	        bot.onMessageReceived((event, message, response) -> response.send(message)); // echos everything back
+	        bot.onMessageReceived((event, message, response) ->{
+	        	System.out.println("Nesto se desavaaaaaaaaaaaaa");
+	        	response.send(message); 
+	        });// echos everything back
 	        bot.onConversationStarted(event -> Futures.immediateFuture(Optional.of( // send 'Hi UserName' when conversation is started
 	                new TextMessage("Hi"))));
 	    }
