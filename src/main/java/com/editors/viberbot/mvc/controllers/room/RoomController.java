@@ -43,22 +43,6 @@ public class RoomController {
 		return "room/editRoom";	
 	}
 	
-	/*
-	@RequestMapping(value = "/addRoom", method = RequestMethod.GET)
-	public String addRoomView(){
-		
-		return "room/addRoom";	
-	}
-	
-	@RequestMapping(value = "/addRoom", method = RequestMethod.POST)
-	public @ResponseBody String addRoom(@ModelAttribute Room room) throws NullPointerException {
-
-		roomService.add(room);
-		return "Room added";
-	}
-	
-	*/
-	
 	@RequestMapping(value = "/editRoom", method = RequestMethod.POST)
 	public @ResponseBody String editRoom(@ModelAttribute Room room) throws NullPointerException {
 		//Room room = roomService.getOne(id);
@@ -67,11 +51,21 @@ public class RoomController {
 		return "Room sucessfully edited";
 	}
 	
-	@RequestMapping(value = "/save", method = RequestMethod.POST)
-	public @ResponseBody String saveRoom(@ModelAttribute("room") Room room){
-		//roomService.add(room);
-		return "Done";
+	
+	@RequestMapping(value = "/addRoom", method = RequestMethod.GET)
+	public String addRoomView(Model model){
+		Room room = new Room();
+		model.addAttribute("room", room);
+		return "room/addRoom";	
 	}
+	
+	@RequestMapping(value = "/addRoom", method = RequestMethod.POST)
+	public @ResponseBody String addRoom(@ModelAttribute Room room) throws NullPointerException {
+		System.out.println(room.toString());
+		roomService.add(room);
+		return "Room added";
+	}
+	
 	
 	@RequestMapping(value = "/deleteRoom/{id}", method = RequestMethod.GET)
 	public String deleteRoomView(@PathVariable Long id, Model model){

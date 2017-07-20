@@ -17,14 +17,16 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 
 public class Room implements Serializable {
 
-	public Room(int i, String name, LocalTime startWorkTime, LocalTime endWorkTime) {
-		this.number = i;
+	public Room(long id, int number, String name, LocalTime startWorkTime, LocalTime endWorkTime) {
+		super();
+		this.id = id;
+		this.number = number;
 		this.name = name;
 		this.startWorkTime = startWorkTime;
 		this.endWorkTime = endWorkTime;
 	}
-	
-	protected Room(){
+
+	public Room(){
 		
 	}
 	
@@ -32,11 +34,8 @@ public class Room implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "id")
 	private long id;
+
 	
-	@ModelAttribute("room")
-	public Room createModel() {
-	    return new Room();
-	}
 	
 	public void setId(long id){
 		this.id = id;
