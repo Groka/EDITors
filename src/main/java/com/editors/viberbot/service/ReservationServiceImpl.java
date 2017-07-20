@@ -1,10 +1,14 @@
 package com.editors.viberbot.service;
 
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.log;
+
+import java.io.Console;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.editors.viberbot.database.entity.Reservation;
@@ -20,8 +24,8 @@ public class ReservationServiceImpl implements ReservationService {
 	@Autowired
 	RoomService roomService;
 	
-	//@Autowired
-	//UserService userService;
+	@Autowired
+	UserService userService;
 
 	@Override
 	public List<Reservation> getAll() {
@@ -33,17 +37,6 @@ public class ReservationServiceImpl implements ReservationService {
 		List<LocalTime> reservations = getFreeRoomCapacitiesOnDate(reservation.getId(), reservation.getDate());
 		if(reservations.contains(reservation.getTime())) return false;
 		reservationRepository.save(reservation);
-		return true;
-	}
-
-	@Override
-	public boolean edit(Reservation reservation) {
-		if(!reservationRepository.exists(reservation.getId())) return false;
-		Reservation dbreservation = reservationRepository.findOne(reservation.getId());
-		dbreservation.setDate(reservation.getDate());
-		dbreservation.setRoomId(reservation.getRoomId());
-		dbreservation.setTime(reservation.getTime());
-		reservationRepository.save(dbreservation);
 		return true;
 	}
 
@@ -72,11 +65,30 @@ public class ReservationServiceImpl implements ReservationService {
 		return result;
 	}
 
+	// return list of reservations by user with viberId
 	@Override
-	public User getByUser(String viberId) {
-		//Dodati hvatanje usera po viber Idu
-		User user = null;
-		return user;
+	public List<Reservation> getByUser(String viberId) {
+		User user = new User();
+		List<Reservation> reservations = null;
+		try{
+			user = userService.getByViberId(viberId);
+			reservations.addAll(reservationRepository.findByUserId(user.getId()));
+		}catch(NotFoundException e){
+			System.out.println(e.getMessage());
+			
+		}
+		return reservations;
+	}
+
+	@Override
+	public Reservation edit(Reservation reservation) throws NotFoundException {
+		if(!reservationRepository.exists(reservation.getId())) throw new NotFoundException();
+		Reservation dbreservation = reservationRepository.findOne(reservation.getId());
+		dbreservation.setDate(reservation.getDate());
+		dbreservation.setRoomId(reservation.getRoomId());
+		dbreservation.setTime(reservation.getTime());
+		reservationRepository.save(dbreservation);
+		return reservation;
 	}
 	
 }

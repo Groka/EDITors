@@ -3,6 +3,7 @@ package com.editors.viberbot.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.editors.viberbot.database.entity.User;
@@ -26,29 +27,42 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public User getByViberId(String viberId) {
+	public User getByViberId(String viberId) throws NotFoundException {
 		User user = userRepository.findByViberId(viberId);
-		//if(userRepository.exists(user.getId())) return Exception
-		
+		if(userRepository.exists(user.getId())) throw new NotFoundException();
 		return user;
 	}
 
 	@Override
-	public void subscribe(String viberId) {
-		
-		
+	public void subscribe(String viberId) throws NotFoundException {
+		User user = new User();
+		try{
+			user = getByViberId(viberId);
+			if(!user.isSubscribe()) user.setSubscribe(true);
+			userRepository.save(user);
+		}catch(NotFoundException e){
+			throw e;
+		}
 	}
 
 	@Override
-	public void unsubscribe(String viberId) {
-		// TODO Auto-generated method stub
-		
+	public void unsubscribe(String viberId) throws NotFoundException {
+		User user = new User();
+		try{
+			user = getByViberId(viberId);
+			if(user.isSubscribe()) user.setSubscribe(false);
+			userRepository.save(user);
+		}catch(NotFoundException e){
+			throw e;
+		}
 	}
 
 	@Override
-	public boolean delete(Long id) {
-		// TODO Auto-generated method stub
-		return false;
+	public User delete(Long id) {
+		User user = new User();
+		user = userRepository.getOne(id);
+		userRepository.delete(user);
+		return user;
 	}
 
 }
