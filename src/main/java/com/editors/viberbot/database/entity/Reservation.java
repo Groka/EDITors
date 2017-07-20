@@ -14,20 +14,20 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "reservations")
 public class Reservation implements Serializable {
-	protected Reservation(){
+	public Reservation(){
 		
 	}
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "id")
-	private Long id;
+	private long id;
 	
 	@Column(name = "userId")
-	private Long userId;
+	private long userId;
 	
 	@Column(name = "roomId")
-	private Long roomId;
+	private long roomId;
 	
 	@Column(name = "date")
 	private LocalDate date;
@@ -35,7 +35,7 @@ public class Reservation implements Serializable {
 	@Column(name = "time")
 	private LocalTime time;
 
-	public Long getId() {
+	public long getId() {
 		return id;
 	}
 
@@ -43,11 +43,11 @@ public class Reservation implements Serializable {
 		this.id = id;
 	}
 
-	public Long getRoomId() {
+	public long getRoomId() {
 		return roomId;
 	}
 
-	public void setRoomId(Long roomId) {
+	public void setRoomId(long roomId) {
 		this.roomId = roomId;
 	}
 
@@ -67,11 +67,11 @@ public class Reservation implements Serializable {
 		this.time = time;
 	}
 	
-	public Long getUser() {
+	public long getUserId() {
 		return userId;
 	}
 
-	public void setUser(Long userId) {
+	public void setUserId(long userId) {
 		this.userId = userId;
 	}
 
@@ -81,7 +81,7 @@ public class Reservation implements Serializable {
 				+ "]";
 	}
 
-	public Reservation(Long id, Long userId, Long roomId, LocalDate date, LocalTime time) {
+	public Reservation(long id, long userId, Long roomId, LocalDate date, LocalTime time) {
 		super();
 		this.id = id;
 		this.userId = userId;
