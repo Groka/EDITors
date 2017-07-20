@@ -41,7 +41,7 @@ public class ReservationServiceImpl implements ReservationService {
 		if(!reservationRepository.exists(reservation.getId())) return false;
 		Reservation dbreservation = reservationRepository.findOne(reservation.getId());
 		dbreservation.setDate(reservation.getDate());
-		dbreservation.setRoom(reservation.getRoom());
+		dbreservation.setRoomId(reservation.getRoomId());
 		dbreservation.setTime(reservation.getTime());
 		reservationRepository.save(dbreservation);
 		return true;
@@ -66,7 +66,7 @@ public class ReservationServiceImpl implements ReservationService {
 		}
 		List<Reservation> reservations = getAll();
 		for(Reservation r : reservations){
-			if(result.contains(r.getTime()) && r.getRoom().getId() == roomId && r.getDate() == date)
+			if(result.contains(r.getTime()) && r.getRoomId() == roomId && r.getDate() == date)
 				result.remove(r.getTime());
 		}
 		return result;

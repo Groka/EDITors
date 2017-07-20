@@ -23,11 +23,11 @@ public class Reservation implements Serializable {
 	@Column(name = "id")
 	private Long id;
 	
-	@Column(name = "user")
-	private User user;
+	@Column(name = "userId")
+	private Long userId;
 	
-	@Column(name = "room")
-	private Room room;
+	@Column(name = "roomId")
+	private Long roomId;
 	
 	@Column(name = "date")
 	private LocalDate date;
@@ -43,12 +43,12 @@ public class Reservation implements Serializable {
 		this.id = id;
 	}
 
-	public Room getRoom() {
-		return room;
+	public Long getRoomId() {
+		return roomId;
 	}
 
-	public void setRoom(Room room) {
-		this.room = room;
+	public void setRoomId(Long roomId) {
+		this.roomId = roomId;
 	}
 
 	public LocalDate getDate() {
@@ -67,25 +67,25 @@ public class Reservation implements Serializable {
 		this.time = time;
 	}
 	
-	public User getUser() {
-		return user;
+	public Long getUser() {
+		return userId;
 	}
 
-	public void setUser(User user) {
-		this.user = user;
+	public void setUser(Long userId) {
+		this.userId = userId;
 	}
 
 	@Override
 	public String toString() {
-		return "Reservation [id=" + id + ", user=" + user + ", room=" + room + ", date=" + date + ", time=" + time
+		return "Reservation [id=" + id + ", userId=" + userId + ", roomId=" + roomId + ", date=" + date + ", time=" + time
 				+ "]";
 	}
 
-	public Reservation(Long id, User user, Room room, LocalDate date, LocalTime time) {
+	public Reservation(Long id, Long userId, Long roomId, LocalDate date, LocalTime time) {
 		super();
 		this.id = id;
-		this.user = user;
-		this.room = room;
+		this.userId = userId;
+		this.roomId = roomId;
 		this.date = date;
 		this.time = time;
 	}

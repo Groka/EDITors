@@ -8,5 +8,6 @@ import com.editors.viberbot.database.entity.User;
 
 @Repository("reservationRepository")
 public interface ReservationRepository extends JpaRepository<Reservation, Long> {
-	public User findByUser(User user);
+	public Long findByUserId(Long userId);
+	public Long findByRoomId(Long roomId);
 }

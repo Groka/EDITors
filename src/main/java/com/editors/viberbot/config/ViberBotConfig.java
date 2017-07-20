@@ -1,4 +1,4 @@
-package config;
+package com.editors.viberbot.config;
 
 
 import org.springframework.beans.factory.annotation.Value;
@@ -9,10 +9,10 @@ import com.viber.bot.ViberSignatureValidator;
 import com.viber.bot.api.ViberBot;
 import com.viber.bot.profile.BotProfile;
 
-//@Configuration
+@Configuration
 public class ViberBotConfig {
 	
-	/*@Value("${application.viber-bot.auth-token}")
+	@Value("${application.viber-bot.auth-token}")
     private String authToken;
 
     @Value("${application.viber-bot.name}")
@@ -31,5 +31,5 @@ public class ViberBotConfig {
         return new ViberSignatureValidator(authToken);
     } 
     
-    */
+    
 }
