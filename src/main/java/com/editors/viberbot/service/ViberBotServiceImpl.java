@@ -150,8 +150,9 @@ public class ViberBotServiceImpl extends HelperMethods implements ViberBotServic
     	        String greeting = "Welcome to room reservation bot " + event.getSender().getName();
     			response.send(goToMain(greeting));
     		}
-    		else confirmNewReservation(message, response);
+    		else confirmNewReservation(message, response, true, false);
     		break;
+    		/*
     	case "make_a_reservation_confirm":
     		if(message.getMapRepresentation().get("text").toString().equals("returnToMain")){
     			// Greetings message
@@ -160,6 +161,7 @@ public class ViberBotServiceImpl extends HelperMethods implements ViberBotServic
     		}
     		else confirmNewReservation(message, response);
     		break;
+    		*/
     	case "make_a_reservation_end":
     		if(message.getMapRepresentation().get("text").toString().equals("returnToMain")){
     			// Greetings message

@@ -536,7 +536,7 @@ public class HelperMethods {
      * 
      * make_a_reservation_confirm
      */
-    protected void confirmNewReservation(Message message, Response response){
+    protected void confirmNewReservation(Message message, Response response, boolean checkTime, boolean wasInvalid){
     	Map<String, Object> mapTrackingData = new HashMap<>();
     	
     	// Create trackingData map
@@ -544,13 +544,17 @@ public class HelperMethods {
     	mapTrackingData.put("date", message.getTrackingData().get("date").toString());
     	mapTrackingData.put("roomId", message.getTrackingData().get("roomId").toString());
     	
+    	LocalTime time = null;
     	
     	// Get time
-    	String[] timeStr = message.getMapRepresentation().get("text").toString().split("=");
-    	// First check if time is good
-    	if(timeStr.length == 0) 
-    		showFreePeriods(message, response, false, true);
-    	LocalTime time = LocalTime.parse(timeStr[1]);
+    	if(checkTime){ // get time from text, otherwise get it from trackingdata
+	    	String[] timeStr = message.getMapRepresentation().get("text").toString().split("=");
+	    	// First check if time is good
+	    	if(timeStr.length != 2) 
+	    		showFreePeriods(message, response, false, true);
+	    	time = LocalTime.parse(timeStr[1]);
+    	}
+    	else time = LocalTime.parse(message.getTrackingData().get("time").toString());
     	
     	// Add time to trackingData
     	mapTrackingData.put("time", time.toString());
@@ -592,7 +596,8 @@ public class HelperMethods {
         }
 
         // Response
-    	String responseText = "Reservation info: Date " + message.getTrackingData().get("date").toString();
+        String responseText = wasInvalid ? "Bad input. Please use the menu provided. " : "";
+    	responseText += "Reservation info: Date " + message.getTrackingData().get("date").toString();
 
         // Calculated reservation ending time
         LocalTime endTime = LocalTime.of(time.getHour() + 1, time.getMinute());
@@ -607,6 +612,9 @@ public class HelperMethods {
      */
     
     protected void addReservation(IncomingMessageEvent event, Message message, Response response){
+    	// Validation
+    	if(!message.getMapRepresentation().get("text").toString().equals("make_a_reservation_end"))
+    		showFreePeriods(message, response, false, true);
     	// Get trackingData
     	TrackingData trackingData = message.getTrackingData();
     	
