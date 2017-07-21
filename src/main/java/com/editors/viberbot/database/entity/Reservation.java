@@ -10,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -33,12 +34,10 @@ public class Reservation implements Serializable {
 	@Column(name = "id")
 	private Long id;
 	
-	@OneToMany
-	@Column(name = "user")
+	@OneToOne
 	private User user;
 	
-	@OneToMany
-	@Column(name = "room")
+	@OneToOne
 	private Room room;
 	
 	@Column(name = "date")
