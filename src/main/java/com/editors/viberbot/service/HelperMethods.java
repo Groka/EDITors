@@ -154,16 +154,8 @@ public class HelperMethods {
      * make_a_reservation_step_2
      */
     
-    protected void showRooms(Message message, Response response, boolean checkDate, boolean wasInvalid) {
-    	LocalDate date = null;
-    	if(checkDate){
-    		try{
-    			date = checkDate(message);
-    		}catch(IllegalArgumentException e){
-    			// if date is invalid ask for date again
-    			askForDate(response, true);
-    		}
-    	}
+    protected void showRooms(Message message, Response response, boolean wasInvalid) {
+    	
     	// get all rooms from DB
 		List<Room> rooms = roomService.findAll();
 		
@@ -189,9 +181,7 @@ public class HelperMethods {
 		
 		// create map for trackingdata
 		Map<String, Object> mapTrackingData = new HashMap<>();
-		mapTrackingData.put("menu", "make_a_reservation_step_2");
-		//mapTrackingData.put("date", );  OOOOOOOODRADITIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
-		mapTrackingData.put("date", date.toString());
+		mapTrackingData.put("menu", "make_a_reservation_step_1");
 		
 		// create TrackingData object
 		TrackingData trackingData = new TrackingData(mapTrackingData);
@@ -203,13 +193,24 @@ public class HelperMethods {
     }
     
     // Ask for the date
-    protected void askForDate(Response response, boolean wasInvalid){
+    protected void askForDate(Message message, Response response, boolean wasInvalid){
+    	// Get room
+    	Room room = null;
+    	try{
+    		room = checkRoom(message);
+    	}catch(IllegalArgumentException e){
+    		System.out.println("Bad rooooooooom");
+    		e.printStackTrace();
+    		showRooms(message, response, true);
+    	}
+    	
     	String responseText = wasInvalid ? "Invalid date. " : "";
     	responseText += "Please enter a date in DD-MM-YYYY format";
     	
     	// Create map for TrackingData object
 		Map<String, Object> mapTrackingData = new HashMap<>();
-		mapTrackingData.put("menu", "make_a_reservation_step_1"); // next is date input
+		mapTrackingData.put("menu", "make_a_reservation_step_2");
+		mapTrackingData.put("roomId", room.getId());
 		
 		// Create TrackingData object
 		TrackingData trackingData = new TrackingData(mapTrackingData);
@@ -267,23 +268,29 @@ public class HelperMethods {
      * make_a_reservation_step_3
      */
     
-    protected void showFreePeriods(Message message, Response response, boolean wasInvalid){
-    	// Get date from trackingData
-    	LocalDate date = LocalDate.parse(message.getTrackingData().get("date").toString());
-    	
-    	// Get room
-    	Room room = null;
-    	try{
-    		room = checkRoom(message);
-    	}catch(IllegalArgumentException e){
-    		System.out.println("Bad rooooooooom");
-    		e.printStackTrace();
-    		showRooms(message, response, false, true);
+    protected void showFreePeriods(Message message, Response response, boolean checkDate, boolean wasInvalid){
+    	LocalDate date = null;
+    	if(checkDate){
+    		try{
+    			date = checkDate(message);
+    		}catch(IllegalArgumentException e){
+    			// if date is invalid ask for date again
+    			askForDate(message, response, true);
+    		}
     	}
-    	
+	    	
+    	// Get room from trackingData
+    	Long roomId = Long.valueOf(message.getTrackingData().get("roomId").toString());
+    	Room room = null;
+		try {
+			room = roomService.getOne(roomId);
+		} catch (NotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
     	
     	// Get free periods on the given date and room
-    	List<LocalTime> periods = null;
+    	List<LocalTime> periods = new ArrayList<>();
     	try {
 			periods = reservationService.getFreeRoomCapacitiesOnDate(room.getId(), date);
 		} catch (NotFoundException e) {

@@ -90,7 +90,8 @@ public class ViberBotServiceImpl extends HelperMethods implements ViberBotServic
     		if(message.getMapRepresentation().get("text").equals("show_reservations"))
     			response.send(showReservations(event, message));
     		else if(message.getMapRepresentation().get("text").equals("make_a_reservation")){
-    			askForDate(response, false);
+    			//askForDate(response, false);
+    			showRooms(message, response, false);
     		}
     			
     		break;
@@ -100,8 +101,8 @@ public class ViberBotServiceImpl extends HelperMethods implements ViberBotServic
     		break;
     	// Date input; if valid respond with room menu to choose a room
     	case "make_a_reservation_step_1":
-    		// Get rooms
-    		showRooms(message, response, true, false);
+    		askForDate(message, response, false);
+    		//showRooms(message, response, true, false);
     		break;
     	// Choose a room
     	// Show available appointments
