@@ -279,6 +279,7 @@ public class HelperMethods {
     
     protected void cancelReservation(Message message, Response response){
     	
+    	System.out.println("OVDJEEEEEEEE: " + message.getMapRepresentation().get("text"));
     	if(!message.getMapRepresentation().get("text").equals("confirm_cancel_reservation"))
     		cancelReservationConfirm(message, response, true);
     	
@@ -288,7 +289,7 @@ public class HelperMethods {
     	Reservation reservation = reservationService.getOne(Long.valueOf(trackingData.get("reservationId").toString()));
     	
     	// Cancel reservation
-    	reservationService.delete(reservation.getId());
+    	//reservationService.delete(reservation.getId());
     	
     	ArrayList<HashMap<String, Object>> buttons = new ArrayList<>();
     	
