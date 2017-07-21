@@ -9,11 +9,21 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "reservations")
 public class Reservation implements Serializable {
+	public Reservation(Long id, User user, Room room, LocalDate date, LocalTime time) {
+		super();
+		this.id = id;
+		this.user = user;
+		this.room = room;
+		this.date = date;
+		this.time = time;
+	}
+
 	public Reservation(){
 		
 	}
@@ -21,13 +31,15 @@ public class Reservation implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "id")
-	private long id;
+	private Long id;
 	
-	@Column(name = "userId")
-	private long userId;
+	@OneToMany
+	@Column(name = "user")
+	private User user;
 	
-	@Column(name = "roomId")
-	private long roomId;
+	@OneToMany
+	@Column(name = "room")
+	private Room room;
 	
 	@Column(name = "date")
 	private LocalDate date;
@@ -41,14 +53,6 @@ public class Reservation implements Serializable {
 
 	public void setId(Long id) {
 		this.id = id;
-	}
-
-	public long getRoomId() {
-		return roomId;
-	}
-
-	public void setRoomId(long roomId) {
-		this.roomId = roomId;
 	}
 
 	public LocalDate getDate() {
@@ -66,29 +70,29 @@ public class Reservation implements Serializable {
 	public void setTime(LocalTime time) {
 		this.time = time;
 	}
-	
-	public long getUserId() {
-		return userId;
+
+	public User getUser() {
+		return user;
 	}
 
-	public void setUserId(long userId) {
-		this.userId = userId;
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	public Room getRoom() {
+		return room;
+	}
+
+	public void setRoom(Room room) {
+		this.room = room;
 	}
 
 	@Override
 	public String toString() {
-		return "Reservation [id=" + id + ", userId=" + userId + ", roomId=" + roomId + ", date=" + date + ", time=" + time
+		return "Reservation [id=" + id + ", user=" + user + ", room=" + room + ", date=" + date + ", time=" + time
 				+ "]";
 	}
-
-	public Reservation(long id, long userId, Long roomId, LocalDate date, LocalTime time) {
-		super();
-		this.id = id;
-		this.userId = userId;
-		this.roomId = roomId;
-		this.date = date;
-		this.time = time;
-	}
+	
 
 	
 }
