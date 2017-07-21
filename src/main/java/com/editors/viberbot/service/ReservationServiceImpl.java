@@ -1,8 +1,8 @@
 package com.editors.viberbot.service;
 
-import java.io.Console;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,7 +55,7 @@ public class ReservationServiceImpl implements ReservationService {
 
 	@Override
 	public List<LocalTime> getFreeRoomCapacitiesOnDate(Long roomId, LocalDate date) throws NotFoundException {
-		ArrayList<LocalTime> result = new ArrayList<>();
+		List<LocalTime> result = new ArrayList<>();
 		Room room = null;
 		try {
 			room = roomService.getOne(roomId);
