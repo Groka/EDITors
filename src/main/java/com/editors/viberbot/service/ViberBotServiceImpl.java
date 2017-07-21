@@ -87,7 +87,7 @@ public class ViberBotServiceImpl extends HelperMethods implements ViberBotServic
     		else if(message.getMapRepresentation().get("text").equals("make_a_reservation")){
     			askForDate(response, false);
     		}
-    		else if(message.getMapRepresentation().get("text").equals("main_menu")){
+    		else if(message.getMapRepresentation().get("text").equals("Reservation added")){
     			response.send(goToMain(null, event, message));
     		}
     			

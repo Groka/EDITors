@@ -66,4 +66,10 @@ public class UserController {
 		return "redirect:/users";
 	}
 	
+	@RequestMapping(value = "/deleteuser/{id}", method = RequestMethod.GET)
+	public String deleteUser(@PathVariable Long id){
+		userService.delete(id);
+		return "redirect:/users";	
+	}
+	
 }
