@@ -57,13 +57,14 @@ public class ReservationServiceImpl implements ReservationService {
 
 	@Override
 	public List<LocalTime> getFreeRoomCapacitiesOnDate(Long roomId, LocalDate date) throws NotFoundException {
-		List<LocalTime> result = new ArrayList<>();
+		
 		Room room = null;
 		try {
 			room = roomService.getOne(roomId);
 		} catch (NotFoundException e) {
 			throw e;
 		}
+		/*
 		int hours = room.getStartWorkTime().getHour();
 		int minutes = room.getStartWorkTime().getMinute();
 		for(; LocalTime.of(hours, 0) != room.getEndWorkTime(); hours++){
@@ -73,6 +74,21 @@ public class ReservationServiceImpl implements ReservationService {
 		List<Reservation> reservations = getAll();
 		for(Reservation r : reservations){
 			if(result.contains(r.getTime()) && r.getRoom().getId() == roomId && r.getDate() == date)
+				result.remove(r.getTime());
+		}
+		*/
+		List<Reservation> reservations = reservationRepository.findByRoomAndDate(room, date);
+		
+		List<LocalTime> result = new ArrayList<>();
+		//
+		int hours = room.getStartWorkTime().getHour();
+		int minutes = room.getStartWorkTime().getMinute();
+		for(; LocalTime.of(hours, 0) != room.getEndWorkTime(); hours++){
+			LocalTime tmp = LocalTime.of(hours, minutes);
+			result.add(tmp);
+		}
+		for(Reservation r : reservations){
+			if(result.contains(r.getTime()))
 				result.remove(r.getTime());
 		}
 		return result;

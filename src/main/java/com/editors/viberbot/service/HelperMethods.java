@@ -615,19 +615,8 @@ public class HelperMethods {
     protected void addReservation(IncomingMessageEvent event, Message message, Response response){
     	// Validation
     	if(!message.getMapRepresentation().get("text").toString().equals("make_a_reservation_end")){
-    		// Create map for TrackingData object
-    		/*
-        	Map<String, Object> mapTrackingData = new HashMap<>();
-        	
-        	mapTrackingData.put("menu", "make_a_reservation_end");
-        	mapTrackingData.put("date", message.getTrackingData().get("date").toString());
-        	mapTrackingData.put("roomId", message.getTrackingData().get("roomId").toString());
-        	mapTrackingData.put("time", message.getTrackingData().get("time").toString());
-        	
-        	TrackingData td = new TrackingData(mapTrackingData);
-        	*/
-    		showFreePeriods(message, response, false, true);
-    		//return;
+    		confirmNewReservation(message, response, false, true);
+    		return;
     	}
     	// Get trackingData
     	TrackingData trackingData = message.getTrackingData();

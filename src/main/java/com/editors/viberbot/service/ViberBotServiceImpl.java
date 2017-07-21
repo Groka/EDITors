@@ -50,18 +50,7 @@ public class ViberBotServiceImpl extends HelperMethods implements ViberBotServic
 	
     @Override
     public Future<Optional<Message>> onConversationStarted(IncomingConversationStartedEvent event) {
-    	/*
-    	String viberId = event.getUser().getId();
-    	User user = new User();
-    	try {
-			user = userService.getByViberId(viberId);
-			System.out.println("POSTOJIIIIIIIIII");
-		} catch (NotFoundException e) {
-			System.out.println("NE POSTOJI U BAZI NE POSTOJI");
-			String userName = event.getUser().getName();
-			userService.addUser(new User(viberId, userName, true));
-		}
-		*/
+    	
     	onSubscribe(event);
 
     	// Greetings message
@@ -73,14 +62,6 @@ public class ViberBotServiceImpl extends HelperMethods implements ViberBotServic
     @Override
     public void onMessageReceived(IncomingMessageEvent event, Message message, Response response) {
     	TrackingData trackingData = message.getTrackingData();
-    	
-    	// For testing purposes
-    	System.out.println("Keys in the trackingdata:\n");
-    	
-    	for(String s : trackingData.keySet())
-    		System.out.println(s);
-    	
-    	System.out.println(trackingData.get("menu").toString());
     	
     	String dataToTrack = trackingData.get("menu").toString();
     	
@@ -125,6 +106,8 @@ public class ViberBotServiceImpl extends HelperMethods implements ViberBotServic
     		break;
     		
     		
+    		
+    		
     	// Date input; if valid respond with room menu to choose a room
     	case "make_a_reservation_step_1":
     		if(message.getMapRepresentation().get("text").toString().equals("returnToMain")){
@@ -152,16 +135,6 @@ public class ViberBotServiceImpl extends HelperMethods implements ViberBotServic
     		}
     		else confirmNewReservation(message, response, true, false);
     		break;
-    		/*
-    	case "make_a_reservation_confirm":
-    		if(message.getMapRepresentation().get("text").toString().equals("returnToMain")){
-    			// Greetings message
-    	        String greeting = "Welcome to room reservation bot " + event.getSender().getName();
-    			response.send(goToMain(greeting));
-    		}
-    		else confirmNewReservation(message, response);
-    		break;
-    		*/
     	case "make_a_reservation_end":
     		if(message.getMapRepresentation().get("text").toString().equals("returnToMain")){
     			// Greetings message

@@ -12,5 +12,5 @@ import com.editors.viberbot.database.entity.User;
 @Repository("reservationRepository")
 public interface ReservationRepository extends JpaRepository<Reservation, Long> {
 	List<Reservation> findByUser(User user);
-	List<Reservation> findByUserAndDate(User user, LocalDate date);
+	List<Reservation> findByRoomAndDate(Room room, LocalDate date);
 }
