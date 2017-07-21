@@ -145,14 +145,14 @@ public abstract class HelperMethods {
     		roomId = Long.valueOf(actionBody.split("=")[1]);
     	}catch(Exception e){
     		System.out.println("Couldn't get roomId from ActionBody");
-    		e.printStackTrace();
+    		throw new IllegalArgumentException();
     	}
     	Room room = new Room();
     	try{
     		room = roomService.getOne(roomId);
     	}catch(NotFoundException e){
     		System.out.println("The room does not exist in DATABASE");
-    		e.printStackTrace();
+    		throw new IllegalArgumentException();
     	}
     	return room;
     }	
