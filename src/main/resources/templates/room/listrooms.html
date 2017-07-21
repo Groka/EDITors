@@ -46,10 +46,13 @@
 		
 		</div>
 	<script>
-		document.onload = function(){
-			if(document.location.search.length)
+		$(document).ready(function(){
+			console.log("Ovdje sam 1");
+			var field = 'error';
+			var url = window.location.href;
+			if(url.indexOf('?' + field) != -1)
 				alert("This room can't be deleted because there are reservations made for it");
-		}
+		});
 	</script>
 	</body>
 </html>

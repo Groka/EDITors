@@ -104,7 +104,7 @@ public class RoomController {
 			e.printStackTrace();
 			
 		} catch (Exception e){
-			return "room/listrooms?error";
+			return "redirect:/rooms?error";
 		}
 		
 		return "redirect:/rooms";	
