@@ -282,8 +282,8 @@ public class HelperMethods {
     	// Get free periods on the given date and room
     	List<LocalTime> periods = null;
     	try {
-    		System.out.println("SOBAAAAAAAAAAAA:");
-    		System.out.println(room.toString());
+    		System.out.println("DATUUUUUUUUUUUM:");
+    		System.out.println(date.toString());
 			periods = reservationService.getFreeRoomCapacitiesOnDate(room.getId(), date);
 		} catch (NotFoundException e) {
 			// TODO Auto-generated catch block
