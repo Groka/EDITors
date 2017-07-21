@@ -51,13 +51,13 @@ public class ReservationController {
 	
 	@RequestMapping(value = "/editreservation", method = RequestMethod.POST)
 	public @ResponseBody String editReservation(@RequestParam String time, @RequestParam String date,
-			@RequestParam Long userId,  @RequestParam Long roomId ) throws NotFoundException{
+			@RequestParam String userId,  @RequestParam String roomId ) throws NotFoundException{
 		
 		LocalDate newdate = LocalDate.parse(date);
 		LocalTime newtime = LocalTime.parse(time);
 		
-		User user = userService.getOne(userId);
-		Room room = roomService.getOne(roomId);
+		User user = userService.getOne(Long.valueOf(userId));
+		Room room = roomService.getOne(Long.valueOf(roomId));
 		
 		Reservation newReservation = new Reservation(user, room, newdate, newtime);
 		reservationService.edit(newReservation);
