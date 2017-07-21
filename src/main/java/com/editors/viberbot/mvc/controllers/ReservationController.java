@@ -66,13 +66,5 @@ public class ReservationController {
 		
 		return "redirect:/reservations";
 	}
-	
-	@RequestMapping(value = "/reservations/{id}", method = RequestMethod.GET)
-	public String deleteReservation(@PathVariable Long id, Model model){
-		Reservation reservation = reservationService.getOne(id);
-		reservationService.delete(reservation.getId());
-		return "redirect:/rooms";	
-	}	
-	
 }
 	

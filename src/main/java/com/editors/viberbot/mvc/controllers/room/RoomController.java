@@ -101,8 +101,9 @@ public class RoomController {
 			Room room = roomService.getOne(id);
 			roomService.delete(room.getId());
 		} catch (NotFoundException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
+			return "room/editRoom?error";
 		}
 		
 		return "redirect:/rooms";	
