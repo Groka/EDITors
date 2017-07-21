@@ -103,7 +103,9 @@ public class RoomController {
 		} catch (NotFoundException e) {
 			
 			e.printStackTrace();
-			return "room/editRoom?error";
+			
+		} catch (Exception e){
+			return "room/editRoom/" + id + "?error";
 		}
 		
 		return "redirect:/rooms";	
