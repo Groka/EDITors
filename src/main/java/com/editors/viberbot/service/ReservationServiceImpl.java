@@ -34,6 +34,7 @@ public class ReservationServiceImpl implements ReservationService {
 
 	@Override
 	public boolean reserve(Reservation reservation) {
+		/*
 		List<LocalTime> reservations = null;
 		try {
 			reservations = getFreeRoomCapacitiesOnDate(reservation.getId(), reservation.getDate());
@@ -42,6 +43,7 @@ public class ReservationServiceImpl implements ReservationService {
 			e.printStackTrace();
 		}
 		if(reservations.contains(reservation.getTime())) return false;
+		*/
 		reservationRepository.save(reservation);
 		return true;
 	}
