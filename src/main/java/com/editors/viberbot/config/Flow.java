@@ -405,7 +405,10 @@ public class Flow extends HelperMethods {
     	
     		String[] tmp = actionBody.split("=");
     		// Validation
-        	if(!tmp[0].equals("reservation_id")) showReservations(message, response, true, viberId);
+        	if(!tmp[0].equals("reservation_id")) {
+        		showReservations(message, response, true, viberId);
+        		return;
+        	}
         	reservationId = Long.valueOf(tmp[1]);
     	}
     	else reservationId = Long.valueOf(message.getTrackingData().get("reservationId").toString());
