@@ -439,6 +439,7 @@ public class HelperMethods {
     			date = checkDate(message);
     		}catch(IllegalArgumentException e){
     			// if date is invalid ask for date again
+    			System.out.println(message.getTrackingData().values().toString());
     			askForDate(message, response, true);
     		}
     	}
