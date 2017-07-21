@@ -348,7 +348,10 @@ public class Flow extends HelperMethods {
     	List<Reservation> reservations = reservationService.getByUser(viberId);
     	
     	// if there are no reservations return to main
-    	if(reservations.isEmpty()) goToMain("You have no reservations yet. You can create one if you want :)");
+    	if(reservations.isEmpty()) {
+    		response.send(goToMain("You have no reservations yet. You can create one if you want :)"));
+    		return;
+    	}
     	
     	// Map for trackingdata
         
