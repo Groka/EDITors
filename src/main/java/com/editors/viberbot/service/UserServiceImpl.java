@@ -23,7 +23,13 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public User addUser(User user) {
-		userRepository.save(user);
+		try {
+			User dbuser = getByViberId(user.getViberId());
+		} catch (NotFoundException e) {
+			userRepository.save(user);
+			System.out.println("User successfully added");
+		}
+
 		return user;
 	}
 

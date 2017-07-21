@@ -108,7 +108,7 @@ public class ViberBotServiceImpl extends HelperMethods implements ViberBotServic
     	
     }
 
-    @Override
+	@Override
     public void onSubscribe(IncomingSubscribedEvent event, Response response) {
     	String viberId = event.getUser().getId();
     	try {

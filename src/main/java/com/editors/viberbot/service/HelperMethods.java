@@ -75,7 +75,6 @@ public class HelperMethods {
         buttons.add(btnReserveARoom);
         buttons.add(btnShowReservations);
 
-
         // Create MessageKeyboard object
 
         MessageKeyboard messageKeyboard = createMessageKeyboard(buttons);
@@ -95,7 +94,11 @@ public class HelperMethods {
 
         return new TextMessage(text, messageKeyboard, trackingData, null);
     }
-    
+
+    /*
+    *   Returns TextMessage object with keyboard displaying
+    *   buttons representing reservations
+    */
     protected TextMessage showReservations(IncomingMessageEvent event, Message message){
     	// Map for trackingdata
         
@@ -249,10 +252,5 @@ public class HelperMethods {
     		e.printStackTrace();
     	}
     	return room;
-    }
-    
-    /*
-     * 
-     */
-
+    }	
 }
