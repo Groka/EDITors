@@ -55,17 +55,8 @@ public class ReservationController {
 	
 	@RequestMapping(value = "/editreservation", method = RequestMethod.POST)
 	public @ResponseBody String editReservation(@RequestParam String time, @RequestParam String date,
-			@RequestParam long userId,  @RequestParam long roomId ) throws NotFoundException{
+			@RequestParam long userId,  @RequestParam long roomId, @RequestParam long reservationId) throws NotFoundException{
 		
-		try{
-			System.out.println(time.toString());
-			System.out.println(date.toString());
-			System.out.println("User id: " + userId);
-			System.out.println("Room id: " + roomId);
-		}catch(Exception e){
-			System.out.println("EDIT RESERVATION CATCH");
-			e.printStackTrace();
-		}
 		
 		LocalDate newdate = LocalDate.parse(date);
 		LocalTime newtime = LocalTime.parse(time);
@@ -74,6 +65,7 @@ public class ReservationController {
 		Room room = roomService.getOne(Long.valueOf(roomId));
 		
 		Reservation newReservation = new Reservation(user, room, newdate, newtime);
+		newReservation.setId(reservationId);
 		reservationService.edit(newReservation);
 		
 		return "redirect:/reservations";
@@ -87,3 +79,4 @@ public class ReservationController {
 	}	
 	
 }
+	
