@@ -23,14 +23,14 @@
 				<th> Viber id </th>
 				<th> Name </th>
 				<th> Subscribed </th>
-				<th></th>
+				<th><a th:href="@{/adduser}"><span class="table-add glyphicon glyphicon-plus" style="color: green;" ></span></a></th>
 			</tr>				
 			
 			<tr th:each="user : ${users}">
 			
 				<td th:text="${user.viberId}"></td>
 				<td th:text="${user.name}"></td>
-				<td th:text="${user.subscribed}"></td>
+				<td th:text="${user.subscribe}"></td>
 				<td><a th:href="@{/edituser/{id}(id=${user.id})}"><span class="table-edit glyphicon glyphicon-pencil" style="color: blue;"></span></a></td>
 			</tr>
 							

@@ -49,4 +49,21 @@ public class UserController {
 		userService.update(user);
 		return "redirect:/users";
 	}
+	
+	@RequestMapping(value = "/adduser", method = RequestMethod.GET)
+	public String adduserView(Model model){
+		model.addAttribute("user", new User());
+		return "user/addUser";	
+	}
+	
+	@RequestMapping(value = "/adduser", method = RequestMethod.POST)
+	public String addRoom (@RequestParam String viberId,
+			@RequestParam String name,
+			@RequestParam boolean subscribe) throws NullPointerException {
+		
+		User user = new User(viberId, name, subscribe);
+		userService.addUser(user);
+		return "redirect:/users";
+	}
+	
 }
