@@ -132,7 +132,7 @@ public class ViberBotServiceImpl extends HelperMethods implements ViberBotServic
     	        String greeting = "Welcome to room reservation bot " + event.getSender().getName();
     			response.send(goToMain(greeting));
     		}
-    		else askForDate(message, response, false);
+    		else askForDate(message, response, true, false);
     		break;
     	// Choose a room
     	// Show available appointments
