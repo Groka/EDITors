@@ -77,7 +77,10 @@ public class ViberBotServiceImpl extends Flow implements ViberBotService {
     		else if(message.getMapRepresentation().get("text").equals("make_a_reservation")){
     			showRooms(message, response, false);
     		}
-    			
+    		else{
+    			String error = "Please choose an option from the menu.";
+    			response.send(goToMain(error));
+    		}
     		break;
     		
     	// Show reservations
