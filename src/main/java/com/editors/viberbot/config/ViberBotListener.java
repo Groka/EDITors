@@ -39,7 +39,7 @@ public class ViberBotListener implements ApplicationListener<ApplicationReadyEve
 
 		bot.onConversationStarted(event -> viberBotService.onConversationStarted(event));
 		
-		//bot.onSubscribe((event, response) -> viberBotService.onSubscribe(event, response));
+		bot.onSubscribe((event, response) -> viberBotService.onSubscribe(event, response));
 		
 		bot.onUnsubscribe((event) -> viberBotService.onUnsubscribe(event));
 	}
