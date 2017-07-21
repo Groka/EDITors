@@ -171,7 +171,7 @@ public class ViberBotServiceImpl extends Flow implements ViberBotService {
     public void onUnsubscribe(IncomingUnsubscribeEvent event) {
         String viberId = event.getUserId();
         try {
-            userService.subscribe(viberId);
+            userService.unsubscribe(viberId);
         } catch (NotFoundException e) {
             e.printStackTrace();
         }
