@@ -115,7 +115,7 @@ public class ViberBotServiceImpl extends HelperMethods implements ViberBotServic
     		}
     		else cancelReservationConfirm(message, response, false);
     		break;
-    	case "cancel_reservation":
+    	case "confirm_cancel_reservation":
     		if(message.getMapRepresentation().get("text").toString().equals("returnToMain")){
     			// Greetings message
     	        String greeting = "Welcome to room reservation bot " + event.getSender().getName();

@@ -254,7 +254,7 @@ public class HelperMethods {
     	
     	// Create "Cancel reservation" button
     	HashMap<String, Object> btnCancelReservation = new HashMap<>();
-        btnCancelReservation.put("Columns", 2);
+        btnCancelReservation.put("Columns", 6);
         btnCancelReservation.put("Rows", 1);
         btnCancelReservation.put("BgColor", "#00ff00");
         btnCancelReservation.put("ActionType", "reply");
