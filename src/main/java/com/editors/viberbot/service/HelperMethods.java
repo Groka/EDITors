@@ -15,6 +15,7 @@ import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 
 import com.editors.viberbot.database.entity.Reservation;
 import com.editors.viberbot.database.entity.Room;
+import com.editors.viberbot.database.entity.User;
 import com.google.common.util.concurrent.Futures;
 import com.viber.bot.Response;
 import com.viber.bot.event.incoming.IncomingConversationStartedEvent;
@@ -317,6 +318,7 @@ public class HelperMethods {
     	
     	mapTrackingData.put("menu", "make_a_reservation_step_3");
     	mapTrackingData.put("date", date.toString());
+    	mapTrackingData.put("roomId", room.getId());
     	
     	// Create TrackingData object
     	TrackingData trackingData = new TrackingData(mapTrackingData);
@@ -338,5 +340,111 @@ public class HelperMethods {
     	String timeStr = message.getMapRepresentation().get("text").toString();
     	LocalTime time = LocalTime.parse(timeStr.split("=")[1]); // PROVJERITI
     	return time;
+    }
+    
+    /*
+     * 
+     * make_a_reservation_confirm
+     */
+    protected void confirmNewReservation(Message message, Response response){
+    	Map<String, Object> mapTrackingData = message.getTrackingData();
+    	
+    	// Change menu type in trackingData
+    	mapTrackingData.replace("menu", "make_a_reservation_end");
+    	
+    	// Get time
+    	String[] timeStr = message.getMapRepresentation().get("text").toString().split("=");
+    	// First check if time is good
+    	if(timeStr.length == 0) 
+    		showFreePeriods(message, response, true);
+    	LocalTime time = LocalTime.parse(timeStr[1]);
+    	
+    	// Add time to trackingData
+    	mapTrackingData.put("time", time.toString());
+    	
+    	// Create TrackingData
+    	
+    	TrackingData trackingData = new TrackingData(mapTrackingData);
+    	
+    	// Create array for buttons
+    	
+    	ArrayList<HashMap<String, Object>> buttons = new ArrayList<> ();
+    	
+    	// Create confirm button
+    	HashMap<String, Object> btnConfirm = new HashMap<>();
+        btnConfirm.put("Columns", 6);
+        btnConfirm.put("Rows", 1);
+        btnConfirm.put("BgColor", "#2db9b9");
+        btnConfirm.put("ActionType", "reply");
+        btnConfirm.put("ActionBody", "make_a_reservation_end");
+        btnConfirm.put("Text", "Confirm");
+        btnConfirm.put("TextVAlign", "middle");
+        btnConfirm.put("TextHAlign", "center");
+        btnConfirm.put("TextSize", "regular");
+        
+        buttons.add(btnConfirm);
+        
+        // Create MessageKeyboard object
+        MessageKeyboard messageKeyboard = createMessageKeyboard(buttons);
+        
+        // Response
+    	String responseText = "Please confirm your reservation";
+    	response.send(new TextMessage(responseText, messageKeyboard, trackingData, null));
+    }
+    
+    /*
+     * END OF MAKE_A_RESERVATION
+     */
+    
+    protected void addReservation(IncomingMessageEvent event, Message message, Response response){
+    	// Get trackingData
+    	TrackingData trackingData = message.getTrackingData();
+    	
+    	// Get roomId
+    	Long roomId = Long.valueOf(trackingData.get("roomId").toString());
+    	// Get room
+    	Room room = new Room();
+		try {
+			room = roomService.getOne(roomId);
+		} catch (NotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+    	
+    	// Get date
+    	LocalDate date = LocalDate.parse(trackingData.get("date").toString());
+    	
+    	// Get time  	
+    	LocalTime time = LocalTime.parse(trackingData.get("time").toString());
+    	
+    	// Get users viberId
+    	String viberId = event.getSender().getId();
+    	
+    	// Get user by viberId
+    	User user = new User();
+		try {
+			user = userService.getByViberId(viberId);
+		} catch (NotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	
+    	
+    	// Create a new Reservation object
+    	Reservation reservation = new Reservation();
+    	reservation.setDate(date);
+    	reservation.setTime(time);
+    	reservation.setRoom(room);
+    	reservation.setUser(user);
+    	reservationService.reserve(reservation);
+    	
+    	// Now set trackingData for main menu
+    	Map<String, Object> mapTrackingData = new HashMap<>();
+    	mapTrackingData.put("menu", "main");
+
+    	// Create TrackingData object
+    	TrackingData trackingDataRes = new TrackingData(mapTrackingData);
+    	
+    	response.send(new TextMessage("Reservation added", null, trackingDataRes, null));
     }
 }

@@ -87,6 +87,9 @@ public class ViberBotServiceImpl extends HelperMethods implements ViberBotServic
     		else if(message.getMapRepresentation().get("text").equals("make_a_reservation")){
     			askForDate(response, false);
     		}
+    		else if(message.getMapRepresentation().get("text").equals("main_menu")){
+    			response.send(goToMain(null, event, message));
+    		}
     			
     		break;
     	// Show reservations
@@ -102,7 +105,15 @@ public class ViberBotServiceImpl extends HelperMethods implements ViberBotServic
     	// Show available appointments
     	case "make_a_reservation_step_2":
     		showFreePeriods(message, response, false);
-    		response.send(goToMain(null, event, message));
+    		break;
+    	case "make_a_reservation_step_3":
+    		confirmNewReservation(message, response);
+    		break;
+    	case "make_a_reservation_confirm":
+    		confirmNewReservation(message, response);
+    		break;
+    	case "make_a_reservation_end":
+    		addReservation(event, message, response);
     		break;
     	default:
     		System.out.println("U defaultu");
