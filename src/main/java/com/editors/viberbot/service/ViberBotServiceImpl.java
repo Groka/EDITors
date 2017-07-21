@@ -92,15 +92,24 @@ public class ViberBotServiceImpl extends HelperMethods implements ViberBotServic
     			showReservations(message, response, false, viberId);
     		}
     		else if(message.getMapRepresentation().get("text").equals("make_a_reservation")){
-    			//askForDate(response, false);
     			showRooms(message, response, false);
     		}
     			
     		break;
+    		
     	// Show reservations
-    	case "show_reservations":
-    		//if(message.getMapRepresentation().get("text").equals(""))
+    	case "show_reservations_step_1":
+    		// Displays info about single reservation
+    		showReservation(message, response, false);
     		break;
+    	case "show_reservations_step_2":
+    		cancelReservationConfirm(message, response, false);
+    		break;
+    	case "cancel_reservation":
+    		cancelReservation(message, response);
+    		break;
+    		
+    		
     	// Date input; if valid respond with room menu to choose a room
     	case "make_a_reservation_step_1":
     		if(message.getMapRepresentation().get("text").toString().equals("returnToMain")){
@@ -109,7 +118,6 @@ public class ViberBotServiceImpl extends HelperMethods implements ViberBotServic
     			response.send(goToMain(greeting));
     		}
     		else askForDate(message, response, false);
-    		//showRooms(message, response, true, false);
     		break;
     	// Choose a room
     	// Show available appointments
