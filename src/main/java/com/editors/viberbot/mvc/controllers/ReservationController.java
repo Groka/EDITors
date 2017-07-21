@@ -54,7 +54,7 @@ public class ReservationController {
 	}
 	
 	@RequestMapping(value = "/editreservation", method = RequestMethod.POST)
-	public @ResponseBody String editReservation(@RequestParam String time, @RequestParam String date,
+	public String editReservation(@RequestParam String time, @RequestParam String date,
 			@RequestParam long userId,  @RequestParam long roomId, @RequestParam long reservationId) throws NotFoundException{
 		
 		
