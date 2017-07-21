@@ -45,11 +45,7 @@ public class ReservationController {
 	@RequestMapping(value = "/editreservation/{id}", method = RequestMethod.GET)
 	public String editReservationView(@PathVariable Long id, Model model){
 		Reservation reservation = reservationService.getOne(id);
-		Long roomId = reservation.getRoom().getId();
-		Long userId = reservation.getUser().getId();
 		model.addAttribute("reservation", reservation);
-		model.addAttribute("roomId", roomId);
-		model.addAttribute("userId", userId);
 		return "reservation/edit";	
 	}
 	
