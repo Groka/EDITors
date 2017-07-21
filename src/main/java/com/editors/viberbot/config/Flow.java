@@ -32,6 +32,13 @@ public class Flow extends HelperMethods {
     	// get all rooms from DB
 		List<Room> rooms = roomService.findAll();
 		
+		// check if there are no rooms xD
+		
+		if(rooms.isEmpty()){
+			response.send(goToMain("We are sorry, there are no rooms available at the moment. :("));
+			return;
+		}
+		
 		// store rooms as buttons in array
 		ArrayList<HashMap<String, Object>> buttons = new ArrayList<>();
 		for(Room room : rooms){
