@@ -29,6 +29,7 @@ public class Flow extends HelperMethods {
      * make_a_reservation_step_2
      */
     
+	
     protected void showRooms(Message message, Response response, boolean wasInvalid) {
     	
     	// get all rooms from DB
