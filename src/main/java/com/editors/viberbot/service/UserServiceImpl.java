@@ -29,7 +29,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public User getByViberId(String viberId) throws NotFoundException {
 		User user = userRepository.findByViberId(viberId);
-		if(userRepository.exists(user.getId())) throw new NotFoundException();
+		if(userRepository.exists(user.getId()) || user == null) throw new NotFoundException();
 		return user;
 	}
 
