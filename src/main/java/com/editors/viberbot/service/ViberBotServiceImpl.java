@@ -96,7 +96,7 @@ public class ViberBotServiceImpl extends HelperMethods implements ViberBotServic
     	// Date input; if valid respond with room menu to choose a room
     	case "make_a_reservation_step_1":
     		// Get rooms
-    		showRooms(message, response, false);
+    		showRooms(message, response, true);
     		break;
     	// Choose a room
     	case "make_a_reservation_step_2:":
