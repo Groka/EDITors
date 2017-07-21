@@ -72,7 +72,7 @@ public class HelperMethods {
         btnShowReservations.put("BgColor", "#2db9b9");
         btnShowReservations.put("ActionType", "reply");
         btnShowReservations.put("ActionBody", "show_reservations");
-        btnShowReservations.put("Text", "Show reservations");
+        btnShowReservations.put("Text", "Show my reservations");
         btnShowReservations.put("TextVAlign", "middle");
         btnShowReservations.put("TextHAlign", "center");
         btnShowReservations.put("TextSize", "regular");
@@ -226,6 +226,7 @@ public class HelperMethods {
      */
     protected void cancelReservationConfirm(Message message, Response response, boolean wasInvalid){
     	
+    	//
     	
     	// Create map for trackingData
         Map<String, Object> mapTrackingData = new HashMap<>();
