@@ -1,8 +1,5 @@
 package com.editors.viberbot;
 
-
-import static org.mockito.Matchers.anyString;
-
 import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
