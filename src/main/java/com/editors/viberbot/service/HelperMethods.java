@@ -176,7 +176,7 @@ public class HelperMethods {
     	// Create map for trackingData
         Map<String, Object> mapTrackingData = new HashMap<>();
         
-        mapTrackingData.put("menu", "show_reservation_step_2");
+        mapTrackingData.put("menu", "show_reservations_step_2");
         mapTrackingData.put("reservationId", reservationId);
         mapTrackingData.put("viberId", viberId);
         
