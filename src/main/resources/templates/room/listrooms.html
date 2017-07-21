@@ -1,50 +1,49 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 
-<head>
+	<head>
 
-	<meta charset="ISO-8859-1"></meta>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"></link>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <title>List rooms</title>
+		<meta charset="ISO-8859-1"></meta>
+  	    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"></link>
+    	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+ 	    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  	    <title>List rooms</title>   
 
-</head>
+	</head>
 
-<body>
-
-	<div style=" position: fixed; top: 0; left: 0; bottom: 0; right: 0;overflow: auto; background-color: white;">
-
-	<div class="container" style="background-color: white;">
-		
-		<table class="table table-striped">
-		
-			<tr>
-				<th> Room number </th>
-				<th> Room name </th>
-				<th> Start work time</th>
-				<th> End work time</th>
-				<th></th>
-				<th><a th:href="@{/addRoom}"><span class="table-add glyphicon glyphicon-plus" style="color: green;" ></span></a></th>
-			</tr>				
+	<body>
+	
+		<div th:replace="fragments/header :: header"></div>
+				
+		<div class="container" style="background-color: white;">
+				
 			
-			<tr th:each="room : ${rooms}">
+			<table class="table table-striped">
+		
+				<tr>
+					<th> Room number </th>
+					<th> Room name </th>
+					<th> Start work time</th>
+					<th> End work time</th>
+					<th></th>
+					<th><a th:href="@{/addRoom}"><span class="table-add glyphicon glyphicon-plus" style="color: green;" ></span></a></th>
+				</tr>				
 			
-				<td th:text="${room.number}"></td>
-				<td th:text="${room.name}"></td>
-				<td th:text="${room.startWorkTime}"></td>
-				<td th:text="${room.endWorkTime}"></td>
-				<td><a th:href="@{/editRoom/{id}(id=${room.id})}"><span class="table-edit glyphicon glyphicon-pencil" style="color: blue;"></span></a></td>
-				<td><a th:href="@{/rooms/{id}(id=${room.id})}"><span class="table-remove glyphicon glyphicon-remove" 
-				style="color: #8B0000;" onclick="return confirm('Are you sure you would like to delete this room?');"></span></a>
-				</td>				
-			</tr>
+				<tr th:each="room : ${rooms}">
+			
+					<td th:text="${room.number}"></td>
+					<td th:text="${room.name}"></td>
+					<td th:text="${room.startWorkTime}"></td>
+					<td th:text="${room.endWorkTime}"></td>
+					<td><a th:href="@{/editRoom/{id}(id=${room.id})}"><span class="table-edit glyphicon glyphicon-pencil" style="color: blue;"></span></a></td>
+					<td><a th:href="@{/rooms/{id}(id=${room.id})}"><span class="table-remove glyphicon glyphicon-remove" 
+					style="color: #8B0000;" onclick="return confirm('Are you sure you would like to delete this room?');"></span></a>
+					</td>				
+				</tr>
 							
-		</table>
+			</table>
 		
-	</div>
-
-	</div>
-
-</body>
+		</div>
+		
+	</body>
 </html>

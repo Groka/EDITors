@@ -12,8 +12,15 @@
 </head>
 
 <body>
+	
+	<div th:replace="fragments/header :: header"></div>
 
-	<div style=" position: fixed; top: 0; left: 0; bottom: 0; right: 0;overflow: auto; background-color: white;">
+	<div style=" position: fixed; top: 3.5em; left: 0; bottom: 0; right: 0;overflow: auto; background-color: white;">
+
+	<div th:insert="fragments/header :: header">
+			
+			
+	</div>
 
 	<div class="container" style="background-color: white;">
 		
