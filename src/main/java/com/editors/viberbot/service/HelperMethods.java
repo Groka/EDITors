@@ -627,7 +627,7 @@ public class HelperMethods {
         	TrackingData td = new TrackingData(mapTrackingData);
         	*/
     		showFreePeriods(message, response, false, true);
-    		return;
+    		//return;
     	}
     	// Get trackingData
     	TrackingData trackingData = message.getTrackingData();
