@@ -1,5 +1,7 @@
 package com.editors.viberbot.service;
 
+import com.editors.viberbot.config.Flow;
+import com.editors.viberbot.config.HelperMethods;
 import com.editors.viberbot.database.entity.Reservation;
 import com.editors.viberbot.database.entity.User;
 import com.google.common.util.concurrent.Futures;
@@ -36,7 +38,7 @@ import java.util.concurrent.Future;
  */
 
 @Service("viberBotService")
-public class ViberBotServiceImpl extends HelperMethods implements ViberBotService {
+public class ViberBotServiceImpl extends Flow implements ViberBotService {
 	
 	@Autowired
 	private RoomService roomService;
