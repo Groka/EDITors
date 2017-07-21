@@ -55,7 +55,7 @@ public class ReservationServiceImpl implements ReservationService {
 
 	@Override
 	public List<LocalTime> getFreeRoomCapacitiesOnDate(Long roomId, LocalDate date) throws NotFoundException {
-		List<LocalTime> result = null;
+		ArrayList<LocalTime> result = new ArrayList<>();
 		Room room = null;
 		try {
 			room = roomService.getOne(roomId);
