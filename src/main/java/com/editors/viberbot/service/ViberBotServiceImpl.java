@@ -87,8 +87,10 @@ public class ViberBotServiceImpl extends HelperMethods implements ViberBotServic
     	switch(dataToTrack){	
     	// main menu
     	case "main":
-    		if(message.getMapRepresentation().get("text").equals("show_reservations"))
-    			response.send(showReservations(event, message));
+    		if(message.getMapRepresentation().get("text").equals("show_reservations")){
+    			String viberId = event.getSender().getId();
+    			showReservations(message, response, false, viberId);
+    		}
     		else if(message.getMapRepresentation().get("text").equals("make_a_reservation")){
     			//askForDate(response, false);
     			showRooms(message, response, false);

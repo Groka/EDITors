@@ -102,18 +102,19 @@ public class HelperMethods {
     /*
     *   Returns TextMessage object with keyboard displaying
     *   buttons representing reservations
+    *  
+    *   show_reservations_step_1
     */
-    protected TextMessage showReservations(IncomingMessageEvent event, Message message){
+    protected void showReservations(Message message, Response response, boolean wasInvalid, String viberId){
     	// Map for trackingdata
         
         Map<String, Object> mapTrackingData = new HashMap<>();
-        mapTrackingData.put("menu", "show_reservations");
+        mapTrackingData.put("menu", "show_reservations_step_1");
+        mapTrackingData.put("viberId", viberId);
         
         // TrackingData object
         TrackingData trackingData = new TrackingData(mapTrackingData);
         
-        // Get user reservations
-        String viberId = event.getSender().getId();
         List<Reservation> reservations = reservationService.getByUser(viberId);
         
         // Creating array of reservations for keyboard
@@ -121,7 +122,6 @@ public class HelperMethods {
         
         // Add all reservations from DB to the array
         for(Reservation reservation : reservations){
-        	String msgInfo = "Reservation info: ";
         	String msg = "Date - " + reservation.getDate().toString() + ", ";
         	msg += "Time - " + reservation.getTime().toString() + ", ";
         	msg += "Room name - " + reservation.getRoom().getName();
@@ -130,8 +130,8 @@ public class HelperMethods {
             btn.put("Rows", 1);
             btn.put("BgColor", "#2db9b9");
             btn.put("ActionType", "reply");
-            btn.put("ActionBody", "reservation_id_" + reservation.getId());
-            btn.put("Text", msgInfo + msg);
+            btn.put("ActionBody", "reservation_id=" + reservation.getId());
+            btn.put("Text", msg);
             btn.put("TextVAlign", "middle");
             btn.put("TextHAlign", "center");
             btn.put("TextSize", "regular");
@@ -144,10 +144,67 @@ public class HelperMethods {
 
         MessageKeyboard messageKeyboard = createMessageKeyboard(buttons);
         
-    	TextMessage textMessage = 
-    			new TextMessage("Click on the reservation to see details", messageKeyboard, trackingData, null);
+        // Response text
+        String responseText = wasInvalid ? "Please choose reservation from the menu. " : "";
+        responseText += "Click on the reservation to see details";
+        
+    	response.send(new TextMessage(responseText, messageKeyboard, trackingData, null));
+    
+    }
+    
+    /*
+     * show_reservations_step_2
+     * Shows "Cancel reservation" and "Return to main" options
+     * Also shows reservation info
+     */
+    protected void showReservation(Message message, Response response, boolean wasInvalid){
+    	// Get viberId
+    	String viberId = message.getTrackingData().get("viberId").toString();
     	
-    	return textMessage;
+    	// Get ActionBody
+    	String actionBody = message.getMapRepresentation().get("text").toString();
+    	
+    	String[] tmp = actionBody.split("=");
+    	
+    	// Validation
+    	if(!tmp[0].equals("reservation_id")) showReservations(message, response, true, viberId);
+    	Reservation reservation = reservationService.getOne(Long.valueOf(tmp[1]));
+    	if(reservation == null) showReservations(message, response, true, viberId);
+    	
+    	// Array for buttons
+    	ArrayList<HashMap<String, Object>> buttons = new ArrayList<>();
+    	
+    	// Create "Cancel reservation" button
+    	HashMap<String, Object> btnCancelReservation = new HashMap<>();
+        btnCancelReservation.put("Columns", 2);
+        btnCancelReservation.put("Rows", 1);
+        btnCancelReservation.put("BgColor", "#ce1212");
+        btnCancelReservation.put("ActionType", "reply");
+        btnCancelReservation.put("ActionBody", "cancel_reservation");
+        btnCancelReservation.put("Text", "Cancel this reservation");
+        btnCancelReservation.put("TextVAlign", "middle");
+        btnCancelReservation.put("TextHAlign", "center");
+        btnCancelReservation.put("TextSize", "regular");
+        
+        buttons.add(btnCancelReservation);
+        buttons.add(btnReturnToMain());
+        
+        // Create messageKeyboard
+        MessageKeyboard messageKeyboard = createMessageKeyboard(buttons);
+        
+        // Create map for trackingData
+        Map<String, Object> mapTrackingData = new HashMap<>();
+        
+        mapTrackingData.put("menu", "cancel_reservation");
+        mapTrackingData.put("reservationId", tmp[1]);
+        
+        // Create trackindata object
+        TrackingData trackingData = new TrackingData(mapTrackingData);
+        
+        String responseText = wasInvalid ? "Wrong input. " : "";
+        responseText += "Please choose reservation from the menu.";
+        
+        response.send(new TextMessage(responseText, messageKeyboard, trackingData, null));
     }
     
     /*
