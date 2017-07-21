@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+	<meta charset="ISO-8859-1"></meta>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"></link>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <title>List users</title>
+
+</head>
+
+<body>
+
+	<div style=" position: fixed; top: 0; left: 0; bottom: 0; right: 0;overflow: auto; background-color: white;">
+
+	<div class="container" style="background-color: white;">
+		
+		<table class="table table-striped">
+		
+			<tr>
+				<th> Viber id </th>
+				<th> Name </th>
+				<th> Subscribed </th>
+				<th></th>
+			</tr>				
+			
+			<tr th:each="user : ${users}">
+			
+				<td th:text="${user.viberId}"></td>
+				<td th:text="${user.name}"></td>
+				<td th:text="${user.subscribed}"></td>
+				<td><a th:href="@{/edituser/{id}(id=${user.id})}"><span class="table-edit glyphicon glyphicon-pencil" style="color: blue;"></span></a></td>
+			</tr>
+							
+		</table>
+		
+	</div>
+
+	</div>
+
+</body>
+</html>

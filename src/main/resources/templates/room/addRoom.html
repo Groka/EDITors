@@ -2,44 +2,40 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-<meta charset="ISO-8859-1"></meta>
- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"></link>
+
+  <meta charset="ISO-8859-1"></meta>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"></link>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <title>Add room</title>
   
-<title>Insert title here</title>
 </head>
+
 <body>
 
 	<div style=" position: fixed; top: 0; left: 0; bottom: 0; right: 0;
 	 overflow: auto; background:url('http://www.hotel-grandmajestic.cz/files/hotel/conferences/hotel-majestic-prague-conference-room-grand-4-conference-and-events-02.jpg') no-repeat;">
 		
 		<form role="form"  th:action="@{/addRoom}" method="POST" style="width:30%; margin-left: 6em; margin-top: 4em; background: rgba(0, 0, 0, 0.77);">
+			
 			<div class="form-group">
-			<label  style="margin-top:1em; color: white; padding: 0 0 0 1em;"> Room name: </label>
-			<br/>			
-			<input style="margin-left: 1em; margin-right: 1em; width: 90%;"  name="name"/>
-			<br/>			
-			<label style="color: white; padding: 1em 0 0 1em;"> Room number: </label>
-			<br/>
-			<input name="number" style="margin-left: 1em; margin-right: 1em; width: 90%;"/>
-			<br/>
-			<label  style="margin-top:1em; color: white; padding: 0 0 0 1em;"> Start work time: </label>
-			<br/>			
-			<input  type="time" name="startWorkTime" style="margin-left: 1em; margin-right: 1em; width: 90%;" id="startWorkTime" />
-			<br/>			
-			<label style="color: white; padding: 1em 0 0 1em;"> End work time: </label>
-			<br/>
-			<input type="time" name="endWorkTime" style="margin-left: 1em; margin-right: 1em; width: 90%;"/>
-			<br/>				
+			
+				<label  style="margin-top:1em; color: white; padding: 0 0 0 1em;"> Room name: </label><br/>			
+				<input style="margin-left: 1em; margin-right: 1em; width: 90%;"  name="name"/><br/>			
+				<label style="color: white; padding: 1em 0 0 1em;"> Room number: </label><br/>
+				<input name="number" style="margin-left: 1em; margin-right: 1em; width: 90%;"/><br/>
+				<label  style="margin-top:1em; color: white; padding: 0 0 0 1em;"> Start work time: </label><br/>			
+				<input  type="time" name="startWorkTime" style="margin-left: 1em; margin-right: 1em; width: 90%;" id="startWorkTime" /><br/>			
+				<label style="color: white; padding: 1em 0 0 1em;"> End work time: </label>	<br/>
+				<input type="time" name="endWorkTime" style="margin-left: 1em; margin-right: 1em; width: 90%;"/><br/>				
 				
 			</div>
+			
 			<button type="submit" style="margin: 1em;"  class="btn btn-info" > Add room </button>
+			
 		</form>
+		
 	</div>
-
-
-
 
 
 </body>

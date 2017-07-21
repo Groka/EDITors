@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+	<meta charset="ISO-8859-1"></meta>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"></link>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <title>List reservations</title>
+
+</head>
+
+<body>
+
+	<div style=" position: fixed; top: 0; left: 0; bottom: 0; right: 0;overflow: auto; background-color: white;">
+
+	<div class="container" style="background-color: white;">
+		
+		<table class="table table-striped">
+		
+			<tr>
+				<th> Date </th>
+				<th> Time </th>
+				<th> User id </th>
+				<th> Room id </th>
+				<th></th>
+				<th></th>
+			</tr>				
+			
+			<tr th:each="reservation : ${reservations}">
+			
+				<td th:text="${reservation.date}"></td>
+				<td th:text="${reservation.time}"></td>
+				<td th:text="${reservation.userId}"></td>
+				<td th:text="${reservation.roomId}"></td>
+				<td><a th:href="@{/editreservation/{id}(id=${reservation.id})}"><span class="table-edit glyphicon glyphicon-pencil" style="color: blue;"></span></a></td>
+				<td><a th:href="@{/reservations/{id}(id=${reservation.id})}"><span class="table-remove glyphicon glyphicon-remove" 
+				style="color: #8B0000;" onclick="return confirm('Are you sure you would like to delete this reservation?');"></span></a>
+				</td>				
+			</tr>
+							
+		</table>
+		
+	</div>
+
+	</div>
+
+</body>
+</html>

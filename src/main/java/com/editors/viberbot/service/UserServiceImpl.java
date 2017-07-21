@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.stereotype.Service;
 
+import com.editors.viberbot.database.entity.Reservation;
 import com.editors.viberbot.database.entity.User;
 import com.editors.viberbot.database.repository.UserRepository;
 
@@ -63,6 +64,24 @@ public class UserServiceImpl implements UserService {
 		user = userRepository.getOne(id);
 		userRepository.delete(user);
 		return user;
+	}
+
+	@Override
+	public User getOne(Long id) {
+		return userRepository.findOne(id);
+	}
+
+	@Override
+	public User update(User user) throws NotFoundException  {
+	
+			if(!userRepository.exists(user.getId())) throw new NotFoundException();
+			User dbuser = userRepository.findOne(user.getId());
+			dbuser.setViberId(user.getViberId());
+			dbuser.setName(user.getName());
+			dbuser.setSubscribe(user.getSubscribe());
+			userRepository.save(dbuser);
+			return user;
+		
 	}
 
 }
