@@ -21,15 +21,15 @@
 			
 			<div class="form-group">
 			
-				<input th:value="${room.id}" th:field="*{id}" type="hidden" />			
+				<input th:value="${room.id}" th:field="*{id}" type="hidden" name="id"/>			
 				<label  style="margin-top:1em; color: white; padding: 0 0 0 1em;"> Room name: </label><br/>			
-				<input style="margin-left: 1em; margin-right: 1em; width: 90%;" th:value="${room.name}" th:field="*{name}" /><br/>			
+				<input style="margin-left: 1em; margin-right: 1em; width: 90%;" name="name" th:value="${room.name}" th:field="*{name}" /><br/>			
 				<label style="color: white; padding: 1em 0 0 1em;"> Room number: </label><br/>
-				<input th:value="${room.number}" th:field="*{number}" style="margin-left: 1em; margin-right: 1em; width: 90%;"/><br/>
+				<input th:value="${room.number}" th:field="*{number}" name="number" style="margin-left: 1em; margin-right: 1em; width: 90%;"/><br/>
 				<label  style="margin-top:1em; color: white; padding: 0 0 0 1em;"> Start work time: </label><br/>			
-				<input style="margin-left: 1em; margin-right: 1em; width: 90%;" th:value="${room.startWorkTime}" th:field="*{startWorkTime}" />	<br/>			
+				<input type="time" name="startWorkTime" style="margin-right: 1em; margin-left: 1em; width: 90%;" th:value="${room.startWorkTime}" th:field="*{startWorkTime}" />	<br/>			
 				<label style="color: white; padding: 1em 0 0 1em;"> End work time: </label>	<br/>
-				<input th:value="${room.endWorkTime}" th:field="*{endWorkTime}" style="margin-left: 1em; margin-right: 1em; width: 90%;"/><br/>
+				<input type="time" name="endWorkTime" th:value="${room.endWorkTime}" th:field="*{endWorkTime}" style="margin-left: 1em; margin-right: 1em; width: 90%;"/><br/>
 				
 			</div>
 			

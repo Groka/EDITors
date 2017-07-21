@@ -5,6 +5,8 @@ import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -119,13 +121,16 @@ public abstract class HelperMethods {
 		try{
 			if(tmpArray.length != 3) throw new DateTimeException("Some values are missing in date");
 			date = LocalDate.of(Integer.valueOf(tmpArray[2]), Integer.valueOf(tmpArray[1]), Integer.valueOf(tmpArray[0]));
+			
+			LocalDate today = LocalDate.now();
+						
+			if(date.isBefore(today)) throw new DateTimeException("Date must be in future");		
 		}catch(DateTimeException e){
 			throw new IllegalArgumentException();
 		}
 		return date;
     }
-    
-    
+        
     
     /*
      * Check if room is valid
