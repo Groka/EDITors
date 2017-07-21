@@ -453,7 +453,10 @@ public class Flow extends HelperMethods {
 	     */
 	    protected void cancelReservationConfirm(Message message, Response response, boolean wasInvalid){
 	    	
-	    	//
+	    	if(!message.getMapRepresentation().get("text").toString().equals("cancel_reservation")){
+	    		showReservation(message, response, true);
+	    		return;
+	    	}
 	    	
 	    	// Create map for trackingData
 	        Map<String, Object> mapTrackingData = new HashMap<>();
@@ -517,7 +520,7 @@ public class Flow extends HelperMethods {
 	    	Reservation reservation = reservationService.getOne(Long.valueOf(trackingData.get("reservationId").toString()));
 	    	
 	    	// Cancel reservation
-	    	//reservationService.delete(reservation.getId());
+	    	reservationService.delete(reservation.getId());
 	    	
 	    	ArrayList<HashMap<String, Object>> buttons = new ArrayList<>();
 	    	
