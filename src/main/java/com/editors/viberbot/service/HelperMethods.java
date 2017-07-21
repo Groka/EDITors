@@ -161,27 +161,32 @@ public class HelperMethods {
     	// Get viberId
     	String viberId = message.getTrackingData().get("viberId").toString();
     	
-    	
+    	Long reservationId = null;
     	// Get ActionBody
-    	String actionBody = message.getMapRepresentation().get("text").toString();
+    	if(!wasInvalid){
+    		String actionBody = message.getMapRepresentation().get("text").toString();
     	
-    	String[] tmp = actionBody.split("=");
+    		String[] tmp = actionBody.split("=");
+    		// Validation
+        	if(!tmp[0].equals("reservation_id")) showReservations(message, response, true, viberId);
+        	reservationId = Long.valueOf(tmp[1]);
+    	}
+    	else reservationId = Long.valueOf(message.getTrackingData().get("reservationId").toString());
     	
     	// Create map for trackingData
         Map<String, Object> mapTrackingData = new HashMap<>();
         
         mapTrackingData.put("menu", "cancel_reservation");
-        mapTrackingData.put("reservationId", tmp[1]);
+        mapTrackingData.put("reservationId", reservationId);
         mapTrackingData.put("viberId", viberId);
         
         // Create trackindata object
         TrackingData trackingData = new TrackingData(mapTrackingData);
     	
-    	// Validation
-    	if(!tmp[0].equals("reservation_id")) showReservations(message, response, true, viberId);
+    	
     	
     	// Get reservation from DB
-    	Reservation reservation = reservationService.getOne(Long.valueOf(tmp[1]));
+    	Reservation reservation = reservationService.getOne(reservationId);
     	if(reservation == null) showReservations(message, response, true, viberId);
     	
     	// Array for buttons
@@ -272,6 +277,10 @@ public class HelperMethods {
      */
     
     protected void cancelReservation(Message message, Response response){
+    	
+    	if(!message.getMapRepresentation().get("text").equals("confirm_cancel_reservation"))
+    		cancelReservationConfirm(message, response, true);
+    	
     	TrackingData trackingData = message.getTrackingData();
     	
     	// Get reservation from base
