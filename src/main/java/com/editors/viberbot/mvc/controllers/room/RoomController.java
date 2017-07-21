@@ -1,5 +1,6 @@
 package com.editors.viberbot.mvc.controllers.room;
 
+import java.time.LocalTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,21 +48,24 @@ public class RoomController {
 		roomService.update(room);
 		System.out.println(room.toString());
 		return "redirect:/rooms";
-
-		
 	}
-	
 	
 	@RequestMapping(value = "/addRoom", method = RequestMethod.GET)
 	public String addRoomView(Model model){
-		Room room = new Room();
-		model.addAttribute("room", room);
+		model.addAttribute("rooom", new Room());
 		return "room/addRoom";	
 	}
 	
 	@RequestMapping(value = "/addRoom", method = RequestMethod.POST)
-	public String addRoom(@ModelAttribute Room room) throws NullPointerException {
-		System.out.println(room.toString());
+	public String addRoom (@RequestParam String name,
+			@RequestParam int number,
+			@RequestParam String startWorkTime,
+			@RequestParam String endWorkTime) throws NullPointerException {
+		
+		LocalTime newSWT = LocalTime.parse(startWorkTime);
+		LocalTime newEWT = LocalTime.parse(endWorkTime);
+
+		Room room = new Room(name, number, newSWT, newEWT);
 		roomService.add(room);
 		return "redirect:/rooms";
 	}
@@ -72,9 +76,6 @@ public class RoomController {
 		Room room = roomService.getOne(id);
 		roomService.delete(room.getId());
 		return "redirect:/rooms";	
-	}
-	
-	
-	
+	}	
 	
 }

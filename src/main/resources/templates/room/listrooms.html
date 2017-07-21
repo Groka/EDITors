@@ -14,7 +14,6 @@
 	 overflow: auto; background-color: white;">
 
 	<div class="container" style="background-color: white;">
-		<div th:if="${not #lists.isEmpty(rooms)}">
 		
 		<table class="table table-striped">
 			<tr>
@@ -23,18 +22,25 @@
 				
 				<th> Name
 				</th>
+					<th> Start work time
+				</th>
+					<th> End work time
+				</th>
 				<th>
 				</th>
 				<th>
 					<a th:href="@{/addRoom}"><span class="table-add glyphicon glyphicon-plus" style="color: green;" ></span></a>
 				</th>
 			</tr>
+			<!-- <div th:if="${not #lists.isEmpty(rooms)}"> -->
 			
 			
 			<tr th:each="room : ${rooms}">
 			
 				<td th:text="${room.number}"></td>
 				<td th:text="${room.name}"></td>
+					<td th:text="${room.startWorkTime}"></td>
+				<td th:text="${room.endWorkTime}"></td>
 				<td> 
 					<a th:href="@{/editRoom/{id}(id=${room.id})}"><span class="table-edit glyphicon glyphicon-pencil" style="color: blue;"></span></a>
 				</td>
@@ -46,9 +52,11 @@
 				</td>				
 			</tr>
 			
+	<!-- </div> -->	
+			
+			
 		</table>
 		
-		</div>
 	</div>
 
 </div>
