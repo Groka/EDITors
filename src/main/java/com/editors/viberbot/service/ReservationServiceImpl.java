@@ -83,7 +83,7 @@ public class ReservationServiceImpl implements ReservationService {
 		//
 		int hours = room.getStartWorkTime().getHour();
 		int minutes = room.getStartWorkTime().getMinute();
-		for(; LocalTime.of(hours, minutes) != room.getEndWorkTime(); hours++){
+		for(; LocalTime.of(hours, minutes).isBefore(room.getEndWorkTime()); hours++){
 			LocalTime tmp = LocalTime.of(hours, minutes);
 			result.add(tmp);
 		}
