@@ -136,7 +136,7 @@ public abstract class HelperMethods {
      * Check if room is valid
      * 
      */
-    protected final Room checkRoom(Message message){
+    protected final Room checkRoom(Message message) throws IllegalArgumentException {
     	Long roomId = null;
     	try{
     		// Get actionBody
