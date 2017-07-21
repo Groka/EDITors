@@ -34,7 +34,13 @@ public class ReservationServiceImpl implements ReservationService {
 
 	@Override
 	public boolean reserve(Reservation reservation) {
-		List<LocalTime> reservations = getFreeRoomCapacitiesOnDate(reservation.getId(), reservation.getDate());
+		List<LocalTime> reservations = null;
+		try {
+			reservations = getFreeRoomCapacitiesOnDate(reservation.getId(), reservation.getDate());
+		} catch (NotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		if(reservations.contains(reservation.getTime())) return false;
 		reservationRepository.save(reservation);
 		return true;
@@ -48,9 +54,14 @@ public class ReservationServiceImpl implements ReservationService {
 	}
 
 	@Override
-	public List<LocalTime> getFreeRoomCapacitiesOnDate(Long roomId, LocalDate date) {
+	public List<LocalTime> getFreeRoomCapacitiesOnDate(Long roomId, LocalDate date) throws NotFoundException {
 		List<LocalTime> result = null;
-		Room room = roomService.getOne(roomId);
+		Room room = null;
+		try {
+			room = roomService.getOne(roomId);
+		} catch (NotFoundException e) {
+			throw e;
+		}
 		int hours = room.getStartWorkTime().getHour();
 		int minutes = room.getStartWorkTime().getMinute();
 		for(; LocalTime.of(hours, 0) != room.getEndWorkTime(); hours++){

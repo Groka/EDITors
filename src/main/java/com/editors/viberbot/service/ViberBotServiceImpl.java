@@ -75,13 +75,31 @@ public class ViberBotServiceImpl extends HelperMethods implements ViberBotServic
     	
     	System.out.println(trackingData.get("menu").toString());
     	
-    	switch(trackingData.get("menu").toString()){	
+    	String dataToTrack = trackingData.get("menu").toString();
+    	
+    	switch(dataToTrack){	
+    	// main menu
     	case "main":
     		if(message.getMapRepresentation().get("text").equals("show_reservations"))
     			response.send(showReservations(event, message));
+    		else if(message.getMapRepresentation().get("text").equals("make_a_reservation")){
+    			askForDate(response, false);
+    		}
+    			
     		break;
+    	// Show reservations
     	case "show_reservations":
-    		if(message.getMapRepresentation().get("text").equals(""))
+    		//if(message.getMapRepresentation().get("text").equals(""))
+    		break;
+    	// Date input; if valid respond with room menu to choose a room
+    	case "make_a_reservation_step_1":
+    		// Get rooms
+    		showRooms(message, response, false);
+    		break;
+    	// Choose a room
+    	case "make_a_reservation_step_2:":
+    		//checkRoom(message, response);
+    		response.send(goToMain(null, event, message));
     		break;
     	default:
     		System.out.println("U defaultu");
