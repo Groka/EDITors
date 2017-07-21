@@ -53,7 +53,7 @@ public class ViberBotServiceImpl extends Flow implements ViberBotService {
     @Override
     public Future<Optional<Message>> onConversationStarted(IncomingConversationStartedEvent event) {
     	
-    	onSubscribe(event);
+    	//onSubscribe(event, null);
 
     	// Greetings message
         String greeting = "Welcome to room reservation bot " + event.getUser().getName();
@@ -156,7 +156,7 @@ public class ViberBotServiceImpl extends Flow implements ViberBotService {
     }
 
 	@Override
-    public void onSubscribe(IncomingConversationStartedEvent event) {
+    public void onSubscribe(IncomingSubscribedEvent event, Response response) {
     	String viberId = event.getUser().getId();
     	try {
 			userService.subscribe(viberId);
