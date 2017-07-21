@@ -22,8 +22,8 @@
 			<tr>
 				<th> Date </th>
 				<th> Time </th>
-				<th> User id </th>
-				<th> Room id </th>
+				<th> User </th>
+				<th> Room name</th>
 				<th></th>
 				<th></th>
 			</tr>				
@@ -32,8 +32,8 @@
 			
 				<td th:text="${reservation.date}"></td>
 				<td th:text="${reservation.time}"></td>
-				<td th:text="${reservation.userId}"></td>
-				<td th:text="${reservation.roomId}"></td>
+				<td th:text="${reservation.user.name}"></td>
+				<td th:text="${reservation.room.name}"></td>
 				<td><a th:href="@{/editreservation/{id}(id=${reservation.id})}"><span class="table-edit glyphicon glyphicon-pencil" style="color: blue;"></span></a></td>
 				<td><a th:href="@{/reservations/{id}(id=${reservation.id})}"><span class="table-remove glyphicon glyphicon-remove" 
 				style="color: #8B0000;" onclick="return confirm('Are you sure you would like to delete this reservation?');"></span></a>
