@@ -3,6 +3,7 @@ package com.editors.viberbot.service;
 import java.security.InvalidParameterException;
 import java.time.DateTimeException;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -150,7 +151,7 @@ public class HelperMethods {
      * make_a_reservation_step_2
      */
     
-    protected void showRooms(Message message, Response response, boolean checkDate) {
+    protected void showRooms(Message message, Response response, boolean checkDate, boolean wasInvalid) {
     	LocalDate date = null;
     	if(checkDate){
     		try{
@@ -186,13 +187,16 @@ public class HelperMethods {
 		// create map for trackingdata
 		Map<String, Object> mapTrackingData = new HashMap<>();
 		mapTrackingData.put("menu", "make_a_reservation_step_2");
-		mapTrackingData.put("date", date.toString()); 
+		//mapTrackingData.put("date", );  OOOOOOOODRADITIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+		mapTrackingData.put("date", date.toString());
 		
 		// create TrackingData object
 		TrackingData trackingData = new TrackingData(mapTrackingData);
 		
 		// respond
-    	response.send(new TextMessage("Please choose a room from the menu", messageKeyboard, trackingData, null));
+		String responseText = wasInvalid ? "Invalid input. " : "";
+		responseText += "Please choose a room from the menu";
+    	response.send(new TextMessage(responseText, messageKeyboard, trackingData, null));
     }
     
     // Ask for the date
@@ -220,6 +224,7 @@ public class HelperMethods {
     	String[] tmpArray = message.getMapRepresentation().get("text").toString().split("\\.|/|-");
     	LocalDate date;
 		try{
+			if(tmpArray.length != 3) throw new DateTimeException("Some values are missing in date");
 			date = LocalDate.of(Integer.valueOf(tmpArray[2]), Integer.valueOf(tmpArray[1]), Integer.valueOf(tmpArray[0]));
 		}catch(DateTimeException e){
 			throw new IllegalArgumentException();
@@ -253,4 +258,85 @@ public class HelperMethods {
     	}
     	return room;
     }	
+    
+    
+    /*
+     * make_a_reservation_step_3
+     */
+    
+    protected void showFreePeriods(Message message, Response response, boolean wasInvalid){
+    	// Get date from trackingData
+    	LocalDate date = LocalDate.parse(message.getTrackingData().get("date").toString());
+    	
+    	// Get room
+    	Room room = null;
+    	try{
+    		room = checkRoom(message);
+    	}catch(IllegalArgumentException e){
+    		System.out.println("Bad rooooooooom");
+    		e.printStackTrace();
+    		showRooms(message, response, false, true);
+    	}
+    	
+    	
+    	// Get free periods on the given date and room
+    	List<LocalTime> periods = null;
+    	try {
+			periods = reservationService.getFreeRoomCapacitiesOnDate(room.getId(), date);
+		} catch (NotFoundException e) {
+			// TODO Auto-generated catch block
+			System.out.println("Nadam se da se nikada neces prikazat");
+			e.printStackTrace();
+		}
+    	
+    	// Create array for buttons
+    	// Available periods will be shown in buttons
+    	ArrayList<HashMap<String, Object>> buttons = new ArrayList<>();
+    	
+    	// Add buttons
+    	for(LocalTime localTime : periods){
+    		HashMap<String, Object> btn = new HashMap<>();
+            btn.put("Columns", 2);
+            btn.put("Rows", 1);
+            btn.put("BgColor", "#2db9b9");
+            btn.put("ActionType", "reply");
+            btn.put("ActionBody", "time=" + localTime.toString());
+            btn.put("Text", localTime.toString());
+            btn.put("TextVAlign", "middle");
+            btn.put("TextHAlign", "center");
+            btn.put("TextSize", "regular");
+            
+            buttons.add(btn);
+    	}
+    	
+    	// Create MessageKeyboard object
+    	MessageKeyboard messageKeyboard = createMessageKeyboard(buttons);
+    	
+    	// Create map for TrackingData object
+    	Map<String, Object> mapTrackingData = new HashMap<>();
+    	
+    	mapTrackingData.put("menu", "make_a_reservation_step_3");
+    	mapTrackingData.put("date", date.toString());
+    	
+    	// Create TrackingData object
+    	TrackingData trackingData = new TrackingData(mapTrackingData);
+    	
+    	//Response text
+    	String responseText = wasInvalid ? "Invalid time. " : "";
+    	responseText += "Please choose a time from the menu";
+    	
+    	response.send(new TextMessage(responseText, messageKeyboard, trackingData, null));
+    	
+    }
+    
+    /*
+     * Check if inputed time is ok
+     */
+    private LocalTime checkTime(Message message) throws IllegalArgumentException {
+    	if(!message.getMapRepresentation().containsKey("text"))
+    		throw new IllegalArgumentException();
+    	String timeStr = message.getMapRepresentation().get("text").toString();
+    	LocalTime time = LocalTime.parse(timeStr.split("=")[1]); // PROVJERITI
+    	return time;
+    }
 }
