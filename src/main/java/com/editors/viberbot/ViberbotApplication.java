@@ -54,26 +54,7 @@ public class ViberbotApplication implements ApplicationListener<ApplicationReady
 	       
 
 	        bot.onMessageReceived((event, message, response) ->{
-				String text = "Testing keyboard";
-
-				Map<String, Object> messageKeyboard = new HashMap<>();
-				messageKeyboard.put("Type", "keyboard");
-				messageKeyboard.put("DefaultHight", true);
-
-				ArrayList<HashMap<String, Object>> buttons = new ArrayList<>();
-				HashMap<String, Object> button1 = new HashMap<>();
-				button1.put("ActionType", "reply");
-				button1.put("ActionBody", "reply to PA");
-				button1.put("Text", "Test");
-
-				buttons.add(button1);
-
-				messageKeyboard.put("Buttons", buttons);
-
-				MessageKeyboard messageKeyboard2 = new MessageKeyboard(messageKeyboard);
-
-				TextMessage textMessage = new TextMessage(text, messageKeyboard2, null, null);
-	        	response.send(textMessage);
+				viberBotService.onMessageReceived(event, message, response);
 	        });
 
 	        //bot.onConversationStarted(event -> Futures.immediateFuture(Optional.of( // send 'Hi UserName' when conversation is started

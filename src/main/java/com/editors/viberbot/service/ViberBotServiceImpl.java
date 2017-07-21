@@ -1,6 +1,7 @@
 package com.editors.viberbot.service;
 
 import com.google.common.util.concurrent.Futures;
+import com.viber.bot.Response;
 import com.viber.bot.event.callback.OnConversationStarted;
 import com.viber.bot.event.callback.OnMessageReceived;
 import com.viber.bot.event.callback.OnSubscribe;
@@ -12,6 +13,8 @@ import com.viber.bot.event.incoming.IncomingUnsubscribeEvent;
 import com.viber.bot.message.Message;
 import com.viber.bot.message.MessageKeyboard;
 import com.viber.bot.message.TextMessage;
+import com.viber.bot.message.TrackingData;
+
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Nonnull;
@@ -49,7 +52,7 @@ public class ViberBotServiceImpl implements ViberBotService {
         btnShowReservations.put("Rows", 1);
         btnShowReservations.put("BgColor", "#2db9b9");
         btnShowReservations.put("ActionType", "reply");
-        btnShowReservations.put("ActionBody", "Show Reservations");
+        btnShowReservations.put("ActionBody", "Show reservations");
         btnShowReservations.put("Text", "Show reservations");
         btnShowReservations.put("TextVAlign", "middle");
         btnShowReservations.put("TextHAlign", "center");
@@ -65,6 +68,7 @@ public class ViberBotServiceImpl implements ViberBotService {
         Map<String, Object> mapMessageKeyboard = new HashMap<>();
         mapMessageKeyboard.put("Type", "keyboard");
         mapMessageKeyboard.put("DefaultHight", true);
+        mapMessageKeyboard.put("Buttons", buttons);
 
         // Create MessageKeyboard object
 
@@ -74,15 +78,56 @@ public class ViberBotServiceImpl implements ViberBotService {
         String userName = event.getUser().getName();
         String text = "Greetings " + userName + "!";
         
-        //
+        // Map for trackingdata
+        
+        Map<String, Object> mapTrackingData = new HashMap<>();
+        mapTrackingData.put("menu", "main");
+        
+        
+        // TrackingData object
+        TrackingData trackingData = new TrackingData(mapTrackingData);
 
-        TextMessage textMessage = new TextMessage(text, messageKeyboard, null, null);
-
+        TextMessage textMessage = new TextMessage(text, messageKeyboard, trackingData, null);
+        
         return Futures.immediateFuture(Optional.of(textMessage));
     }
-
+    
+    private TextMessage showReservations(IncomingMessageEvent event, Message message){
+    	// Map for trackingdata
+        
+        Map<String, Object> mapTrackingData = new HashMap<>();
+        mapTrackingData.put("menu", "show_reservations");
+        
+        // TrackingData object
+        TrackingData trackingData = new TrackingData(mapTrackingData);
+        
+    	TextMessage textMessage = new TextMessage("dobar radi vadi", null, trackingData, null);
+    	
+    	return textMessage;
+    }
+    
     @Override
-    public void onMessageReceived(IncomingMessageEvent event) {
+    public void onMessageReceived(IncomingMessageEvent event, Message message, Response response) {
+    	TrackingData trackingData = message.getTrackingData();
+    	
+    	// For testing purposes
+    	System.out.println("Keys in the trackingdata:\n");
+    	
+    	for(String s : trackingData.keySet())
+    		System.out.println(s);
+    	
+    	System.out.println(trackingData.get("menu").toString());
+    	
+    	switch(trackingData.get("menu").toString()){	
+    	case "main":
+    		System.out.println(message.getKeyboard().keySet().toString());
+    		//if(message.getMapRepresentation().get("ActionBody").equals("Show reservations"))
+    			//response.send(showReservations(event, message));
+    		break;
+    	default:
+    		System.out.println("U defaultu");
+    		break;
+    	}
     	
     }
 
