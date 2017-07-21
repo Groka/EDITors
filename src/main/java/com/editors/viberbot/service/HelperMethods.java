@@ -604,6 +604,7 @@ public class HelperMethods {
         responseText += " from " + time.toString() + " to " + endTime.toString();
         responseText += " for room: " + room.getName() + " " + room.getNumber();
         responseText += ". Please confirm.";
+        
     	response.send(new TextMessage(responseText, messageKeyboard, trackingData, null));
     }
     
@@ -613,8 +614,18 @@ public class HelperMethods {
     
     protected void addReservation(IncomingMessageEvent event, Message message, Response response){
     	// Validation
-    	if(!message.getMapRepresentation().get("text").toString().equals("make_a_reservation_end"))
-    		showFreePeriods(message, response, false, true);
+    	if(!message.getMapRepresentation().get("text").toString().equals("make_a_reservation_end")){
+    		// Create map for TrackingData object
+        	Map<String, Object> mapTrackingData = new HashMap<>();
+        	
+        	mapTrackingData.put("menu", "make_a_reservation_step_3");
+        	mapTrackingData.put("date", message.getTrackingData().get("date").toString());
+        	mapTrackingData.put("roomId", message.getTrackingData().get("roomId").toString());
+        	mapTrackingData.put("time", message.getTrackingData().get("time").toString());
+        	
+        	TrackingData td = new TrackingData(mapTrackingData);
+    		showFreePeriods(new TextMessage(null, null, td, null), response, false, true);
+    	}
     	// Get trackingData
     	TrackingData trackingData = message.getTrackingData();
     	
