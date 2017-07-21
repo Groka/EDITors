@@ -36,12 +36,12 @@ public class RoomController {
 	
 	
 	@RequestMapping(value = "/editRoom/{id}", method = RequestMethod.GET)
-	public String editRoomView(@PathVariable Long id, Model model){
+	public String editRoomView(@PathVariable Long id, Model model, boolean hasError){
 		Room room = null;
 		try {
 			room = roomService.getOne(id);
 			model.addAttribute("room", room);
-
+			if(hasError) return "room/editRoom?error";
 		} catch (NotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -105,7 +105,7 @@ public class RoomController {
 			e.printStackTrace();
 			
 		} catch (Exception e){
-			return "room/editRoom/" + id + "?error";
+			return "room/editRoom";
 		}
 		
 		return "redirect:/rooms";	
