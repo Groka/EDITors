@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+	<meta charset="ISO-8859-1"></meta>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"></link>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <title>Edit user</title>
+    
+</head>
+
+<body>
+
+	<div style=" position: fixed; top: 0; left: 0; bottom: 0; right: 0; overflow: auto; background:url('http://www.hotel-grandmajestic.cz/files/hotel/conferences/hotel-majestic-prague-conference-room-grand-4-conference-and-events-02.jpg') no-repeat;">
+		
+		<form role="form"  th:action="@{/edituser}" th:object="${user}" method="POST" style="width:30%; margin-left: 6em; margin-top: 4em; background: rgba(0, 0, 0, 0.77);">
+			
+			<div class="form-group">
+			
+				<input th:value="${user.id}" th:field="*{id}" type="hidden" />			
+				<label  style="margin-top:1em; color: white; padding: 0 0 0 1em;"> Viber id: </label><br/>			
+				<input style="margin-left: 1em; margin-right: 1em; width: 90%;" th:value="${user.viberId}" th:field="*{viberId}" /><br/>			
+				<label style="color: white; padding: 1em 0 0 1em;"> Name: </label><br/>
+				<input th:value="${user.name}" th:field="*{name}" style="margin-left: 1em; margin-right: 1em; width: 90%;"/><br/>
+				<label  style="margin-top:1em; color: white; padding: 0 0 0 1em;"> Subscribed: </label><br/>			
+				<input style="margin-left: 1em; margin-right: 1em; width: 90%;" th:value="${user.subscribed}" th:field="*{subscribed}" />	<br/>			
+			
+			</div>
+			
+			<button type="submit" style="margin: 1em;"  class="btn btn-info" > Submit </button>
+			
+		</form>
+		
+	</div>
+
+</body>
+</html>

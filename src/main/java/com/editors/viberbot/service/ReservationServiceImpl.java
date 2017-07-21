@@ -15,7 +15,9 @@ import com.editors.viberbot.database.entity.User;
 import com.editors.viberbot.database.repository.ReservationRepository;
 
 @Service("reservationService")
+
 public class ReservationServiceImpl implements ReservationService {
+	
 	@Autowired
 	ReservationRepository reservationRepository;
 	
@@ -88,4 +90,13 @@ public class ReservationServiceImpl implements ReservationService {
 		reservationRepository.save(dbreservation);
 		return reservation;
 	}
+
+
+	@Override
+	public Reservation getOne(Long id) {
+		Reservation reservation = reservationRepository.findOne(id);
+		return reservation;
+	}
+	
+
 }

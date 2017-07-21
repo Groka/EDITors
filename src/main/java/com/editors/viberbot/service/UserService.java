@@ -13,4 +13,6 @@ public interface UserService {
 	public void subscribe(String viberId) throws NotFoundException;
 	public void unsubscribe(String viberId) throws NotFoundException;
 	public User delete(Long id);
+	public User getOne(Long id);
+	public User update(User user) throws NotFoundException;
 }
