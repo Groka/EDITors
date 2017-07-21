@@ -107,7 +107,7 @@ public class ViberBotServiceImpl extends HelperMethods implements ViberBotServic
     	// Choose a room
     	// Show available appointments
     	case "make_a_reservation_step_2":
-    		showFreePeriods(message, response, false);
+    		showFreePeriods(message, response, true, false);
     		break;
     	case "make_a_reservation_step_3":
     		confirmNewReservation(message, response);

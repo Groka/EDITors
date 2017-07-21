@@ -368,7 +368,7 @@ public class HelperMethods {
     	String[] timeStr = message.getMapRepresentation().get("text").toString().split("=");
     	// First check if time is good
     	if(timeStr.length == 0) 
-    		showFreePeriods(message, response, true);
+    		showFreePeriods(message, response, false, true);
     	LocalTime time = LocalTime.parse(timeStr[1]);
     	
     	// Add time to trackingData
