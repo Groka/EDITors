@@ -62,7 +62,7 @@ public class ViberBotServiceImpl extends HelperMethods implements ViberBotServic
 			userService.addUser(new User(viberId, userName, true));
 		}
 		*/
-    	//onSubscribe(event);
+    	onSubscribe(event);
 
     	// Greetings message
         String greeting = "Welcome to room reservation bot " + event.getUser().getName();
@@ -101,22 +101,47 @@ public class ViberBotServiceImpl extends HelperMethods implements ViberBotServic
     		break;
     	// Date input; if valid respond with room menu to choose a room
     	case "make_a_reservation_step_1":
-    		askForDate(message, response, false);
+    		if(message.getMapRepresentation().get("text").toString().equals("returnToMain")){
+    			// Greetings message
+    	        String greeting = "Welcome to room reservation bot " + event.getSender().getName();
+    			response.send(goToMain(greeting));
+    		}
+    		else askForDate(message, response, false);
     		//showRooms(message, response, true, false);
     		break;
     	// Choose a room
     	// Show available appointments
     	case "make_a_reservation_step_2":
-    		showFreePeriods(message, response, true, false);
+    		if(message.getMapRepresentation().get("text").toString().equals("returnToMain")){
+    			// Greetings message
+    	        String greeting = "Welcome to room reservation bot " + event.getSender().getName();
+    			response.send(goToMain(greeting));
+    		}
+    		else showFreePeriods(message, response, true, false);
     		break;
     	case "make_a_reservation_step_3":
-    		confirmNewReservation(message, response);
+    		if(message.getMapRepresentation().get("text").toString().equals("returnToMain")){
+    			// Greetings message
+    	        String greeting = "Welcome to room reservation bot " + event.getSender().getName();
+    			response.send(goToMain(greeting));
+    		}
+    		else confirmNewReservation(message, response);
     		break;
     	case "make_a_reservation_confirm":
-    		confirmNewReservation(message, response);
+    		if(message.getMapRepresentation().get("text").toString().equals("returnToMain")){
+    			// Greetings message
+    	        String greeting = "Welcome to room reservation bot " + event.getSender().getName();
+    			response.send(goToMain(greeting));
+    		}
+    		else confirmNewReservation(message, response);
     		break;
     	case "make_a_reservation_end":
-    		addReservation(event, message, response);
+    		if(message.getMapRepresentation().get("text").toString().equals("returnToMain")){
+    			// Greetings message
+    	        String greeting = "Welcome to room reservation bot " + event.getSender().getName();
+    			response.send(goToMain(greeting));
+    		}
+    		else addReservation(event, message, response);
     		break;
     	default:
     		System.out.println("U defaultu");

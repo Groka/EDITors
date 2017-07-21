@@ -138,6 +138,9 @@ public class HelperMethods {
             
             buttons.add(btn);
         }
+        
+        // Add button to return to main menu
+        buttons.add(btnReturnToMain());
 
         MessageKeyboard messageKeyboard = createMessageKeyboard(buttons);
         
@@ -176,6 +179,9 @@ public class HelperMethods {
             buttons.add(btn);
 		}
 		
+		// Add button to return to main menu
+        buttons.add(btnReturnToMain());
+		
 		// Create messageKeyboard object
 		MessageKeyboard messageKeyboard = createMessageKeyboard(buttons);
 		
@@ -212,9 +218,18 @@ public class HelperMethods {
 		mapTrackingData.put("menu", "make_a_reservation_step_2");
 		mapTrackingData.put("roomId", room.getId());
 		
+		// Crate button list for keyboard
+		ArrayList<HashMap<String, Object>> buttons = new ArrayList<>();
+		
+		// Add button to return to main menu
+        buttons.add(btnReturnToMain());
+        
+        // Create messageKeyboard object
+     	MessageKeyboard messageKeyboard = createMessageKeyboard(buttons);
+		
 		// Create TrackingData object
 		TrackingData trackingData = new TrackingData(mapTrackingData);
-		response.send(new TextMessage(responseText, null, trackingData, null));
+		response.send(new TextMessage(responseText, messageKeyboard, trackingData, null));
     }
     
     
@@ -319,6 +334,9 @@ public class HelperMethods {
             buttons.add(btn);
     	}
     	
+    	// Add button to return to main menu
+        buttons.add(btnReturnToMain());
+    	
     	// Create MessageKeyboard object
     	MessageKeyboard messageKeyboard = createMessageKeyboard(buttons);
     	
@@ -396,6 +414,9 @@ public class HelperMethods {
         
         buttons.add(btnConfirm);
         
+        // Add button to return to main menu
+        buttons.add(btnReturnToMain());
+        
         // Create MessageKeyboard object
         MessageKeyboard messageKeyboard = createMessageKeyboard(buttons);
 
@@ -467,5 +488,23 @@ public class HelperMethods {
         responseText += " for room: " + room.getName() + " " + room.getNumber();
 
         response.send(goToMain(responseText));
+    }
+    
+    /*
+     * Button to return to main menu
+     */
+    private HashMap<String, Object> btnReturnToMain(){
+    	// Create returnToMain button
+        HashMap<String, Object> btnReturnToMain = new HashMap<>();
+        btnReturnToMain.put("Columns", 6);
+        btnReturnToMain.put("Rows", 1);
+        btnReturnToMain.put("BgColor", "#ce1212");
+        btnReturnToMain.put("ActionType", "reply");
+        btnReturnToMain.put("ActionBody", "returnToMain");
+        btnReturnToMain.put("Text", "Return to main");
+        btnReturnToMain.put("TextVAlign", "middle");
+        btnReturnToMain.put("TextHAlign", "center");
+        btnReturnToMain.put("TextSize", "regular");
+        return btnReturnToMain;
     }
 }
