@@ -176,7 +176,7 @@ public class HelperMethods {
     	// Create map for trackingData
         Map<String, Object> mapTrackingData = new HashMap<>();
         
-        mapTrackingData.put("menu", "cancel_reservation");
+        mapTrackingData.put("menu", "show_reservation_step_2");
         mapTrackingData.put("reservationId", reservationId);
         mapTrackingData.put("viberId", viberId);
         
@@ -279,7 +279,6 @@ public class HelperMethods {
     
     protected void cancelReservation(Message message, Response response){
     	
-    	System.out.println("OVDJEEEEEEEE: " + message.getMapRepresentation().get("text"));
     	if(!message.getMapRepresentation().get("text").equals("confirm_cancel_reservation"))
     		cancelReservationConfirm(message, response, true);
     	
