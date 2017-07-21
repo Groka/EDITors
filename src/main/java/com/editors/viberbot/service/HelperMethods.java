@@ -360,6 +360,17 @@ public class HelperMethods {
 	    		showRooms(message, response, true);
 	    	}
     	}
+    	else{
+    		try {
+				room = roomService.getOne(Long.valueOf(message.getTrackingData().get("roomId").toString()));
+			} catch (NumberFormatException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (NotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+    	}
     	String responseText = wasInvalid ? "Invalid date. " : "";
     	responseText += "Please enter a date in DD-MM-YYYY format";
     	
@@ -444,6 +455,7 @@ public class HelperMethods {
     			askForDate(message, response, false, true);
     		}
     	}
+    	else date = LocalDate.parse(message.getTrackingData().get("date").toString());
 	    	
     	// Get room from trackingData
     	Long roomId = Long.valueOf(message.getTrackingData().get("roomId").toString());
