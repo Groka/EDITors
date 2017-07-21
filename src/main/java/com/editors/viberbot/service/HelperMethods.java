@@ -348,17 +348,18 @@ public class HelperMethods {
     }
     
     // Ask for the date
-    protected void askForDate(Message message, Response response, boolean wasInvalid){
+    protected void askForDate(Message message, Response response, boolean checkRoom, boolean wasInvalid){
     	// Get room
     	Room room = null;
-    	try{
-    		room = checkRoom(message);
-    	}catch(IllegalArgumentException e){
-    		System.out.println("Bad rooooooooom");
-    		e.printStackTrace();
-    		showRooms(message, response, true);
+    	if(checkRoom){
+	    	try{
+	    		room = checkRoom(message);
+	    	}catch(IllegalArgumentException e){
+	    		System.out.println("Bad rooooooooom");
+	    		e.printStackTrace();
+	    		showRooms(message, response, true);
+	    	}
     	}
-    	
     	String responseText = wasInvalid ? "Invalid date. " : "";
     	responseText += "Please enter a date in DD-MM-YYYY format";
     	
@@ -440,7 +441,7 @@ public class HelperMethods {
     		}catch(IllegalArgumentException e){
     			// if date is invalid ask for date again
     			System.out.println(message.getTrackingData().values().toString());
-    			askForDate(message, response, true);
+    			askForDate(message, response, false, true);
     		}
     	}
 	    	
