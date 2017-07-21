@@ -79,6 +79,7 @@ public class Flow extends HelperMethods {
 	    		System.out.println("Bad rooooooooom");
 	    		e.printStackTrace();
 	    		showRooms(message, response, true);
+	    		return;
 	    	}
     	}
     	else{
@@ -127,6 +128,7 @@ public class Flow extends HelperMethods {
     			// if date is invalid ask for date again
     			System.out.println(message.getTrackingData().values().toString());
     			askForDate(message, response, false, true);
+    			return;
     		}
     	}
     	else date = LocalDate.parse(message.getTrackingData().get("date").toString());
@@ -213,8 +215,10 @@ public class Flow extends HelperMethods {
     	if(checkTime){ // get time from text, otherwise get it from trackingdata
 	    	String[] timeStr = message.getMapRepresentation().get("text").toString().split("=");
 	    	// First check if time is good
-	    	if(timeStr.length != 2) 
+	    	if(timeStr.length != 2){
 	    		showFreePeriods(message, response, false, true);
+	    		return;
+	    	}
 	    	time = LocalTime.parse(timeStr[1]);
     	}
     	else time = LocalTime.parse(message.getTrackingData().get("time").toString());
@@ -330,204 +334,204 @@ public class Flow extends HelperMethods {
     /* ===================================================================================== */
     
     /*
-	    *   show_reservations_step_1
-	    */
-	    protected void showReservations(Message message, Response response, boolean wasInvalid, String viberId){
-	    	// Map for trackingdata
-	        
-	        Map<String, Object> mapTrackingData = new HashMap<>();
-	        mapTrackingData.put("menu", "show_reservations_step_1");
-	        mapTrackingData.put("viberId", viberId);
-	        
-	        // TrackingData object
-	        TrackingData trackingData = new TrackingData(mapTrackingData);
-	        
-	        List<Reservation> reservations = reservationService.getByUser(viberId);
-	        
-	        // Creating array of reservations for keyboard
-	        ArrayList<HashMap<String, Object>> buttons = new ArrayList<>();
-	        
-	        // Add all reservations from DB to the array
-	        for(Reservation reservation : reservations){
-	        	String msg = "Date - " + reservation.getDate().toString() + ", ";
-	        	msg += "Time - " + reservation.getTime().toString() + ", ";
-	        	msg += "Room name - " + reservation.getRoom().getName();
-	        	HashMap<String, Object> btn = new HashMap<>();
-	            btn.put("Columns", 6);
-	            btn.put("Rows", 1);
-	            btn.put("BgColor", "#2db9b9");
-	            btn.put("ActionType", "reply");
-	            btn.put("ActionBody", "reservation_id=" + reservation.getId());
-	            btn.put("Text", msg);
-	            btn.put("TextVAlign", "middle");
-	            btn.put("TextHAlign", "center");
-	            btn.put("TextSize", "regular");
-	            
-	            buttons.add(btn);
-	        }
-	        
-	        // Add button to return to main menu
-	        buttons.add(btnReturnToMain());
+    *   show_reservations_step_1
+    */
+    protected void showReservations(Message message, Response response, boolean wasInvalid, String viberId){
+    	// Map for trackingdata
+        
+        Map<String, Object> mapTrackingData = new HashMap<>();
+        mapTrackingData.put("menu", "show_reservations_step_1");
+        mapTrackingData.put("viberId", viberId);
+        
+        // TrackingData object
+        TrackingData trackingData = new TrackingData(mapTrackingData);
+        
+        List<Reservation> reservations = reservationService.getByUser(viberId);
+        
+        // Creating array of reservations for keyboard
+        ArrayList<HashMap<String, Object>> buttons = new ArrayList<>();
+        
+        // Add all reservations from DB to the array
+        for(Reservation reservation : reservations){
+        	String msg = "Date - " + reservation.getDate().toString() + ", ";
+        	msg += "Time - " + reservation.getTime().toString() + ", ";
+        	msg += "Room name - " + reservation.getRoom().getName();
+        	HashMap<String, Object> btn = new HashMap<>();
+            btn.put("Columns", 6);
+            btn.put("Rows", 1);
+            btn.put("BgColor", "#2db9b9");
+            btn.put("ActionType", "reply");
+            btn.put("ActionBody", "reservation_id=" + reservation.getId());
+            btn.put("Text", msg);
+            btn.put("TextVAlign", "middle");
+            btn.put("TextHAlign", "center");
+            btn.put("TextSize", "regular");
+            
+            buttons.add(btn);
+        }
+        
+        // Add button to return to main menu
+        buttons.add(btnReturnToMain());
 
-	        MessageKeyboard messageKeyboard = createMessageKeyboard(buttons);
-	        
-	        // Response text
-	        String responseText = wasInvalid ? "Please choose reservation from the menu. " : "";
-	        responseText += "Click on the reservation to see details";
-	        
-	    	response.send(new TextMessage(responseText, messageKeyboard, trackingData, null));
-	    
-	    }
-	    
-	    /*
-	     * show_reservations_step_2
-	     * Shows "Cancel reservation" and "Return to main" options
-	     * Also shows reservation info
-	     */
-	    protected void showReservation(Message message, Response response, boolean wasInvalid){
-	    	// Get viberId
-	    	String viberId = message.getTrackingData().get("viberId").toString();
-	    	
-	    	Long reservationId = null;
-	    	// Get ActionBody
-	    	if(!wasInvalid){
-	    		String actionBody = message.getMapRepresentation().get("text").toString();
-	    	
-	    		String[] tmp = actionBody.split("=");
-	    		// Validation
-	        	if(!tmp[0].equals("reservation_id")) showReservations(message, response, true, viberId);
-	        	reservationId = Long.valueOf(tmp[1]);
-	    	}
-	    	else reservationId = Long.valueOf(message.getTrackingData().get("reservationId").toString());
-	    	
-	    	// Create map for trackingData
-	        Map<String, Object> mapTrackingData = new HashMap<>();
-	        
-	        mapTrackingData.put("menu", "show_reservations_step_2");
-	        mapTrackingData.put("reservationId", reservationId);
-	        mapTrackingData.put("viberId", viberId);
-	        
-	        // Create trackindata object
-	        TrackingData trackingData = new TrackingData(mapTrackingData);
-	    	
-	    	
-	    	
-	    	// Get reservation from DB
-	    	Reservation reservation = reservationService.getOne(reservationId);
-	    	if(reservation == null) showReservations(message, response, true, viberId);
-	    	
-	    	// Array for buttons
-	    	ArrayList<HashMap<String, Object>> buttons = new ArrayList<>();
-	    	
-	    	// Create "Cancel reservation" button
-	    	HashMap<String, Object> btnCancelReservation = new HashMap<>();
-	        btnCancelReservation.put("Columns", 6);
-	        btnCancelReservation.put("Rows", 1);
-	        btnCancelReservation.put("BgColor", "#f96164");
-	        btnCancelReservation.put("ActionType", "reply");
-	        btnCancelReservation.put("ActionBody", "cancel_reservation");
-	        btnCancelReservation.put("Text", "Cancel this reservation");
-	        btnCancelReservation.put("TextVAlign", "middle");
-	        btnCancelReservation.put("TextHAlign", "center");
-	        btnCancelReservation.put("TextSize", "regular");
-	        
-	        buttons.add(btnCancelReservation);
-	        buttons.add(btnReturnToMain());
-	        
-	        // Create messageKeyboard
-	        MessageKeyboard messageKeyboard = createMessageKeyboard(buttons);
-	        
-	        
-	        String responseText = wasInvalid ? "Wrong input. Please choose option from the menu. " : "";
-	        responseText += " Reservation info: ";
-	        responseText += "Date " + reservation.getDate().toString();
-	        responseText += " from " + reservation.getTime().toString();
-	        responseText += " to " + LocalTime.of(reservation.getTime().getHour() + 1, reservation.getTime().getMinute());
-	        responseText += " for room: " + reservation.getRoom().getName() + " " + reservation.getRoom().getNumber();
-	        
-	        response.send(new TextMessage(responseText, messageKeyboard, trackingData, null));
-	    }
-	    /*
-	     * cancel_reservation
-	     * Asks user to confirm reservation cancelling
-	     */
-	    protected void cancelReservationConfirm(Message message, Response response, boolean wasInvalid){
-	    	
-	    	if(!message.getMapRepresentation().get("text").toString().equals("cancel_reservation")){
-	    		showReservation(message, response, true);
-	    		return;
-	    	}
-	    	
-	    	// Create map for trackingData
-	        Map<String, Object> mapTrackingData = new HashMap<>();
-	        
-	        mapTrackingData.put("menu", "confirm_cancel_reservation");
-	        mapTrackingData.put("reservationId", message.getTrackingData().get("reservationId").toString());
-	        mapTrackingData.put("viberId", message.getTrackingData().get("viberId").toString());
-	        
-	        // Create trackingdata object
-	        TrackingData trackingData = new TrackingData(mapTrackingData);
-	        
-	        // Get reservation from DB
-	    	Reservation reservation = reservationService.getOne(Long.valueOf(message.getTrackingData().get("reservationId").toString()));
-	        
-	        // Response text
-	        String responseText = wasInvalid ? "Bad input. " : "";
-	        responseText += " Please confirm that you want to cancel this reservation: ";
-	        responseText += "Date " + reservation.getDate().toString();
-	        responseText += " from " + reservation.getTime().toString();
-	        responseText += " to " + LocalTime.of(reservation.getTime().getHour() + 1, reservation.getTime().getMinute());
-	        responseText += " for room: " + reservation.getRoom().getName() + " " + reservation.getRoom().getNumber();
-	        
-	        // Array for buttons
-	    	ArrayList<HashMap<String, Object>> buttons = new ArrayList<>();
-	    	
-	    	// Create "Cancel reservation" button
-	    	HashMap<String, Object> btnCancelReservation = new HashMap<>();
-	        btnCancelReservation.put("Columns", 6);
-	        btnCancelReservation.put("Rows", 1);
-	        btnCancelReservation.put("BgColor", "#00ff00");
-	        btnCancelReservation.put("ActionType", "reply");
-	        btnCancelReservation.put("ActionBody", "confirm_cancel_reservation");
-	        btnCancelReservation.put("Text", "Confirm");
-	        btnCancelReservation.put("TextVAlign", "middle");
-	        btnCancelReservation.put("TextHAlign", "center");
-	        btnCancelReservation.put("TextSize", "regular");
-	        
-	        buttons.add(btnCancelReservation);
-	        buttons.add(btnReturnToMain());
-	        
-	        MessageKeyboard messageKeyboard = createMessageKeyboard(buttons);
-	        
-	        response.send(new TextMessage(responseText, messageKeyboard, trackingData, null));
-	    }
-	    
-	    /*
-	     * confirm_cancel_reservation
-	     * Deletes reservation and goes back to the main menu
-	     */
-	    
-	    protected void cancelReservation(Message message, Response response){
-	    	
-	    	if(!message.getMapRepresentation().get("text").equals("confirm_cancel_reservation")){
-	    		cancelReservationConfirm(message, response, true);
-	    		return;
-	    	}
-	    	
-	    	TrackingData trackingData = message.getTrackingData();
-	    	
-	    	// Get reservation from base
-	    	Reservation reservation = reservationService.getOne(Long.valueOf(trackingData.get("reservationId").toString()));
-	    	
-	    	// Cancel reservation
-	    	reservationService.delete(reservation.getId());
-	    	
-	    	ArrayList<HashMap<String, Object>> buttons = new ArrayList<>();
-	    	
-	    	buttons.add(btnReturnToMain());
-	    	
-	    	MessageKeyboard messageKeyboard = createMessageKeyboard(buttons);
-	    	
-	    	response.send(goToMain("Reservation cancelled."));
-	    }
+        MessageKeyboard messageKeyboard = createMessageKeyboard(buttons);
+        
+        // Response text
+        String responseText = wasInvalid ? "Please choose reservation from the menu. " : "";
+        responseText += "Click on the reservation to see details";
+        
+    	response.send(new TextMessage(responseText, messageKeyboard, trackingData, null));
+    
+    }
+    
+    /*
+     * show_reservations_step_2
+     * Shows "Cancel reservation" and "Return to main" options
+     * Also shows reservation info
+     */
+    protected void showReservation(Message message, Response response, boolean wasInvalid){
+    	// Get viberId
+    	String viberId = message.getTrackingData().get("viberId").toString();
+    	
+    	Long reservationId = null;
+    	// Get ActionBody
+    	if(!wasInvalid){
+    		String actionBody = message.getMapRepresentation().get("text").toString();
+    	
+    		String[] tmp = actionBody.split("=");
+    		// Validation
+        	if(!tmp[0].equals("reservation_id")) showReservations(message, response, true, viberId);
+        	reservationId = Long.valueOf(tmp[1]);
+    	}
+    	else reservationId = Long.valueOf(message.getTrackingData().get("reservationId").toString());
+    	
+    	// Create map for trackingData
+        Map<String, Object> mapTrackingData = new HashMap<>();
+        
+        mapTrackingData.put("menu", "show_reservations_step_2");
+        mapTrackingData.put("reservationId", reservationId);
+        mapTrackingData.put("viberId", viberId);
+        
+        // Create trackindata object
+        TrackingData trackingData = new TrackingData(mapTrackingData);
+    	
+    	
+    	
+    	// Get reservation from DB
+    	Reservation reservation = reservationService.getOne(reservationId);
+    	if(reservation == null) showReservations(message, response, true, viberId);
+    	
+    	// Array for buttons
+    	ArrayList<HashMap<String, Object>> buttons = new ArrayList<>();
+    	
+    	// Create "Cancel reservation" button
+    	HashMap<String, Object> btnCancelReservation = new HashMap<>();
+        btnCancelReservation.put("Columns", 6);
+        btnCancelReservation.put("Rows", 1);
+        btnCancelReservation.put("BgColor", "#f96164");
+        btnCancelReservation.put("ActionType", "reply");
+        btnCancelReservation.put("ActionBody", "cancel_reservation");
+        btnCancelReservation.put("Text", "Cancel this reservation");
+        btnCancelReservation.put("TextVAlign", "middle");
+        btnCancelReservation.put("TextHAlign", "center");
+        btnCancelReservation.put("TextSize", "regular");
+        
+        buttons.add(btnCancelReservation);
+        buttons.add(btnReturnToMain());
+        
+        // Create messageKeyboard
+        MessageKeyboard messageKeyboard = createMessageKeyboard(buttons);
+        
+        
+        String responseText = wasInvalid ? "Wrong input. Please choose option from the menu. " : "";
+        responseText += " Reservation info: ";
+        responseText += "Date " + reservation.getDate().toString();
+        responseText += " from " + reservation.getTime().toString();
+        responseText += " to " + LocalTime.of(reservation.getTime().getHour() + 1, reservation.getTime().getMinute());
+        responseText += " for room: " + reservation.getRoom().getName() + " " + reservation.getRoom().getNumber();
+        
+        response.send(new TextMessage(responseText, messageKeyboard, trackingData, null));
+    }
+    /*
+     * cancel_reservation
+     * Asks user to confirm reservation cancelling
+     */
+    protected void cancelReservationConfirm(Message message, Response response, boolean wasInvalid){
+    	
+    	if(!message.getMapRepresentation().get("text").toString().equals("cancel_reservation")){
+    		showReservation(message, response, true);
+    		return;
+    	}
+    	
+    	// Create map for trackingData
+        Map<String, Object> mapTrackingData = new HashMap<>();
+        
+        mapTrackingData.put("menu", "confirm_cancel_reservation");
+        mapTrackingData.put("reservationId", message.getTrackingData().get("reservationId").toString());
+        mapTrackingData.put("viberId", message.getTrackingData().get("viberId").toString());
+        
+        // Create trackingdata object
+        TrackingData trackingData = new TrackingData(mapTrackingData);
+        
+        // Get reservation from DB
+    	Reservation reservation = reservationService.getOne(Long.valueOf(message.getTrackingData().get("reservationId").toString()));
+        
+        // Response text
+        String responseText = wasInvalid ? "Bad input. " : "";
+        responseText += " Please confirm that you want to cancel this reservation: ";
+        responseText += "Date " + reservation.getDate().toString();
+        responseText += " from " + reservation.getTime().toString();
+        responseText += " to " + LocalTime.of(reservation.getTime().getHour() + 1, reservation.getTime().getMinute());
+        responseText += " for room: " + reservation.getRoom().getName() + " " + reservation.getRoom().getNumber();
+        
+        // Array for buttons
+    	ArrayList<HashMap<String, Object>> buttons = new ArrayList<>();
+    	
+    	// Create "Cancel reservation" button
+    	HashMap<String, Object> btnCancelReservation = new HashMap<>();
+        btnCancelReservation.put("Columns", 6);
+        btnCancelReservation.put("Rows", 1);
+        btnCancelReservation.put("BgColor", "#00ff00");
+        btnCancelReservation.put("ActionType", "reply");
+        btnCancelReservation.put("ActionBody", "confirm_cancel_reservation");
+        btnCancelReservation.put("Text", "Confirm");
+        btnCancelReservation.put("TextVAlign", "middle");
+        btnCancelReservation.put("TextHAlign", "center");
+        btnCancelReservation.put("TextSize", "regular");
+        
+        buttons.add(btnCancelReservation);
+        buttons.add(btnReturnToMain());
+        
+        MessageKeyboard messageKeyboard = createMessageKeyboard(buttons);
+        
+        response.send(new TextMessage(responseText, messageKeyboard, trackingData, null));
+    }
+    
+    /*
+     * confirm_cancel_reservation
+     * Deletes reservation and goes back to the main menu
+     */
+    
+    protected void cancelReservation(Message message, Response response){
+    	
+    	if(!message.getMapRepresentation().get("text").equals("confirm_cancel_reservation")){
+    		cancelReservationConfirm(message, response, true);
+    		return;
+    	}
+    	
+    	TrackingData trackingData = message.getTrackingData();
+    	
+    	// Get reservation from base
+    	Reservation reservation = reservationService.getOne(Long.valueOf(trackingData.get("reservationId").toString()));
+    	
+    	// Cancel reservation
+    	reservationService.delete(reservation.getId());
+    	
+    	ArrayList<HashMap<String, Object>> buttons = new ArrayList<>();
+    	
+    	buttons.add(btnReturnToMain());
+    	
+    	MessageKeyboard messageKeyboard = createMessageKeyboard(buttons);
+    	
+    	response.send(goToMain("Reservation cancelled."));
+    }
 }
