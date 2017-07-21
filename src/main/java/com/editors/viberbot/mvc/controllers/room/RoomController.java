@@ -41,7 +41,6 @@ public class RoomController {
 		try {
 			room = roomService.getOne(id);
 			model.addAttribute("room", room);
-			if(hasError) return "room/editRoom?error";
 		} catch (NotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -105,7 +104,7 @@ public class RoomController {
 			e.printStackTrace();
 			
 		} catch (Exception e){
-			return "room/editRoom";
+			return "room/listrooms?error";
 		}
 		
 		return "redirect:/rooms";	
