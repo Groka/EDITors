@@ -189,7 +189,7 @@ public class HelperMethods {
     	
     	// Create "Cancel reservation" button
     	HashMap<String, Object> btnCancelReservation = new HashMap<>();
-        btnCancelReservation.put("Columns", 2);
+        btnCancelReservation.put("Columns", 6);
         btnCancelReservation.put("Rows", 1);
         btnCancelReservation.put("BgColor", "#ce1212");
         btnCancelReservation.put("ActionType", "reply");
@@ -206,8 +206,7 @@ public class HelperMethods {
         MessageKeyboard messageKeyboard = createMessageKeyboard(buttons);
         
         
-        String responseText = wasInvalid ? "Wrong input. " : "";
-        responseText += "Please choose option from the menu.";
+        String responseText = wasInvalid ? "Wrong input. Please choose option from the menu. " : "";
         responseText += " Reservation info: ";
         responseText += "Date " + reservation.getDate().toString();
         responseText += " from " + reservation.getTime().toString();

@@ -100,13 +100,28 @@ public class ViberBotServiceImpl extends HelperMethods implements ViberBotServic
     	// Show reservations
     	case "show_reservations_step_1":
     		// Displays info about single reservation
-    		showReservation(message, response, false);
+    		if(message.getMapRepresentation().get("text").toString().equals("returnToMain")){
+    			// Greetings message
+    	        String greeting = "Welcome to room reservation bot " + event.getSender().getName();
+    			response.send(goToMain(greeting));
+    		}
+    		else showReservation(message, response, false);
     		break;
     	case "show_reservations_step_2":
-    		cancelReservationConfirm(message, response, false);
+    		if(message.getMapRepresentation().get("text").toString().equals("returnToMain")){
+    			// Greetings message
+    	        String greeting = "Welcome to room reservation bot " + event.getSender().getName();
+    			response.send(goToMain(greeting));
+    		}
+    		else cancelReservationConfirm(message, response, false);
     		break;
     	case "cancel_reservation":
-    		cancelReservation(message, response);
+    		if(message.getMapRepresentation().get("text").toString().equals("returnToMain")){
+    			// Greetings message
+    	        String greeting = "Welcome to room reservation bot " + event.getSender().getName();
+    			response.send(goToMain(greeting));
+    		}
+    		else cancelReservation(message, response);
     		break;
     		
     		
