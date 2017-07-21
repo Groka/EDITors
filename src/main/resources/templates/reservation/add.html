@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<meta charset="ISO-8859-1"></meta>
+ <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"></link>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<title>Insert title here</title>
+<body>
+
+	<div style=" position: fixed; top: 0; left: 0; bottom: 0; right: 0;
+	 overflow: auto; background:url('http://www.hotel-grandmajestic.cz/files/hotel/conferences/hotel-majestic-prague-conference-room-grand-4-conference-and-events-02.jpg') no-repeat;">
+	
+		
+		<form role="form" th:action="@{/add}" th:object="${reservation}" method="POST" style="width:30%; margin-left: 6em; margin-top: 4em; background: rgba(0, 0, 0, 0.77);">
+			<div class="form-group">
+			<label  style="margin-top:1em; color: white; padding: 0 0 0 1em;"> Date: </label>
+			<br/>			
+			<input style="margin-left: 1em; margin-right: 1em; width: 90%;"  th:field="*{date}"  type="date"/>
+			<br/>			
+			<label style="color: white; padding: 1em 0 0 1em;"> Time: </label>
+			<br/>
+			<input th:field="*{time}" style="margin-left: 1em; margin-right: 1em; width: 90%;"  type="time"/>
+			<br/>
+			<label style="color: white; padding: 1em 0 0 1em;"> User id: </label>
+			<br/>			
+			<input th:field="*{userId}" style="margin-left: 1em; margin-right: 1em; width: 90%;" placeholder="Enter user id"/>
+			<br/>
+			<label style="color: white; padding: 1em 0 0 1em;"> Room id: </label>
+			<br/>
+			<input  th:field="*{roomId}" style="margin-left: 1em; margin-right: 1em; width: 90%;" placeholder="Enter room id"/>
+			<br/>			
+			</div>
+			<button type="submit" style="margin: 1em;"  class="btn btn-info" > Add reservation </button>
+		</form>
+	</div>
+
+</body>
+</html>
