@@ -28,7 +28,7 @@ public class ViberBotServiceImpl2 implements ViberBotService {
 	}
 
 	@Override
-	public void onSubscribe(IncomingSubscribedEvent event) {
+	public void onSubscribe(IncomingSubscribedEvent event, Response response) {
 	
 		
 		

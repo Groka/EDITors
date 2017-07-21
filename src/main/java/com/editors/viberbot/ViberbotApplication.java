@@ -30,39 +30,7 @@ import com.viber.bot.profile.UserProfile;
 
 @SpringBootApplication
 
-public class ViberbotApplication implements ApplicationListener<ApplicationReadyEvent>  {
-	
-	@Autowired
-	private ViberBotService viberBotService;
-	
-	 @Inject
-	 private ViberBot bot;
-
-	 @Inject
-	 private ViberSignatureValidator signatureValidator;
-
-	 @Value("${application.viber-bot.webhook-url}")
-	 private String webhookUrl;
-
-	 @Override
-	    public void onApplicationEvent(ApplicationReadyEvent appReadyEvent) {
-	        try {
-	            bot.setWebhook(webhookUrl).get();
-	        } catch (Exception e) {
-	            e.printStackTrace();
-	        }
-	       
-
-	        bot.onMessageReceived((event, message, response) ->{
-				viberBotService.onMessageReceived(event, message, response);
-	        });
-
-	        //bot.onConversationStarted(event -> Futures.immediateFuture(Optional.of( // send 'Hi UserName' when conversation is started
-	          //      new TextMessage("Hi"))));
-		 	bot.onConversationStarted(event -> viberBotService.onConversationStarted(event));
-	    }
-
-
+public class ViberbotApplication {
 	
 	
 	public static void main(String[] args) throws JsonProcessingException {
