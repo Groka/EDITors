@@ -45,13 +45,27 @@ public class ReservationController {
 	@RequestMapping(value = "/editreservation/{id}", method = RequestMethod.GET)
 	public String editReservationView(@PathVariable Long id, Model model){
 		Reservation reservation = reservationService.getOne(id);
+		Long roomId = reservation.getRoom().getId();
+		Long userId = reservation.getUser().getId();
 		model.addAttribute("reservation", reservation);
+		model.addAttribute("roomId", roomId);
+		model.addAttribute("userId", userId);
 		return "reservation/edit";	
 	}
 	
 	@RequestMapping(value = "/editreservation", method = RequestMethod.POST)
 	public @ResponseBody String editReservation(@RequestParam String time, @RequestParam String date,
-			@RequestParam String userId,  @RequestParam String roomId ) throws NotFoundException{
+			@RequestParam long userId,  @RequestParam long roomId ) throws NotFoundException{
+		
+		try{
+			System.out.println(time.toString());
+			System.out.println(date.toString());
+			System.out.println("User id: " + userId);
+			System.out.println("Room id: " + roomId);
+		}catch(Exception e){
+			System.out.println("EDIT RESERVATION CATCH");
+			e.printStackTrace();
+		}
 		
 		LocalDate newdate = LocalDate.parse(date);
 		LocalTime newtime = LocalTime.parse(time);

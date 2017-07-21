@@ -26,8 +26,8 @@
 				<input name="date" th:value="${reservation.date}" style="margin-left: 1em; margin-right: 1em; width: 90%;"  th:field="*{date}"  type="date"/><br/>			
 				<label style="color: white; padding: 1em 0 0 1em;"> Time: </label><br/>
 				<input name="time" th:value="${reservation.time}" th:field="*{time}" style="margin-left: 1em; margin-right: 1em; width: 90%;"  type="time"/><br/>
-				<input  name="userId" th:value="${reservation.user.id}" style="margin-left: 1em; margin-right: 1em; width: 90%;" type="hidden"/><br/>
-				<input name="roomId" th:value="${reservation.room.id}" type="hidden" />	<br/>		
+				<input  name="userId" th:value="${userId}" type="hidden"/><br/>
+				<input name="roomId" th:value="${roomId}" type="hidden" />	<br/>		
 				
 			</div>
 			
