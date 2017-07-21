@@ -49,6 +49,7 @@ public class ViberBotServiceImpl extends HelperMethods implements ViberBotServic
 	
     @Override
     public Future<Optional<Message>> onConversationStarted(IncomingConversationStartedEvent event) {
+    	/*
     	String viberId = event.getUser().getId();
     	User user = new User();
     	try {
@@ -59,6 +60,7 @@ public class ViberBotServiceImpl extends HelperMethods implements ViberBotServic
 			String userName = event.getUser().getName();
 			userService.addUser(new User(viberId, userName, true));
 		}
+		*/
         return Futures.immediateFuture(Optional.of(goToMain(event, null, null)));
     }
         
