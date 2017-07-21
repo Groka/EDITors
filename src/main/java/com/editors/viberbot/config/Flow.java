@@ -3,6 +3,8 @@ package com.editors.viberbot.config;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -373,6 +375,18 @@ public class Flow extends HelperMethods {
         
         // Creating array of reservations for keyboard
         ArrayList<HashMap<String, Object>> buttons = new ArrayList<>();
+        
+        // Sort the array
+        Collections.sort(reservations, new Comparator<Reservation>(){
+
+			@Override
+			public int compare(Reservation r1, Reservation r2) {
+				if(r1.getDate().equals(r2.getDate()))
+					return r1.getTime().compareTo(r2.getTime());
+				return r1.getDate().compareTo(r2.getDate());
+			}
+        	
+        });
         
         // Add all reservations from DB to the array
         for(Reservation reservation : reservations){
