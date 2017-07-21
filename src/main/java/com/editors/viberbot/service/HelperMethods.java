@@ -347,10 +347,13 @@ public class HelperMethods {
      * make_a_reservation_confirm
      */
     protected void confirmNewReservation(Message message, Response response){
-    	Map<String, Object> mapTrackingData = message.getTrackingData();
+    	Map<String, Object> mapTrackingData = new HashMap<>();
     	
-    	// Change menu type in trackingData
-    	mapTrackingData.replace("menu", "make_a_reservation_end");
+    	// Create trackingData map
+    	mapTrackingData.put("menu", "make_a_reservation_end");
+    	mapTrackingData.put("date", message.getTrackingData().get("date").toString());
+    	mapTrackingData.put("roomId", message.getTrackingData().get("roomId").toString());
+    	
     	
     	// Get time
     	String[] timeStr = message.getMapRepresentation().get("text").toString().split("=");
