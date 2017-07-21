@@ -45,7 +45,7 @@ public class Flow extends HelperMethods {
 			HashMap<String, Object> btn = new HashMap<>();
             btn.put("Columns", 3);
             btn.put("Rows", 1);
-            btn.put("BgColor", "#2db9b9");
+            btn.put("BgColor", "#e2d4e7");
             btn.put("ActionType", "reply");
             btn.put("ActionBody", "room_id=" + room.getId());
             btn.put("Text", room.getName() + " " + room.getNumber());
@@ -169,7 +169,7 @@ public class Flow extends HelperMethods {
     		HashMap<String, Object> btn = new HashMap<>();
             btn.put("Columns", 2);
             btn.put("Rows", 1);
-            btn.put("BgColor", "#2db9b9");
+            btn.put("BgColor", "#e2d4e7");
             btn.put("ActionType", "reply");
             btn.put("ActionBody", "time=" + localTime.toString());
             btn.put("Text", localTime.toString());
@@ -245,7 +245,7 @@ public class Flow extends HelperMethods {
     	HashMap<String, Object> btnConfirm = new HashMap<>();
         btnConfirm.put("Columns", 6);
         btnConfirm.put("Rows", 1);
-        btnConfirm.put("BgColor", "#2db9b9");
+        btnConfirm.put("BgColor", "#81cd50");
         btnConfirm.put("ActionType", "reply");
         btnConfirm.put("ActionBody", "make_a_reservation_end");
         btnConfirm.put("Text", "Confirm");
@@ -382,7 +382,7 @@ public class Flow extends HelperMethods {
         	HashMap<String, Object> btn = new HashMap<>();
             btn.put("Columns", 6);
             btn.put("Rows", 1);
-            btn.put("BgColor", "#2db9b9");
+            btn.put("BgColor", "#8f5db7");
             btn.put("ActionType", "reply");
             btn.put("ActionBody", "reservation_id=" + reservation.getId());
             btn.put("Text", msg);
@@ -453,7 +453,7 @@ public class Flow extends HelperMethods {
     	HashMap<String, Object> btnCancelReservation = new HashMap<>();
         btnCancelReservation.put("Columns", 6);
         btnCancelReservation.put("Rows", 1);
-        btnCancelReservation.put("BgColor", "#f96164");
+        btnCancelReservation.put("BgColor", "#e2d4e7");
         btnCancelReservation.put("ActionType", "reply");
         btnCancelReservation.put("ActionBody", "cancel_reservation");
         btnCancelReservation.put("Text", "Cancel this reservation");
@@ -516,7 +516,7 @@ public class Flow extends HelperMethods {
     	HashMap<String, Object> btnCancelReservation = new HashMap<>();
         btnCancelReservation.put("Columns", 6);
         btnCancelReservation.put("Rows", 1);
-        btnCancelReservation.put("BgColor", "#00ff00");
+        btnCancelReservation.put("BgColor", "#e2d4e7");
         btnCancelReservation.put("ActionType", "reply");
         btnCancelReservation.put("ActionBody", "confirm_cancel_reservation");
         btnCancelReservation.put("Text", "Confirm");
