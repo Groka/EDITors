@@ -61,6 +61,7 @@ public class ViberBotServiceImpl extends HelperMethods implements ViberBotServic
 			userService.addUser(new User(viberId, userName, true));
 		}
 		*/
+    	onSubscribe(event);
         return Futures.immediateFuture(Optional.of(goToMain(event, null, null)));
     }
         
@@ -123,7 +124,7 @@ public class ViberBotServiceImpl extends HelperMethods implements ViberBotServic
     }
 
 	@Override
-    public void onSubscribe(IncomingSubscribedEvent event, Response response) {
+    public void onSubscribe(IncomingConversationStartedEvent event) {
     	String viberId = event.getUser().getId();
     	try {
 			userService.subscribe(viberId);
