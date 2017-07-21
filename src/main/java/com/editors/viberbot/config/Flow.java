@@ -343,6 +343,13 @@ public class Flow extends HelperMethods {
     *   show_reservations_step_1
     */
     protected void showReservations(Message message, Response response, boolean wasInvalid, String viberId){
+    	
+    	// Get reservations
+    	List<Reservation> reservations = reservationService.getByUser(viberId);
+    	
+    	// if there are no reservations return to main
+    	if(reservations.isEmpty()) goToMain("You have no reservations yet. You can create one if you want :)");
+    	
     	// Map for trackingdata
         
         Map<String, Object> mapTrackingData = new HashMap<>();
@@ -352,7 +359,7 @@ public class Flow extends HelperMethods {
         // TrackingData object
         TrackingData trackingData = new TrackingData(mapTrackingData);
         
-        List<Reservation> reservations = reservationService.getByUser(viberId);
+        
         
         // Creating array of reservations for keyboard
         ArrayList<HashMap<String, Object>> buttons = new ArrayList<>();

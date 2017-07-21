@@ -149,7 +149,7 @@ public class ViberBotServiceImpl extends Flow implements ViberBotService {
     		else addReservation(event, message, response);
     		break;
     	default:
-    		System.out.println("U defaultu");
+    		System.out.println("BAD STUFF: DEFAULT IN VIBERBOTSERVICEIMPL");
     		break;
     	}
     	
@@ -157,7 +157,6 @@ public class ViberBotServiceImpl extends Flow implements ViberBotService {
 
 	@Override
     public void onSubscribe(IncomingConversationStartedEvent event) {
-        System.out.println("Pokusaj subscribea!");
     	String viberId = event.getUser().getId();
     	try {
 			userService.subscribe(viberId);
@@ -174,7 +173,6 @@ public class ViberBotServiceImpl extends Flow implements ViberBotService {
         try {
             userService.subscribe(viberId);
         } catch (NotFoundException e) {
-            System.out.println("(onUnsubscribe): user not found");
             e.printStackTrace();
         }
     }

@@ -31,7 +31,6 @@ public class RoomController {
 	@RequestMapping("/rooms")
 	public String listRooms(Model model){
 		model.addAttribute("rooms", roomService.findAll());
-		System.out.println("Velicina: " + roomService.findAll().size());
 		return "room/listrooms";
 	}
 	

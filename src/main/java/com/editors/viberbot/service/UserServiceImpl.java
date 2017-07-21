@@ -27,7 +27,6 @@ public class UserServiceImpl implements UserService {
 			getByViberId(user.getViberid());
 		} catch (NotFoundException e) {
 			userRepository.save(user);
-			System.out.println("User successfully added");
 		}
 
 		return user;

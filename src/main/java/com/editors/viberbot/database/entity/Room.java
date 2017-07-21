@@ -43,6 +43,14 @@ public class Room implements Serializable {
 	@Cascade(CascadeType.DELETE)
 	List<Reservation> reservations;
 	
+	public List<Reservation> getReservations() {
+		return reservations;
+	}
+
+	public void setReservations(List<Reservation> reservations) {
+		this.reservations = reservations;
+	}
+
 	public void setId(long id){
 		this.id = id;
 	}

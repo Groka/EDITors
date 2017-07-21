@@ -64,19 +64,6 @@ public class ReservationServiceImpl implements ReservationService {
 		} catch (NotFoundException e) {
 			throw e;
 		}
-		/*
-		int hours = room.getStartWorkTime().getHour();
-		int minutes = room.getStartWorkTime().getMinute();
-		for(; LocalTime.of(hours, 0) != room.getEndWorkTime(); hours++){
-			LocalTime tmp = LocalTime.of(hours, minutes);
-			result.add(tmp);
-		}
-		List<Reservation> reservations = getAll();
-		for(Reservation r : reservations){
-			if(result.contains(r.getTime()) && r.getRoom().getId() == roomId && r.getDate() == date)
-				result.remove(r.getTime());
-		}
-		*/
 		List<Reservation> reservations = reservationRepository.findByRoomAndDate(room, date);
 		
 		List<LocalTime> result = new ArrayList<>();
