@@ -1,10 +1,14 @@
 package com.editors.viberbot;
 
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Optional;
 
 import javax.inject.Inject;
 
+import com.viber.bot.message.MessageKeyboard;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -45,9 +49,23 @@ public class ViberbotApplication implements ApplicationListener<ApplicationReady
 	       
 
 	        bot.onMessageReceived((event, message, response) ->{
+	        	String text = "Testing keyboard";
+				MessageKeyboard messageKeyboard = new MessageKeyboard();
+				messageKeyboard.put("Type", "keyboard");
+				messageKeyboard.put("DefaultHight", true);
+
+				ArrayList<HashMap<String, Object>> buttons = new ArrayList<>();
+				HashMap<String, Object> button1 = new HashMap<>();
+				button1.put("ActionType", "reply");
+				button1.put("ActionBody", "reply to PA");
+				button1.put("Text", "Test");
+
+				messageKeyboard.put("Buttons", buttons);
+
+	        	TextMessage textMessage = new TextMessage(text, messageKeyboard, null, null);
 	        	System.out.println("Nesto se desavaaaaaaaaaaaaa");
-	        	response.send(message); 
-	        });// echos everything back
+	        	response.send(textMessage);
+	        });
 	        bot.onConversationStarted(event -> Futures.immediateFuture(Optional.of( // send 'Hi UserName' when conversation is started
 	                new TextMessage("Hi"))));
 	    }
