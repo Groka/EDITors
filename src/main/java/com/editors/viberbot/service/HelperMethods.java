@@ -44,7 +44,7 @@ public class HelperMethods {
         btnReserveARoom.put("Rows", 1);
         btnReserveARoom.put("BgColor", "#2db9b9");
         btnReserveARoom.put("ActionType", "reply");
-        btnReserveARoom.put("ActionBody", "Reserve a room");
+        btnReserveARoom.put("ActionBody", "make_a_reservation_step_1");
         btnReserveARoom.put("Text", "Reserve a room");
         btnReserveARoom.put("TextVAlign", "middle");
         btnReserveARoom.put("TextHAlign", "center");
@@ -67,12 +67,6 @@ public class HelperMethods {
         buttons.add(btnReserveARoom);
         buttons.add(btnShowReservations);
 
-        // Create a map for initialization of MessageKeyboard
-        Map<String, Object> mapMessageKeyboard = new HashMap<>();
-        mapMessageKeyboard.put("Type", "keyboard");
-        mapMessageKeyboard.put("DefaultHight", true);
-        mapMessageKeyboard.put("Buttons", buttons);
-
         // Create MessageKeyboard object
 
         MessageKeyboard messageKeyboard = createMessageKeyboard(buttons);
@@ -92,7 +86,11 @@ public class HelperMethods {
 
         return new TextMessage(text, messageKeyboard, trackingData, null);
     }
-    
+
+    /*
+    *   Returns TextMessage object with keyboard displaying
+    *   buttons representing reservations
+    */
     protected TextMessage showReservations(IncomingMessageEvent event, Message message){
     	// Map for trackingdata
         
@@ -135,5 +133,29 @@ public class HelperMethods {
     			new TextMessage("Click on the reservation to see details", messageKeyboard, trackingData, null);
     	
     	return textMessage;
+    }
+
+    protected TextMessage makeAReservationStep1(IncomingMessageEvent event, Message message) {
+        Map<String, Object> mapTrackingData = new HashMap<>();
+        mapTrackingData.put("menu", "make_a_reservation_step_1");
+        TrackingData trackingData = new TrackingData(mapTrackingData);
+        return new TextMessage("Please enter the date", null, trackingData, null);
+    }
+
+    /*
+    Step 2 of creating a reservation - Date parsing
+     */
+
+    protected Message getDate(IncomingMessageEvent event, Message message){
+        String date;
+        try{
+            date = message.getMapRepresentation().get("text").toString();
+            System.out.println("Date: " + date);
+        }catch(Exception e){
+            System.out.println("DATE PARSING BELAJ");
+            e.printStackTrace();
+        }
+
+        return message;
     }
 }

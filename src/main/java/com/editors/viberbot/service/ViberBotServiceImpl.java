@@ -65,32 +65,37 @@ public class ViberBotServiceImpl extends HelperMethods implements ViberBotServic
     
     @Override
     public void onMessageReceived(IncomingMessageEvent event, Message message, Response response) {
-    	TrackingData trackingData = message.getTrackingData();
-    	
-    	// For testing purposes
-    	System.out.println("Keys in the trackingdata:\n");
-    	
-    	for(String s : trackingData.keySet())
-    		System.out.println(s);
-    	
-    	System.out.println(trackingData.get("menu").toString());
-    	
-    	switch(trackingData.get("menu").toString()){	
-    	case "main":
-    		if(message.getMapRepresentation().get("text").equals("show_reservations"))
-    			response.send(showReservations(event, message));
-    		break;
-    	case "show_reservations":
-    		if(message.getMapRepresentation().get("text").equals(""))
-    		break;
-    	default:
-    		System.out.println("U defaultu");
-    		break;
-    	}
-    	
-    }
+		TrackingData trackingData = message.getTrackingData();
 
-    @Override
+		// For testing purposes
+		System.out.println("Keys in the trackingdata:\n");
+
+		for (String s : trackingData.keySet())
+			System.out.println(s);
+
+		System.out.println(trackingData.get("menu").toString());
+
+		switch (trackingData.get("menu").toString()) {
+			case "main":
+				if (message.getMapRepresentation().get("text").equals("show_reservations"))
+					response.send(showReservations(event, message));
+				else if (message.getMapRepresentation().get("text").equals("make_a_reservation_step_1"))
+					response.send(makeAReservationStep1(event, message));
+				break;
+			case "show_reservations":
+				if (message.getMapRepresentation().get("text").equals(""))//zavrsiti !!
+				    break;
+			case "make_a_reservation_step_1":
+				response.send(getDate(event, message));
+                break;
+			default:
+				System.out.println("U defaultu");
+				break;
+		}
+
+	}
+
+	@Override
     public void onSubscribe(IncomingSubscribedEvent event, Response response) {
     	String viberId = event.getUser().getId();
     	try {
