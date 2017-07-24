@@ -5,6 +5,7 @@ import java.util.*;
 
 import javax.inject.Inject;
 
+import com.editors.viberbot.service.ViberBotService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.viber.bot.message.MessageKeyboard;
@@ -28,6 +29,7 @@ import com.viber.bot.profile.UserProfile;
 
 public class ViberbotApplication implements ApplicationListener<ApplicationReadyEvent>  {
 
+	ViberBotService viberBotService;
 	
 	 @Inject
 	 private ViberBot bot;
@@ -71,8 +73,9 @@ public class ViberbotApplication implements ApplicationListener<ApplicationReady
 	        	response.send(textMessage);
 	        });
 
-	        bot.onConversationStarted(event -> Futures.immediateFuture(Optional.of( // send 'Hi UserName' when conversation is started
-	                new TextMessage("Hi"))));
+	        //bot.onConversationStarted(event -> Futures.immediateFuture(Optional.of( // send 'Hi UserName' when conversation is started
+	          //      new TextMessage("Hi"))));
+		 	bot.onConversationStarted(event -> viberBotService.onConversationStarted(event));
 	    }
 
 
