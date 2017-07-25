@@ -62,7 +62,7 @@ public class ViberBotServiceImpl extends HelperMethods implements ViberBotServic
 			userService.addUser(new User(viberId, userName, true));
 		}
 		*/
-    	onSubscribe(event);
+    	//onSubscribe(event);
 
     	// Greetings message
         String greeting = "Welcome to room reservation bot " + event.getUser().getName();
@@ -126,6 +126,7 @@ public class ViberBotServiceImpl extends HelperMethods implements ViberBotServic
 
 	@Override
     public void onSubscribe(IncomingConversationStartedEvent event) {
+        System.out.println("Pokusaj subscribea!");
     	String viberId = event.getUser().getId();
     	try {
 			userService.subscribe(viberId);
@@ -138,7 +139,13 @@ public class ViberBotServiceImpl extends HelperMethods implements ViberBotServic
 
     @Override
     public void onUnsubscribe(IncomingUnsubscribeEvent event) {
-
+        String viberId = event.getUserId();
+        try {
+            userService.subscribe(viberId);
+        } catch (NotFoundException e) {
+            System.out.println("(onUnsubscribe): user not found");
+            e.printStackTrace();
+        }
     }
 }
 
