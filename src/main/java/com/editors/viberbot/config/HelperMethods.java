@@ -63,7 +63,7 @@ public abstract class HelperMethods {
         HashMap<String, Object> btnReserveARoom = new HashMap<>();
         btnReserveARoom.put("Columns", 6);
         btnReserveARoom.put("Rows", 1);
-        btnReserveARoom.put("BgColor", "#2db9b9");
+        btnReserveARoom.put("BgColor", "#8f5db7");
         btnReserveARoom.put("ActionType", "reply");
         btnReserveARoom.put("ActionBody", "make_a_reservation");
         btnReserveARoom.put("Text", "Reserve a room");
@@ -74,7 +74,7 @@ public abstract class HelperMethods {
         HashMap<String, Object> btnShowReservations = new HashMap<>();
         btnShowReservations.put("Columns", 6);
         btnShowReservations.put("Rows", 1);
-        btnShowReservations.put("BgColor", "#2db9b9");
+        btnShowReservations.put("BgColor", "#8f5db7");
         btnShowReservations.put("ActionType", "reply");
         btnShowReservations.put("ActionBody", "show_reservations");
         btnShowReservations.put("Text", "Show my reservations");
@@ -180,7 +180,7 @@ public abstract class HelperMethods {
         HashMap<String, Object> btnReturnToMain = new HashMap<>();
         btnReturnToMain.put("Columns", 6);
         btnReturnToMain.put("Rows", 1);
-        btnReturnToMain.put("BgColor", "#f96164");
+        btnReturnToMain.put("BgColor", "#59267c");
         btnReturnToMain.put("ActionType", "reply");
         btnReturnToMain.put("ActionBody", "returnToMain");
         btnReturnToMain.put("Text", "Return to main");
