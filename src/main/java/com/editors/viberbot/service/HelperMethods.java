@@ -391,9 +391,23 @@ public class HelperMethods {
         
         // Create MessageKeyboard object
         MessageKeyboard messageKeyboard = createMessageKeyboard(buttons);
-        
+
+        // Get room by id
+        Room room = null;
+        try {
+            room = roomService.getOne(Long.valueOf(message.getTrackingData().get("roomId").toString()));
+        } catch (NotFoundException e) {
+            e.printStackTrace();
+        }
+
         // Response
-    	String responseText = "Please confirm your reservation";
+    	String responseText = "Reservation info: Date " + message.getTrackingData().get("date").toString();
+
+        // Calculated reservation ending time
+        LocalTime endTime = LocalTime.of(time.getHour() + 1, time.getMinute());
+        responseText += " from " + time.toString() + " to " + endTime.toString();
+        responseText += " for room: " + room.getName() + " " + room.getNumber();
+        responseText += ". Please confirm.";
     	response.send(new TextMessage(responseText, messageKeyboard, trackingData, null));
     }
     
@@ -436,10 +450,6 @@ public class HelperMethods {
     	
     	// Create a new Reservation object
     	Reservation reservation = new Reservation(user, room, date, time);
-    	System.out.println(date.toString());
-        System.out.println(time.toString());
-        System.out.println(room.toString());
-        System.out.println(user.toString());
     	reservationService.reserve(reservation);
     	
     	// Respond with main menu and confirmation
