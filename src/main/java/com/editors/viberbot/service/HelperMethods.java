@@ -439,6 +439,10 @@ public class HelperMethods {
     	reservation.setTime(time);
     	reservation.setRoom(room);
     	reservation.setUser(user);
+    	System.out.println(date.toString());
+        System.out.println(time.toString());
+        System.out.println(room.toString());
+        System.out.println(user.toString());
     	reservationService.reserve(reservation);
     	
     	// Now set trackingData for main menu
