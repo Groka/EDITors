@@ -315,9 +315,9 @@ public class HelperMethods {
 		ArrayList<HashMap<String, Object>> buttons = new ArrayList<>();
 		for(Room room : rooms){
 			HashMap<String, Object> btn = new HashMap<>();
-            btn.put("Columns", 2);
+            btn.put("Columns", 3);
             btn.put("Rows", 1);
-            btn.put("BgColor", "#b0e5e5");
+            btn.put("BgColor", "#2db9b9");
             btn.put("ActionType", "reply");
             btn.put("ActionBody", "room_id=" + room.getId());
             btn.put("Text", room.getName() + " " + room.getNumber());
@@ -486,7 +486,7 @@ public class HelperMethods {
     		HashMap<String, Object> btn = new HashMap<>();
             btn.put("Columns", 2);
             btn.put("Rows", 1);
-            btn.put("BgColor", "#b0e5e5");
+            btn.put("BgColor", "#2db9b9");
             btn.put("ActionType", "reply");
             btn.put("ActionBody", "time=" + localTime.toString());
             btn.put("Text", localTime.toString());
@@ -571,7 +571,7 @@ public class HelperMethods {
     	HashMap<String, Object> btnConfirm = new HashMap<>();
         btnConfirm.put("Columns", 6);
         btnConfirm.put("Rows", 1);
-        btnConfirm.put("BgColor", "#b0e5e5");
+        btnConfirm.put("BgColor", "#2db9b9");
         btnConfirm.put("ActionType", "reply");
         btnConfirm.put("ActionBody", "make_a_reservation_end");
         btnConfirm.put("Text", "Confirm");
