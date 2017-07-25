@@ -44,7 +44,7 @@ public class Reservation {
 	@Column(name = "time")
 	private LocalTime time;
 
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
 
