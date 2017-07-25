@@ -7,5 +7,5 @@ import com.editors.viberbot.database.entity.User;
 
 @Repository("userRepository")
 public interface UserRepository extends JpaRepository<User, Long> {
-	public User findByViberId(String viberId);
+	User findByViberId(String viberId);
 }

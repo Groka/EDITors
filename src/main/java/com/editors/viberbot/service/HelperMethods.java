@@ -428,7 +428,9 @@ public class HelperMethods {
 		try {
 			user = userService.getByViberId(viberId);
 		} catch (NotFoundException e) {
-			// TODO Auto-generated catch block
+		    System.out.println("Users in database:");
+            for(User u : userService.findAll())
+                System.out.println(u.toString());
 			e.printStackTrace();
 		}
     	
@@ -442,7 +444,7 @@ public class HelperMethods {
     	System.out.println(date.toString());
         System.out.println(time.toString());
         System.out.println(room.toString());
-        System.out.println(user.toString());
+        //System.out.println(user.toString());
     	reservationService.reserve(reservation);
     	
     	// Now set trackingData for main menu
