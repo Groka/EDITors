@@ -4,6 +4,7 @@ import java.time.LocalTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -37,7 +38,13 @@ public class RoomController {
 	
 	@RequestMapping(value = "/editRoom/{id}", method = RequestMethod.GET)
 	public String editRoomView(@PathVariable Long id, Model model){
-		Room room = roomService.getOne(id);
+		Room room = null;
+		try {
+			room = roomService.getOne(id);
+		} catch (NotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		model.addAttribute("room", room);
 		return "room/editRoom";	
 	}
@@ -45,7 +52,12 @@ public class RoomController {
 	@RequestMapping(value = "/editRoom", method = RequestMethod.POST)
 	public String editRoom(@ModelAttribute Room room) throws NullPointerException {
 		//Room room = roomService.getOne(id);
-		roomService.update(room);
+		try {
+			roomService.update(room);
+		} catch (NotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		System.out.println(room.toString());
 		return "redirect:/rooms";
 	}
@@ -73,8 +85,14 @@ public class RoomController {
 	
 	@RequestMapping(value = "/rooms/{id}", method = RequestMethod.GET)
 	public String deleteRoomView(@PathVariable Long id, Model model){
-		Room room = roomService.getOne(id);
-		roomService.delete(room.getId());
+		try {
+			Room room = roomService.getOne(id);
+			roomService.delete(room.getId());
+		} catch (NotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		return "redirect:/rooms";	
 	}	
 	

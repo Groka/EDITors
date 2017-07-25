@@ -1,8 +1,8 @@
 package com.editors.viberbot.service;
 
-import java.io.Console;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,8 +34,16 @@ public class ReservationServiceImpl implements ReservationService {
 
 	@Override
 	public boolean reserve(Reservation reservation) {
-		List<LocalTime> reservations = getFreeRoomCapacitiesOnDate(reservation.getId(), reservation.getDate());
+		/*
+		List<LocalTime> reservations = null;
+		try {
+			reservations = getFreeRoomCapacitiesOnDate(reservation.getId(), reservation.getDate());
+		} catch (NotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		if(reservations.contains(reservation.getTime())) return false;
+		*/
 		reservationRepository.save(reservation);
 		return true;
 	}
@@ -48,9 +56,14 @@ public class ReservationServiceImpl implements ReservationService {
 	}
 
 	@Override
-	public List<LocalTime> getFreeRoomCapacitiesOnDate(Long roomId, LocalDate date) {
-		List<LocalTime> result = null;
-		Room room = roomService.getOne(roomId);
+	public List<LocalTime> getFreeRoomCapacitiesOnDate(Long roomId, LocalDate date) throws NotFoundException {
+		List<LocalTime> result = new ArrayList<>();
+		Room room = null;
+		try {
+			room = roomService.getOne(roomId);
+		} catch (NotFoundException e) {
+			throw e;
+		}
 		int hours = room.getStartWorkTime().getHour();
 		int minutes = room.getStartWorkTime().getMinute();
 		for(; LocalTime.of(hours, 0) != room.getEndWorkTime(); hours++){
@@ -69,13 +82,15 @@ public class ReservationServiceImpl implements ReservationService {
 	@Override
 	public List<Reservation> getByUser(String viberId) {
 		User user = new User();
-		List<Reservation> reservations = null;
+		List<Reservation> reservations = new ArrayList<>();
 		try{
 			user = userService.getByViberId(viberId);
-			reservations.addAll(reservationRepository.findByUserId(user.getId()));
+			reservations.addAll(reservationRepository.findByUser(user));
 		}catch(NotFoundException e){
-			System.out.println(e.getMessage());
-			
+			e.printStackTrace();
+		}catch(NullPointerException e){
+			System.out.println("(findByUser) Reservations length: " + reservationRepository.findByUser(user).size());
+			e.printStackTrace();
 		}
 		return reservations;
 	}

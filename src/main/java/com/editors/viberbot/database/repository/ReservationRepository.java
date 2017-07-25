@@ -1,5 +1,6 @@
 package com.editors.viberbot.database.repository;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -10,6 +11,6 @@ import com.editors.viberbot.database.entity.User;
 
 @Repository("reservationRepository")
 public interface ReservationRepository extends JpaRepository<Reservation, Long> {
-	public List<Reservation> findByUserId(Long userId);
-	public Reservation findByRoomId(Long roomId);
+	List<Reservation> findByUser(User user);
+	List<Reservation> findByUserAndDate(User user, LocalDate date);
 }

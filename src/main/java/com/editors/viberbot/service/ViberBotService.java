@@ -20,6 +20,6 @@ import java.util.concurrent.Future;
 public interface ViberBotService {
     public Future<Optional<Message>> onConversationStarted(final @Nonnull IncomingConversationStartedEvent event);
     public void onMessageReceived(IncomingMessageEvent event, Message message, Response response);
-    public void onSubscribe(IncomingSubscribedEvent event, Response response);
+    public void onSubscribe(IncomingConversationStartedEvent event);
     public void onUnsubscribe(IncomingUnsubscribeEvent event);
 }

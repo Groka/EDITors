@@ -2,6 +2,7 @@ package com.editors.viberbot.service;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
@@ -14,7 +15,7 @@ public interface ReservationService {
 	public boolean reserve(Reservation reservation);
 	public Reservation edit(Reservation reservation) throws NotFoundException;
 	public boolean delete(Long id);
-	public List<LocalTime> getFreeRoomCapacitiesOnDate(Long roomId, LocalDate date);
+	public List<LocalTime> getFreeRoomCapacitiesOnDate(Long roomId, LocalDate date) throws NotFoundException;
 	public List<Reservation> getByUser(String viberId);
 	public Reservation getOne(Long id);
 }

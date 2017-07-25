@@ -3,6 +3,7 @@ package com.editors.viberbot.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.editors.viberbot.database.entity.Room;
@@ -27,25 +28,30 @@ public class RoomServiceImpl implements RoomService {
 	}
 
 	@Override
-	public boolean update(Room room) {
-		if(!roomRepository.exists(room.getId())) return false;
+	public void update(Room room) throws NotFoundException {
 		Room dbroom = getOne(room.getId());
 		dbroom.setName(room.getName());
 		dbroom.setNumber(room.getNumber());
 		dbroom.setStartWorkTime(room.getStartWorkTime());
 		dbroom.setEndWorkTime(room.getEndWorkTime());
 		roomRepository.save(dbroom);
-		return true;
 	}
 
 	@Override
-	public Room getOne(Long id) {
-		return roomRepository.findOne(id);
+	public Room getOne(Long id) throws NotFoundException {
+		Room room = roomRepository.findOne(id);
+		if(room == null)
+			throw new NotFoundException();
+		return room;
 	}
 
 	@Override
-	public void delete(Long id) {
-		roomRepository.delete(id);
+	public void delete(Long id) throws NotFoundException {
+		try{
+			roomRepository.delete(id);
+		}catch(IllegalArgumentException e){
+			e.printStackTrace();
+		}
 	}
 	
 

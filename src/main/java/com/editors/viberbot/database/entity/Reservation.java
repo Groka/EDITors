@@ -15,10 +15,8 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "reservations")
-public class Reservation implements Serializable {
-	public Reservation(Long id, User user, Room room, LocalDate date, LocalTime time) {
-		super();
-		this.id = id;
+public class Reservation {
+	public Reservation(User user, Room room, LocalDate date, LocalTime time) {
 		this.user = user;
 		this.room = room;
 		this.date = date;
@@ -46,7 +44,7 @@ public class Reservation implements Serializable {
 	@Column(name = "time")
 	private LocalTime time;
 
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
 

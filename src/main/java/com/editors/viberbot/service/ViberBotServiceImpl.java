@@ -46,9 +46,11 @@ public class ViberBotServiceImpl extends HelperMethods implements ViberBotServic
 	
 	@Autowired 
 	private UserService userService;
+
 	
     @Override
     public Future<Optional<Message>> onConversationStarted(IncomingConversationStartedEvent event) {
+    	/*
     	String viberId = event.getUser().getId();
     	User user = new User();
     	try {
@@ -59,7 +61,12 @@ public class ViberBotServiceImpl extends HelperMethods implements ViberBotServic
 			String userName = event.getUser().getName();
 			userService.addUser(new User(viberId, userName, true));
 		}
-        return Futures.immediateFuture(Optional.of(goToMain(event, null, null)));
+		*/
+    	//onSubscribe(event);
+
+    	// Greetings message
+        String greeting = "Welcome to room reservation bot " + event.getUser().getName();
+        return Futures.immediateFuture(Optional.of(goToMain(greeting)));
     }
         
     
@@ -75,13 +82,40 @@ public class ViberBotServiceImpl extends HelperMethods implements ViberBotServic
     	
     	System.out.println(trackingData.get("menu").toString());
     	
-    	switch(trackingData.get("menu").toString()){	
+    	String dataToTrack = trackingData.get("menu").toString();
+    	
+    	switch(dataToTrack){	
+    	// main menu
     	case "main":
     		if(message.getMapRepresentation().get("text").equals("show_reservations"))
     			response.send(showReservations(event, message));
+    		else if(message.getMapRepresentation().get("text").equals("make_a_reservation")){
+    			askForDate(response, false);
+    		}
+    			
     		break;
+    	// Show reservations
     	case "show_reservations":
-    		if(message.getMapRepresentation().get("text").equals(""))
+    		//if(message.getMapRepresentation().get("text").equals(""))
+    		break;
+    	// Date input; if valid respond with room menu to choose a room
+    	case "make_a_reservation_step_1":
+    		// Get rooms
+    		showRooms(message, response, true, false);
+    		break;
+    	// Choose a room
+    	// Show available appointments
+    	case "make_a_reservation_step_2":
+    		showFreePeriods(message, response, false);
+    		break;
+    	case "make_a_reservation_step_3":
+    		confirmNewReservation(message, response);
+    		break;
+    	case "make_a_reservation_confirm":
+    		confirmNewReservation(message, response);
+    		break;
+    	case "make_a_reservation_end":
+    		addReservation(event, message, response);
     		break;
     	default:
     		System.out.println("U defaultu");
@@ -90,8 +124,9 @@ public class ViberBotServiceImpl extends HelperMethods implements ViberBotServic
     	
     }
 
-    @Override
-    public void onSubscribe(IncomingSubscribedEvent event, Response response) {
+	@Override
+    public void onSubscribe(IncomingConversationStartedEvent event) {
+        System.out.println("Pokusaj subscribea!");
     	String viberId = event.getUser().getId();
     	try {
 			userService.subscribe(viberId);
@@ -104,7 +139,13 @@ public class ViberBotServiceImpl extends HelperMethods implements ViberBotServic
 
     @Override
     public void onUnsubscribe(IncomingUnsubscribeEvent event) {
-
+        String viberId = event.getUserId();
+        try {
+            userService.subscribe(viberId);
+        } catch (NotFoundException e) {
+            System.out.println("(onUnsubscribe): user not found");
+            e.printStackTrace();
+        }
     }
 }
 
