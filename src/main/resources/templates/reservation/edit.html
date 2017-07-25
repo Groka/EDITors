@@ -27,9 +27,9 @@
 				<label style="color: white; padding: 1em 0 0 1em;"> Time: </label><br/>
 				<input  th:value="${reservation.time}" th:field="*{time}" style="margin-left: 1em; margin-right: 1em; width: 90%;"  type="time"/><br/>
 				<label style="color: white; padding: 1em 0 0 1em;"> User id: </label><br/>			
-				<input  th:value="${reservation.userId}" th:field="*{userId}" style="margin-left: 1em; margin-right: 1em; width: 90%;" placeholder="Enter user id"/><br/>
+				<input  th:value="${reservation.user.name}" th:field="*{user.name}" style="margin-left: 1em; margin-right: 1em; width: 90%;" placeholder="Enter user name"/><br/>
 				<label style="color: white; padding: 1em 0 0 1em;"> Room id: </label><br/>
-				<input  th:value="${reservation.roomId}" th:field="*{roomId}" style="margin-left: 1em; margin-right: 1em; width: 90%;" placeholder="Enter room id"/>	<br/>		
+				<input  th:value="${reservation.room.name}" th:field="*{room.name}" style="margin-left: 1em; margin-right: 1em; width: 90%;" placeholder="Enter room name"/>	<br/>		
 				
 			</div>
 			
