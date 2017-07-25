@@ -438,11 +438,7 @@ public class HelperMethods {
     	
     	
     	// Create a new Reservation object
-    	Reservation reservation = new Reservation();
-    	reservation.setDate(date);
-    	reservation.setTime(time);
-    	reservation.setRoom(room);
-    	reservation.setUser(user);
+    	Reservation reservation = new Reservation(user, room, date, time);
     	System.out.println(date.toString());
         System.out.println(time.toString());
         System.out.println(room.toString());
