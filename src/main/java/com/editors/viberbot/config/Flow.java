@@ -355,7 +355,7 @@ public class Flow extends HelperMethods {
         for(Reservation reservation : reservations){
         	String msg = "Date - " + reservation.getDate().toString() + ", ";
         	msg += "Time - " + reservation.getTime().toString() + ", ";
-        	msg += "Room name - " + reservation.getRoom().getName();
+        	msg += "Room name - " + reservation.getRoom().getName() + " " + reservation.getRoom().getNumber();
         	HashMap<String, Object> btn = new HashMap<>();
             btn.put("Columns", 6);
             btn.put("Rows", 1);
