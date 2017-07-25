@@ -1,5 +1,7 @@
 package com.editors.viberbot.database.entity;
 
+import jdk.nashorn.internal.objects.annotations.Property;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,9 +13,9 @@ import javax.persistence.Table;
 @Table(name = "users")
 public class User {
 	
-	public User(String viberId, String name, boolean subscribe) {
+	public User(String viberid, String name, boolean subscribe) {
 		super();
-		this.viberId = viberId;
+		this.viberid = viberid;
 		this.name = name;
 		this.subscribe = subscribe;
 	}
@@ -25,9 +27,9 @@ public class User {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "id")
 	private Long id;
-	
-	@Column(name = "viberId")
-	private String viberId;
+    
+	@Column(name = "viberid")
+	private String viberid;
 	
 	@Column(name = "name")
 	private String name;
@@ -43,12 +45,12 @@ public class User {
 		this.id = id;
 	}
 
-	public String getViberId() {
-		return viberId;
+	public String getViberid() {
+		return viberid;
 	}
 
-	public void setViberId(String viberId) {
-		this.viberId = viberId;
+	public void setViberid(String viberid) {
+		this.viberid = viberid;
 	}
 
 	public String getName() {
@@ -71,7 +73,7 @@ public class User {
     public String toString() {
         return "User{" +
                 "id=" + id +
-                ", viberId='" + viberId + '\'' +
+                ", viberid='" + viberid + '\'' +
                 ", name='" + name + '\'' +
                 ", subscribe=" + subscribe +
                 '}';

@@ -85,7 +85,7 @@ public class ReservationServiceImpl implements ReservationService {
 		List<Reservation> reservations = null;
 		try{
 			user = userService.getByViberId(viberId);
-			reservations.addAll(reservationRepository.findByUserId(user.getId()));
+			reservations.addAll(reservationRepository.findByUser(user));
 		}catch(NotFoundException e){
 			System.out.println(e.getMessage());
 			

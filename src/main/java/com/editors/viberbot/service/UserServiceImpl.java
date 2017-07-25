@@ -24,7 +24,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public User addUser(User user) {
 		try {
-			getByViberId(user.getViberId());
+			getByViberId(user.getViberid());
 		} catch (NotFoundException e) {
 			userRepository.save(user);
 			System.out.println("User successfully added");
@@ -34,9 +34,9 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public User getByViberId(String viberId) throws NotFoundException {
-		User user = userRepository.findByViberId(viberId);
-		if(user == null || userRepository.exists(user.getId())) throw new NotFoundException();
+	public User getByViberId(String viberid) throws NotFoundException {
+		User user = userRepository.findByViberid(viberid);
+		if(user == null || !userRepository.exists(user.getId())) throw new NotFoundException();
 		return user;
 	}
 
@@ -82,7 +82,7 @@ public class UserServiceImpl implements UserService {
 	
 			if(!userRepository.exists(user.getId())) throw new NotFoundException();
 			User dbuser = userRepository.findOne(user.getId());
-			dbuser.setViberId(user.getViberId());
+			dbuser.setViberid(user.getViberid());
 			dbuser.setName(user.getName());
 			dbuser.setSubscribe(user.getSubscribe());
 			userRepository.save(dbuser);

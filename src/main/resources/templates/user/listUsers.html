@@ -28,7 +28,7 @@
 			
 			<tr th:each="user : ${users}">
 			
-				<td th:text="${user.viberId}"></td>
+				<td th:text="${user.viberid}"></td>
 				<td th:text="${user.name}"></td>
 				<td th:text="${user.subscribe}"></td>
 				<td><a th:href="@{/edituser/{id}(id=${user.id})}"><span class="table-edit glyphicon glyphicon-pencil" style="color: blue;"></span></a></td>
