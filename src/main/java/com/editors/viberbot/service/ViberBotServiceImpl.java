@@ -62,7 +62,10 @@ public class ViberBotServiceImpl extends HelperMethods implements ViberBotServic
 		}
 		*/
     	onSubscribe(event);
-        return Futures.immediateFuture(Optional.of(goToMain(event, null, null)));
+
+    	// Greetings message
+        String greeting = "Welcome to room reservation bot " + event.getUser().getName();
+        return Futures.immediateFuture(Optional.of(goToMain(greeting)));
     }
         
     
@@ -87,9 +90,6 @@ public class ViberBotServiceImpl extends HelperMethods implements ViberBotServic
     			response.send(showReservations(event, message));
     		else if(message.getMapRepresentation().get("text").equals("make_a_reservation")){
     			askForDate(response, false);
-    		}
-    		else if(message.getMapRepresentation().get("text").equals("Reservation added")){
-    			response.send(goToMain(null, event, message));
     		}
     			
     		break;

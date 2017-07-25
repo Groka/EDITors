@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.concurrent.Future;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
@@ -46,8 +47,13 @@ public class HelperMethods {
 
         return new MessageKeyboard(mapMessageKeyboard);
     }
+
+    /*
+        Return MessageKeyboard object for main menu
+        with custom message
+     */
     
-    protected TextMessage goToMain(IncomingConversationStartedEvent cvrEvent, IncomingMessageEvent msgEvent, Message message){
+    protected TextMessage goToMain(String message){
     	// Button for reserving a room
         HashMap<String, Object> btnReserveARoom = new HashMap<>();
         btnReserveARoom.put("Columns", 6);
@@ -80,10 +86,6 @@ public class HelperMethods {
         // Create MessageKeyboard object
 
         MessageKeyboard messageKeyboard = createMessageKeyboard(buttons);
-
-        // Text to show when conversation starts
-        String userName = cvrEvent.getUser().getName();
-        String text = "Greetings " + userName + "!";
         
         // Map for trackingdata
         
@@ -94,7 +96,7 @@ public class HelperMethods {
         // TrackingData object
         TrackingData trackingData = new TrackingData(mapTrackingData);
 
-        return new TextMessage(text, messageKeyboard, trackingData, null);
+        return new TextMessage(message, messageKeyboard, trackingData, null);
     }
 
     /*
@@ -428,11 +430,6 @@ public class HelperMethods {
 		try {
 			user = userService.getByViberId(viberId);
 		} catch (NotFoundException e) {
-		    System.out.println("Viber id from viber API: " + viberId);
-		    System.out.print("Are IDs the same?  " + viberId.equals("e5GDL4+qFzkQV4rbZldi7w=="));
-		    System.out.println("Users in database:");
-            for(User u : userService.findAll())
-                System.out.println(u.toString());
 			e.printStackTrace();
 		}
     	
@@ -442,16 +439,16 @@ public class HelperMethods {
     	System.out.println(date.toString());
         System.out.println(time.toString());
         System.out.println(room.toString());
-        //System.out.println(user.toString());
+        System.out.println(user.toString());
     	reservationService.reserve(reservation);
     	
-    	// Now set trackingData for main menu
-    	Map<String, Object> mapTrackingData = new HashMap<>();
-    	mapTrackingData.put("menu", "main");
+    	// Respond with main menu and confirmation
+        String responseText = "Created reservation on " + date.toString();
+        // Calculated reservation ending time
+        LocalTime endTime = LocalTime.of(time.getHour() + 1, time.getMinute());
+        responseText += " from " + time.toString() + " to " + endTime.toString();
+        responseText += " for room: " + room.getName() + " " + room.getNumber();
 
-    	// Create TrackingData object
-    	TrackingData trackingDataRes = new TrackingData(mapTrackingData);
-    	
-    	response.send(new TextMessage("Reservation added", null, trackingDataRes, null));
+        response.send(goToMain(responseText));
     }
 }
