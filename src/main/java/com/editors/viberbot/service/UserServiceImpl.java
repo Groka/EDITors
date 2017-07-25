@@ -42,6 +42,7 @@ public class UserServiceImpl implements UserService {
 	
 	@Override
 	public User getByName(String name) throws NotFoundException {
+		// This may cause exception as the method can return list of users
 		User user = userRepository.findByName(name);
 		if(user == null || !userRepository.exists(user.getId())) throw new NotFoundException();
 		return user;
