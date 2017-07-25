@@ -41,24 +41,37 @@ public class RoomController {
 		Room room = null;
 		try {
 			room = roomService.getOne(id);
+			model.addAttribute("room", room);
+
 		} catch (NotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		model.addAttribute("room", room);
 		return "room/editRoom";	
 	}
 	
 	@RequestMapping(value = "/editRoom", method = RequestMethod.POST)
-	public String editRoom(@ModelAttribute Room room) throws NullPointerException {
-		//Room room = roomService.getOne(id);
-		try {
+	public String editRoom(@RequestParam long id,
+			@RequestParam String name,
+			@RequestParam int number,
+			@RequestParam String startWorkTime,
+			@RequestParam String endWorkTime) throws NullPointerException {
+		
+		try {			
+			LocalTime newSWT = LocalTime.parse(startWorkTime);
+			LocalTime newEWT = LocalTime.parse(endWorkTime);
+			
+			Room room = roomService.getOne(id);			
+			room.setName(name);
+			room.setNumber(number);
+			room.setStartWorkTime(newSWT);
+			room.setEndWorkTime(newEWT);
 			roomService.update(room);
+			
 		} catch (NotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		System.out.println(room.toString());
 		return "redirect:/rooms";
 	}
 	
