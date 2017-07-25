@@ -428,6 +428,8 @@ public class HelperMethods {
 		try {
 			user = userService.getByViberId(viberId);
 		} catch (NotFoundException e) {
+		    System.out.println("Viber id from viber API: " + viberId);
+		    System.out.print("Are IDs the same?  " + viberId.equals("e5GDL4+qFzkQV4rbZldi7w=="));
 		    System.out.println("Users in database:");
             for(User u : userService.findAll())
                 System.out.println(u.toString());
