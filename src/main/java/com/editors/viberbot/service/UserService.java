@@ -15,4 +15,5 @@ public interface UserService {
 	public User delete(Long id);
 	public User getOne(Long id);
 	public User update(User user) throws NotFoundException;
+	User getByName(String name) throws NotFoundException;
 }

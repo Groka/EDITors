@@ -39,7 +39,15 @@ public class UserServiceImpl implements UserService {
 		if(user == null || !userRepository.exists(user.getId())) throw new NotFoundException();
 		return user;
 	}
+	
+	@Override
+	public User getByName(String name) throws NotFoundException {
+		User user = userRepository.findByName(name);
+		if(user == null || !userRepository.exists(user.getId())) throw new NotFoundException();
+		return user;
+	}
 
+	
 	@Override
 	public void subscribe(String viberId) throws NotFoundException {
 		User user = new User();
