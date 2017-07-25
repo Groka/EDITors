@@ -47,6 +47,7 @@ public class ViberBotServiceImpl extends HelperMethods implements ViberBotServic
 	@Autowired 
 	private UserService userService;
 	
+	
     @Override
     public Future<Optional<Message>> onConversationStarted(IncomingConversationStartedEvent event) {
     	/*
