@@ -66,4 +66,14 @@ public class User {
 	public void setSubscribe(boolean subscribe) {
 		this.subscribe = subscribe;
 	}
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", viberId='" + viberId + '\'' +
+                ", name='" + name + '\'' +
+                ", subscribe=" + subscribe +
+                '}';
+    }
 }
