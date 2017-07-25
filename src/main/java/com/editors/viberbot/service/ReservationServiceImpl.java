@@ -87,8 +87,10 @@ public class ReservationServiceImpl implements ReservationService {
 			user = userService.getByViberId(viberId);
 			reservations.addAll(reservationRepository.findByUser(user));
 		}catch(NotFoundException e){
-			System.out.println(e.getMessage());
-			
+			e.printStackTrace();
+		}catch(NullPointerException e){
+			System.out.println("(findByUser) Reservations length: " + reservationRepository.findByUser(user).size());
+			e.printStackTrace();
 		}
 		return reservations;
 	}
