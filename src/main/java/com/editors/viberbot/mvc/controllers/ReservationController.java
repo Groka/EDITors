@@ -23,6 +23,8 @@ import com.editors.viberbot.service.ReservationService;
 import com.editors.viberbot.service.RoomService;
 import com.editors.viberbot.service.UserService;
 
+import scala.annotation.meta.setter;
+
 @Controller
 public class ReservationController {
 	
@@ -51,7 +53,7 @@ public class ReservationController {
 	
 	@RequestMapping(value = "/editreservation", method = RequestMethod.POST)
 	public @ResponseBody String editReservation(@RequestParam String time, @RequestParam String date,
-			@RequestParam Long userId,  @RequestParam Long roomId ) throws NotFoundException{
+			@RequestParam Long userId,  @RequestParam Long roomId, @RequestParam Long reservationId ) throws NotFoundException{
 		
 		LocalDate newdate = LocalDate.parse(date);
 		LocalTime newtime = LocalTime.parse(time);
@@ -59,8 +61,13 @@ public class ReservationController {
 		User user = userService.getOne(userId);
 		Room room = roomService.getOne(roomId);
 		
-		Reservation newReservation = new Reservation(user, room, newdate, newtime);
-		reservationService.edit(newReservation);
+		Reservation reservation = reservationService.getOne(reservationId);			
+		reservation.setRoom(room);
+		reservation.setTime(newtime);
+		reservation.setUser(user);
+		reservation.setDate(newdate);
+	
+		reservationService.edit(reservation);
 		
 		return "redirect:/reservations";
 	}
