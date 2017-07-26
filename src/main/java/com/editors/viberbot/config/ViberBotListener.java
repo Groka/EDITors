@@ -33,7 +33,6 @@ public class ViberBotListener implements ApplicationListener<ApplicationReadyEve
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-      
 
 		bot.onMessageReceived((event, message, response) ->
 				viberBotService.onMessageReceived(event, message, response));

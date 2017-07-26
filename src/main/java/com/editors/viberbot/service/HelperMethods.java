@@ -120,7 +120,7 @@ public class HelperMethods {
         ArrayList<HashMap<String, Object>> buttons = new ArrayList<>();
         
         // Add all reservations from DB to the array
-        for(Reservation reservation : reservations){;
+        for(Reservation reservation : reservations){
         	String msgInfo = "Reservation info: ";
         	String msg = "Date - " + reservation.getDate().toString() + ", ";
         	msg += "Time - " + reservation.getTime().toString() + ", ";

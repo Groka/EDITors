@@ -82,7 +82,7 @@ public class ReservationServiceImpl implements ReservationService {
 	@Override
 	public List<Reservation> getByUser(String viberId) {
 		User user = new User();
-		List<Reservation> reservations = null;
+		List<Reservation> reservations = new ArrayList<>();
 		try{
 			user = userService.getByViberId(viberId);
 			reservations.addAll(reservationRepository.findByUser(user));
